@@ -11,3 +11,4 @@ client = motor.motor_asyncio.AsyncIOMotorClient(DB_URL)
 
 db = client.get_database("info")
 user_collection = db.get_collection("users")
+cafe_collection = db.get_collection("cafe")

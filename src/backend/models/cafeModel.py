@@ -1,10 +1,14 @@
 from pydantic import BaseModel, conint
-from typing import Set
+from typing import List
+
 
 class CafeModel(BaseModel):
     cafeId: str
-    tags: Set[str]
-    rating: conint(ge=1, le=100)
+    tags: List[str]
+    rating: int
     plugs: int
-    seatSize: conint(ge=1, le=3)
-    music: Set[str]
+    seatSize: int
+    music: str
+    mapURL: str
+    image: str
+    light: str
