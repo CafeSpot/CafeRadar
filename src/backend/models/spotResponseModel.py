@@ -3,7 +3,7 @@ from datetime import datetime
 
 class spotResponseModel(BaseModel):
     overall: conint(ge=1, le=5)
-    bar: bool
+    barTable: bool
     smallTable: bool
     bigTable: bool
     timestamp: datetime
