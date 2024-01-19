@@ -39,7 +39,7 @@ class UserModel(BaseModel):
         json_schema_extra={
             "example": {
                 "firstName": "Jane",
-                "lastName" : "Doe",
+                "lastName": "Doe",
                 "email": "jdoe@example.com",
                 "phone": "0901250815",
                 "username": "JaneDoe123",
@@ -64,9 +64,29 @@ class UpdateUserModel(BaseModel):
         json_schema_extra={
             "example": {
                 "firstName": "Jane",
-                "lastName" : "Doe",
+                "lastName": "Doe",
                 "email": "jdoe@example.com",
                 "phone": "0901250815",
+                "username": "JaneDoe123",
+                "password": "HashedPassword",
+            }
+        },
+    )
+
+
+class LogInUserModel(BaseModel):
+    """
+    Container for a single user sign in.
+    """
+
+    username: str = Field(...)
+    password: str = Field(...)
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        arbitrary_types_allowed=True,
+        json_schema_extra={
+            "example": {
                 "username": "JaneDoe123",
                 "password": "HashedPassword",
             }
@@ -82,4 +102,3 @@ class UserCollection(BaseModel):
     """
 
     users: List[UserModel]
-
