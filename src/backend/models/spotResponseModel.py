@@ -7,6 +7,5 @@ class spotResponseModel(BaseModel):
     smallTable: bool
     bigTable: bool
     timestamp: datetime
-    cafeId = str
+    cafeId: str
     username: str
-
