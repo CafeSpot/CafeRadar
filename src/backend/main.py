@@ -10,15 +10,6 @@ app = FastAPI()
 app.include_router(auth_router)
 
 
-class User(BaseModel):
-    firstName: str
-    lastName: str
-    email: str
-    username: str
-    password: str
-    phone: str
-
-
 @app.get("/")
 def root():
     return {"message": "Hello World"}
