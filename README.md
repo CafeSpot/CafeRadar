@@ -17,11 +17,12 @@
 3. Install the required dependencies:
     ```bash
     pip install -r requirements.txt
+    pip install pydantic[email]
     ```
 
 4. Run the app using uvicorn:
     ```bash
-    uvicorn src.backend.main:app
+    uvicorn src.backend.main:app -- reload
     ```
 
 5. View the result in your browser at [http://127.0.0.1:8000](http://127.0.0.1:8000)
