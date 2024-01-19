@@ -1,7 +1,13 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+from src.backend.routes.auth import router as auth_router
+
 app = FastAPI()
+
+
+# 添加 auth 路由
+app.include_router(auth_router)
 
 
 class User(BaseModel):
@@ -23,7 +29,4 @@ def read_item(item_id: int, q: str | None = None):
     return {"item_id": item_id, "q": q}
 
 
-@app.put("/user/signup")
-def signup(firstName: str, lastName: str, email: str, username: str, password: str, phone: str):
-    password = Hasher.get_password_hash(password)
-    return {"firstName": firstName, "lastName": lastName, "email": email, "username": username, "password": password, "phone": phone}
+app.include_router(auth_router)
