@@ -5,7 +5,12 @@ from src.backend.models.cafeModel import *
 
 router = APIRouter(prefix='/cafe')
 
-@router.get("/",response_model=CafeModel)
+
+@router.get("/", response_model=CafeModel)
 async def cafe():
-    cafe = await cafe_collection.find_one({"cafeId" : "1"})
-    return CafeModel(cafe)
+    cafe = await cafe_collection.find_one({"cafeId": "1"})
+
+    if cafe is None:
+        raise HTTPException(status_code=404, detail="Cafe not found")
+
+    return CafeModel(**cafe)
