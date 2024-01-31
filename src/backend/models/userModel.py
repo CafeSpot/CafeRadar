@@ -32,6 +32,7 @@ class UserModel(BaseModel):
     phone: str = Field(...)
     username: str = Field(...)
     password: str = Field(...)
+    credibility: int = Field(...)
 
     model_config = ConfigDict(
         populate_by_name=True,

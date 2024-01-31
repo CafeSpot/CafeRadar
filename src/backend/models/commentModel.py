@@ -1,8 +1,8 @@
 from pydantic import BaseModel, conint
 from datetime import datetime
 
-class RatingModel(BaseModel):
-    rating: conint(ge=1, le=100)
+class CommentModel(BaseModel):
+    rating: conint(ge=1, le=5)
     review: str
     timeStamp: datetime
     username: str
