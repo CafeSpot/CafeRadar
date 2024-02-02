@@ -69,6 +69,7 @@ struct StoreSimpleInfoView: View {
                 }
                 
             }
+                .background(Color.white)
         }
     }
 }

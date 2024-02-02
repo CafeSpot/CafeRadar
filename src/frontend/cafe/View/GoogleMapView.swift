@@ -8,12 +8,17 @@
 import SwiftUI
 import GoogleMaps
 
-struct GoogleMapView: View {
-    var body: some View {
-        Text("GoogleMapView")
-    }
+struct GoogleMapView: UIViewControllerRepresentable {
+
+  func makeUIViewController(context: Context) -> MapViewController {
+    return MapViewController()
+  }
+
+  func updateUIViewController(_ uiViewController: MapViewController, context: Context) {
+  }
 }
 
+ 
 #Preview {
     GoogleMapView()
 }

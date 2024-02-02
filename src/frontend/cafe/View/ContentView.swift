@@ -9,8 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var mode: SimpleInfoListView.Mode = .close
-    
     var body: some View {
         TabView {
             ExploreView()
@@ -30,5 +28,7 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView().environment(StoreModel())
+    ContentView()
+        .environment(StoreModel())
+        .environment(MapViewModeModel())
 }

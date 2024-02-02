@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct MapView: View {
-    @State private var mode: SimpleInfoListView.Mode = .close
     @Environment(StoreModel.self) private var storeModel
+    @Environment(MapViewModeModel.self) private var mapViewModeModel
     var body: some View {
         NavigationStack {
             VStack{
@@ -21,21 +21,28 @@ struct MapView: View {
                         RoundedRectangle(cornerRadius: 5)
                             .stroke(Color.blue, lineWidth: 1)
                     )
-                GoogleMapView()
-                Spacer()
-                VStack{
-                    Rectangle()
-                        .frame(width: 300, height: 7) // Adjust width and height as needed
-                        .foregroundColor(.gray)
-                        .cornerRadius(5)
-                    SimpleInfoListView(mode: $mode, stores: storeModel.storeBuffer)
-                        .gesture(
-                            DragGesture()
-                                .onEnded({ value in
-                                    // Detect vertical drag direction
-                                   mode = value.translation.height>0 ? .close : .open
-                                })
+                ZStack(alignment: .top){
+                    
+                    GoogleMapView()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.black, lineWidth: 2)
                         )
+                    
+                    VStack{
+                        Spacer()
+
+                        SimpleInfoListView(stores: storeModel.storeBuffer)
+                            .contentShape(Rectangle())
+                            .background(Color.white)
+                            .gesture(
+                                DragGesture()
+                                    .onEnded({ value in
+                                        //value.translation.height
+                                        mapViewModeModel.dragGestureModel(varyAmount: value.translation.height)
+                                    })
+                            )
+                    }
                 }
             }
         }
@@ -43,5 +50,7 @@ struct MapView: View {
 }
 
 #Preview {
-    MapView().environment(StoreModel())
+    MapView()
+        .environment(StoreModel())
+        .environment(MapViewModeModel())
 }

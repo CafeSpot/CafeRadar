@@ -12,12 +12,16 @@ struct SearchBarView: View {
     @State private var selectionText: String = ""
     @State private var ifSelectionText: Bool = false
     @Environment(StoreModel.self) private var storeModel
+    @Environment(MapViewModeModel.self) private var mapViewModeModel
     
     var body: some View {
         VStack {
             TextField("Search", text: $selectionText)
                 .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .onChange(of: selectionText) { value in
+                    mapViewModeModel.ifSearchText(searchText: value)
+                 }
             
             HStack {
                 ForEach(storeModel.types, id: \.self) { type in
@@ -42,5 +46,7 @@ struct SearchBarView: View {
 }
 
 #Preview {
-    SearchBarView().environment(StoreModel())
+    SearchBarView()
+        .environment(StoreModel())
+        .environment(MapViewModeModel())
 }

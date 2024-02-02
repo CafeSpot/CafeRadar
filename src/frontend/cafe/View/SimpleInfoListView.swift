@@ -8,51 +8,55 @@
 import SwiftUI
 
 struct SimpleInfoListView: View {
-    enum Mode{
-        case open
-        case close
-    }
     
-    @Binding var mode: Mode
+    @Environment(MapViewModeModel.self) private var mapViewModeModel
+    
     var stores: [Store] = []
     
     var body: some View {
-        if mode == .close{
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(stores) { store in
-                        StoreSimpleInfoView(store: store,imgNum: 3)
-                            .padding(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(Color.black, lineWidth: 2)
-                            )
+        VStack{
+            Rectangle()
+                .frame(width: 300, height: 7) // Adjust width and height as needed
+                .foregroundColor(.gray)
+                .cornerRadius(5)
+                .padding(.top, 15)
+            if mapViewModeModel.mode == .small{
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(stores) { store in
+                            StoreSimpleInfoView(store: store,imgNum: 3)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color.black, lineWidth: 2)
+                                )
+                        }
+                    }
+                }
+            }else if mapViewModeModel.mode == .large{
+                ScrollView(showsIndicators: false) {
+                    VStack {
+                        ForEach(stores) { store in
+                            StoreSimpleInfoView(store: store,imgNum: 5)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color.black, lineWidth: 2)
+                                )
+                        }
                     }
                 }
             }
-        }else{
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    ForEach(stores) { store in
-                        StoreSimpleInfoView(store: store,imgNum: 5)
-                            .padding(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(Color.black, lineWidth: 2)
-                            )
-                    }
-                }
+            else{
+                //no
             }
-            
         }
+            .frame(maxWidth: .infinity)
     }
 }
 
 #Preview {
         
     //@State var mode: SimpleInfoListView.Mode = .close
-    @State var mode: SimpleInfoListView.Mode = .open
     let stores: [Store] = testStores
     
-    return SimpleInfoListView(mode: $mode, stores: stores)
+    return SimpleInfoListView(stores: stores)
 }
