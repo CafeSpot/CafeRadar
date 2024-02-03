@@ -10,10 +10,12 @@ import SwiftUI
 struct MapView: View {
     @Environment(StoreModel.self) private var storeModel
     @Environment(MapViewModeModel.self) private var mapViewModeModel
+    @State private var selectionText: String = ""
+    @State private var selectionsType: [Bool] = [false, false, false, false, false]
     var body: some View {
         NavigationStack {
             VStack{
-                SearchBarView()
+                SearchBarView(selectionText: $selectionText, selectionsType: $selectionsType)
                 //.foregroundColor(.black)
                     .padding(5)
                     .background(Color.clear)
@@ -23,16 +25,14 @@ struct MapView: View {
                     )
                 ZStack(alignment: .top){
                     
-                    GoogleMapView()
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color.black, lineWidth: 2)
-                        )
+                    GoogleMapView(mapViewWillMove: { (isGesture) in
+                        guard isGesture else { return }
+                      })
                     
                     VStack{
                         Spacer()
 
-                        SimpleInfoListView(stores: storeModel.storeBuffer)
+                        SimpleInfoListView(stores: storeModel.storeBuffer, selectionText: $selectionText, selectionsType: $selectionsType)
                             .contentShape(Rectangle())
                             .background(Color.white)
                             .gesture(
@@ -43,6 +43,7 @@ struct MapView: View {
                                     })
                             )
                     }
+                        .padding(EdgeInsets(top: 0, leading: 7, bottom: 0, trailing: 7))
                 }
             }
         }

@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import GoogleMaps
+import CoreLocation
 
 
 struct IdImage: Identifiable {
@@ -58,6 +60,10 @@ struct Store: Identifiable{
     //google map info
     var placeId: String = ""
     var distance: Int = -1
+    var marker: GMSMarker
+        //https://developers.google.com/maps/documentation/ios-sdk/reference/interface_g_m_s_marker
+        //  let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: x, longitude: y))
+        //  marker.title = "name"
     
     //contact
     var address = "no address no"

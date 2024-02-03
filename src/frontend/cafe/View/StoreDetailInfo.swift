@@ -91,9 +91,7 @@ struct StoreDetailInfo: View {
 
 #Preview {
     @State var storeInfoModel = StoreInfoModel(stores: [store1] )
-    var store: Store{
-        return storeInfoModel.stores.first(where: { $0.placeId == "1223" }) ?? Store(placeId: "null")
-    }
+    var store: Store = storeInfoModel.stores[0]
     
     return StoreDetailInfo(store: store)
 }

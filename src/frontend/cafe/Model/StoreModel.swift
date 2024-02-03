@@ -23,6 +23,14 @@ class StoreModel{
         self.storeBuffer = testStores
         self.storeCollection = testStores
     }
+    
+    //request googlemapAPI-nearbySearch and set the result to the storeBuffer
+    func searchText(text: String){
+        storeBuffer = Array(storeBuffer.prefix(2))
+    }
+    
+    
+    
 }
 
 

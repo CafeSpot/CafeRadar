@@ -9,19 +9,37 @@ import SwiftUI
 
 
 struct SearchBarView: View {
-    @State private var selectionText: String = ""
-    @State private var ifSelectionText: Bool = false
     @Environment(StoreModel.self) private var storeModel
     @Environment(MapViewModeModel.self) private var mapViewModeModel
+    @Binding var selectionText: String
+    @Binding var selectionsType: [Bool]
     
     var body: some View {
         VStack {
-            TextField("Search", text: $selectionText)
-                .padding()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onChange(of: selectionText) { value in
-                    mapViewModeModel.ifSearchText(searchText: value)
-                 }
+            HStack{
+                TextField("Search", text: $selectionText)
+                    .autocapitalization(.none)
+                    .padding()
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .onChange(of: selectionText) { value in
+                        mapViewModeModel.ifSearchText(searchText: value)
+                    }
+                
+                Button(action: {
+                    if selectionText != ""{
+                        storeModel.searchText(text: selectionText)
+                    }
+                }) {
+                    Text("search")
+                        .font(.system(size: 10))
+                        .padding(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                               .stroke(Color.blue, lineWidth: 2)
+                        )
+                }
+                
+            }
             
             HStack {
                 ForEach(storeModel.types, id: \.self) { type in
@@ -46,7 +64,9 @@ struct SearchBarView: View {
 }
 
 #Preview {
-    SearchBarView()
+    @State var selectionText: String = "1"
+    @State var selectionsType: [Bool] = [false, false, false, false, false]
+    return SearchBarView(selectionText: $selectionText, selectionsType: $selectionsType)
         .environment(StoreModel())
         .environment(MapViewModeModel())
 }

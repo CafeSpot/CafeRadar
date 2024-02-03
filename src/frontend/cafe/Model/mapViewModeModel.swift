@@ -8,6 +8,7 @@
 //mapViewModeModel
 import Foundation
 
+
 enum Mode{
     case large
     case small
@@ -21,6 +22,7 @@ enum IfSearchTypeOpt{
 
 @Observable
 class MapViewModeModel{
+    //list mode
     var mode: Mode
     var searchtypeCount: Int
     var searchTextCount: Bool
