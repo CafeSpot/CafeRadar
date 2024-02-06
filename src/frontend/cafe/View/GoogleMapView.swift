@@ -8,64 +8,54 @@
 import SwiftUI
 import GoogleMaps
 
-struct GoogleMapView: UIViewControllerRepresentable {
+struct GoogleMapView: UIViewRepresentable {
     @Environment(StoreModel.self) private var storeModel
-    var mapViewWillMove: (Bool) -> ()
+    var markerTappedAction: ((Int) -> Void)?
+    private let gmsMapView = GMSMapView(frame: .zero)
+    private let defaultZoomLevel: Float = 10
+
+
+    func makeUIView(context: Context) -> GMSMapView {
+        // Create a GMSMapView centered around the city of San Francisco, California
+        //let sanFrancisco = CLLocationCoordinate2D(latitude: 37.7576, longitude: -122.4194)
+        //gmsMapView.camera = GMSCameraPosition.camera(withTarget: sanFrancisco, zoom: defaultZoomLevel)
+        gmsMapView.delegate = context.coordinator
+        gmsMapView.isUserInteractionEnabled = true
+        return gmsMapView
+    }
+
+    func updateUIView(_ uiView: GMSMapView, context: Context) {
     
-    //listen the event emit from googlemap(marker is tapped)
-    final class MapViewCoordinator: NSObject, GMSMapViewDelegate {
-        var mapViewControllerBridge: GoogleMapView
-
-        init(_ GoogleMapView: GoogleMapView) {
-            self.mapViewControllerBridge = GoogleMapView
-        }
-        
-        func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
-            self.mapViewControllerBridge.mapViewWillMove(gesture)
-        }
+         storeModel.storeBuffer.forEach { $0.marker.map = uiView }
     }
-
-    func makeUIViewController(context: Context) -> MapViewController {
-        let uiViewController = MapViewController()
-        uiViewController.map.delegate = context.coordinator
-        return MapViewController()
-    }
-
-    func updateUIViewController(_ uiViewController: MapViewController, context: Context) {
-        storeModel.storeBuffer.forEach { $0.marker.map = uiViewController.map }
-        //animateToSelectedMarker(viewController: uiViewController)
-    }
-    
     
     //map view's delegate
     func makeCoordinator() -> MapViewCoordinator {
         return MapViewCoordinator(self)
     }
     
-    private func animateToSelectedMarker(viewController: MapViewController) {
-        let selectedMarker = storeModel.storeBuffer[0].marker
+    final class MapViewCoordinator: NSObject, GMSMapViewDelegate {
+        var mapView: GoogleMapView
 
-        let map = viewController.map
-        if map.selectedMarker != selectedMarker {
-            map.selectedMarker = selectedMarker
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                map.animate(toZoom: kGMSMinZoomLevel)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    map.animate(with: GMSCameraUpdate.setTarget(selectedMarker.position))
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                        map.animate(toZoom: 12)
-                    })
-                }
+        init(_ googleMapView: GoogleMapView) {
+            self.mapView = googleMapView
+        }
+
+        
+        func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+            mapView.delegate = self
+            print("tap the marker")
+            if let index = self.mapView.storeModel.storeBuffer.firstIndex(where: { $0.marker == marker }) {
+                self.mapView.markerTappedAction?(index)
             }
+            return true
         }
     }
 }
 
  
 #Preview {
-    GoogleMapView(mapViewWillMove: { (isGesture) in
-        guard isGesture else { return }
-      })
+    GoogleMapView()
         .environment(StoreModel())
         .environment(MapViewModeModel())
 }

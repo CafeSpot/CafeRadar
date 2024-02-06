@@ -11,6 +11,7 @@ import GoogleMaps
 import CoreLocation
 
 let testStores: [Store] = [store1, store2 ,store3 ,store4 ,store5 ,store6 ,store7 ,store8 ,store9 ,store10]
+//let testStores: [Store] = [store1]
 
 let store1 =  Store(
     cafeId: "1",

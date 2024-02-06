@@ -42,9 +42,9 @@ struct StoreSimpleInfoView: View {
                     VStack(alignment: .leading){
                         Text("name: "+store.cafename)
                         Text("distance: "+String(store.distance)+"m")
-                        Text("time: "+store.openTime)
-                        Text("   "+store.openTime)
-                        Text("   "+store.closeTime)
+                        Text("time: ")
+                        Text("          "+store.openTime)
+                        Text("          "+store.closeTime)
                         
                     }
                     Spacer()

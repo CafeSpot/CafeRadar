@@ -10,9 +10,28 @@ import SwiftUI
 struct MapView: View {
     @Environment(StoreModel.self) private var storeModel
     @Environment(MapViewModeModel.self) private var mapViewModeModel
+    @Environment(UserModel.self) private var userModel
     @State private var selectionText: String = ""
     @State private var selectionsType: [Bool] = [false, false, false, false, false]
+    @State private var selectedMarkerIndex: Int?
+    
+    
     var body: some View {
+        
+        
+        Button(action: {
+            print(userModel.latitude ?? 0.0 )
+        },
+            label: {
+                Text("Button")
+        })
+        
+        Button(action: {
+            userModel.requestPermission()
+        }, label: {
+            Text("request permisin Button")
+        })
+        
         NavigationStack {
             VStack{
                 SearchBarView(selectionText: $selectionText, selectionsType: $selectionsType)
@@ -25,9 +44,21 @@ struct MapView: View {
                     )
                 ZStack(alignment: .top){
                     
-                    GoogleMapView(mapViewWillMove: { (isGesture) in
-                        guard isGesture else { return }
-                      })
+                    //GoogleMapView()
+                    VStack {
+                        NavigationLink(
+                            destination: selectedMarkerIndex.map { StoreDetailInfo(store: self.storeModel.storeBuffer[$0]) },
+                            isActive: Binding(
+                                get: { self.selectedMarkerIndex != nil },
+                                set: { _ in self.selectedMarkerIndex = nil }
+                            ),
+                            label: { EmptyView() }
+                        )
+                        GoogleMapView() { index in
+                            // This closure will be called when a marker is tapped
+                            self.selectedMarkerIndex = index
+                        }
+                    }
                     
                     VStack{
                         Spacer()
@@ -54,4 +85,5 @@ struct MapView: View {
     MapView()
         .environment(StoreModel())
         .environment(MapViewModeModel())
+        .environment(UserModel())
 }

@@ -28,9 +28,6 @@ class StoreModel{
     func searchText(text: String){
         storeBuffer = Array(storeBuffer.prefix(2))
     }
-    
-    
-    
 }
 
 

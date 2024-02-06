@@ -8,3 +8,8 @@ NOTE: pod is command of "cocoapods"
 )
 2. open the file "cafe.xcworkspace" (open the project in xcode)
 3. choose the "simulator" to run the app
+
+[update record]
+v0.0  
+1. add the gps info (latitude and longitude) to the userModel. 
+2. make the marker on the google map view which can navigate to storeDetailInfo after tap it

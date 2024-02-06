@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     var body: some View {
         TabView {
             ExploreView()
@@ -31,4 +30,6 @@ struct ContentView: View {
     ContentView()
         .environment(StoreModel())
         .environment(MapViewModeModel())
+        .environment(UserModel())
+
 }

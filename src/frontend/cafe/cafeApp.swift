@@ -12,6 +12,7 @@ import GoogleMaps
 struct cafeApp: App {
     @State private var storeModel = StoreModel()
     @State private var mapViewModeModel = MapViewModeModel()
+    @State var userModel: UserModel = UserModel()
     
     init(){
         GMSServices.provideAPIKey("AIzaSyA56wAlcA_gChuocEng24X_qi6OKIGdkaU")
@@ -22,6 +23,7 @@ struct cafeApp: App {
             ContentView()
                 .environment(storeModel)
                 .environment(mapViewModeModel)
+                .environment(userModel)
         }
     }
 }
