@@ -18,30 +18,15 @@ struct MapView: View {
     
     var body: some View {
         
-        
-        Button(action: {
-            print(userModel.latitude ?? 0.0 )
-        },
-            label: {
-                Text("Button")
-        })
-        
-        Button(action: {
-            userModel.requestPermission()
-        }, label: {
-            Text("request permisin Button")
-        })
-        
         NavigationStack {
             VStack{
                 SearchBarView(selectionText: $selectionText, selectionsType: $selectionsType)
                 //.foregroundColor(.black)
-                    .padding(5)
+                    .padding(.top,7)
+                    .padding(.bottom,10)
+                    .padding(.leading,16)
                     .background(Color.clear)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color.blue, lineWidth: 1)
-                    )
+                
                 ZStack(alignment: .top){
                     
                     //GoogleMapView()
@@ -74,7 +59,7 @@ struct MapView: View {
                                     })
                             )
                     }
-                        .padding(EdgeInsets(top: 0, leading: 7, bottom: 0, trailing: 7))
+                        //.padding(EdgeInsets(top: 0, leading: 7, bottom: 0, trailing: 7))
                 }
             }
         }

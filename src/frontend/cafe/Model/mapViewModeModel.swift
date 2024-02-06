@@ -66,4 +66,8 @@ class MapViewModeModel{
             searchTextCount = true
         }
     }
+    
+    func large(){mode = .large}
+    func small(){mode = .small}
+    func close(){mode = .close}
 }

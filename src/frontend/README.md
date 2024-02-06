@@ -13,3 +13,8 @@ NOTE: pod is command of "cocoapods"
 v0.0  
 1. add the gps info (latitude and longitude) to the userModel. 
 2. make the marker on the google map view which can navigate to storeDetailInfo after tap it
+
+v0.1
+1. modify the color, size and arrangment to the UI requirement
+2. modify the searchbar - add delete searchtext button
+3. modify the simpleInfoList - add the different top rectangle type in 3 different mode 

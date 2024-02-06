@@ -11,7 +11,7 @@ import Foundation
 class StoreModel{
     var storeBuffer: [Store]
     var storeCollection: [Store]
-    var types: [String] = ["class_a", "class_b", "class_c", "class_d", "class_e",]
+    var types: [String] = ["空位", "插座", "不限時", "讀書", "供應正餐", "音樂", "戶外"]
     
     init() {
         self.storeBuffer = []

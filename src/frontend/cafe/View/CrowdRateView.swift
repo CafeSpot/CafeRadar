@@ -13,18 +13,15 @@ struct CrowdRateView: View {
     var body: some View {
         HStack{
             ForEach(0..<crowdRate, id: \.self) { _ in
-                Text("*")
+                Image(systemName: "person.fill")
             }
         }
-            .frame(width: 33, alignment: .center)
+            .frame(width: 38, alignment: .center)
             .font(.system(size: 10))
             .foregroundColor(.black)
             .padding(5)
-            .background(Color.yellow)
-            .overlay(
-                RoundedRectangle(cornerRadius: 5)
-                .stroke(Color.blue, lineWidth: 2)
-            )
+            .background(Color(UIColor.lightGray))
+            .cornerRadius(3)
             
     }
 }

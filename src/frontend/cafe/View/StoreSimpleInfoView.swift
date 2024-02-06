@@ -33,43 +33,38 @@ struct StoreSimpleInfoView: View {
                         image.image
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 60, height: 60)
+                            .frame(width: 110, height: 110)
                             .clipped()
+                            .cornerRadius(10)
+                        Spacer()
                     }
                 }
                 
-                HStack{
+                HStack(alignment: .top){
                     VStack(alignment: .leading){
-                        Text("name: "+store.cafename)
-                        Text("distance: "+String(store.distance)+"m")
-                        Text("time: ")
-                        Text("          "+store.openTime)
-                        Text("          "+store.closeTime)
+                        Text(store.cafename)
+                            .bold()
+                        Text(String(store.distance)+"公尺")
+                        Text(store.openTime+"-"+store.closeTime)
                         
                     }
+                    .padding(.leading, 8)
                     Spacer()
-                    CrowdRateView(crowdRate: store.crowdRate)
+                    VStack{
+                        CrowdRateView(crowdRate: store.crowdRate)
+                    }
                     
                 }
                 .font(.system(size: 13))
-                HStack {
-                    Text("hashtag: ")
-                        .font(.system(size: 10))
-                    ForEach(store.tags.prefix(4)) { item in
-                        Text(item.tag)
-                            .font(.system(size: 10))
-                            .foregroundColor(.black)
-                            .padding(5)
-                            .background(Color.gray)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(Color.blue, lineWidth: 2)
-                            )
-                    }
-                }
                 
             }
-                .background(Color.white)
+            .padding(10)
+            .foregroundColor(.black)
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.black, lineWidth: 1)
+            )
+            .background(Color.white)
         }
     }
 }
@@ -78,6 +73,6 @@ struct StoreSimpleInfoView: View {
     @State var storeInfoModel = StoreInfoModel(stores: [store1] )
     var store: Store = storeInfoModel.stores[0]
     
-    return StoreSimpleInfoView(store: store, imgNum: 4)
+    return StoreSimpleInfoView(store: store, imgNum: 2)
 }
 

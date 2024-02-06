@@ -26,7 +26,17 @@ struct GoogleMapView: UIViewRepresentable {
 
     func updateUIView(_ uiView: GMSMapView, context: Context) {
     
-         storeModel.storeBuffer.forEach { $0.marker.map = uiView }
+        storeModel.storeBuffer.forEach {
+            $0.marker.map = uiView
+            if $0.crowdRate == 1 {
+                $0.marker.icon = UIImage(systemName: "person.circle.fill")
+            }else if $0.crowdRate == 2 {
+                $0.marker.icon = UIImage(systemName: "person.2.circle.fill")
+            }else if $0.crowdRate == 3 {
+                $0.marker.icon = UIImage(systemName: "person.3.fill")
+            }
+            
+        }
     }
     
     //map view's delegate

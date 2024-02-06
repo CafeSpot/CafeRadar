@@ -67,9 +67,12 @@ struct Store: Identifiable{
     
     //contact
     var address = "no address no"
+    var addressLink = "https://maps.app.goo.gl/5dyExrTXkTU1SBH79"
     var phone = "03-5205766"
     var ig = "ilikecoffee"
+    var igLink = "https://"
     var fb = "ilikecoffee"
+    var fbLink = "https://"
     
     //condition now
     var crowdRate: Int = -1
