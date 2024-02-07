@@ -18,3 +18,7 @@ v0.1
 1. modify the color, size and arrangment to the UI requirement
 2. modify the searchbar - add delete searchtext button
 3. modify the simpleInfoList - add the different top rectangle type in 3 different mode 
+
+v0.2
+1. move the gps system from userModel to storeModel(send the nearby request to get the store info and save in storeModel)
+2. googleMapView add current position and camera at this postion

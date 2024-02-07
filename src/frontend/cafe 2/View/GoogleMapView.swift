@@ -10,6 +10,7 @@ import GoogleMaps
 
 struct GoogleMapView: UIViewRepresentable {
     @Environment(StoreModel.self) private var storeModel
+    @Environment(UserModel.self) private var userModel
     var markerTappedAction: ((Int) -> Void)?
     private let gmsMapView = GMSMapView(frame: .zero)
     private let defaultZoomLevel: Float = 10
@@ -19,12 +20,20 @@ struct GoogleMapView: UIViewRepresentable {
         // Create a GMSMapView centered around the city of San Francisco, California
         //let sanFrancisco = CLLocationCoordinate2D(latitude: 37.7576, longitude: -122.4194)
         //gmsMapView.camera = GMSCameraPosition.camera(withTarget: sanFrancisco, zoom: defaultZoomLevel)
+        if let position = storeModel.position{
+            gmsMapView.camera = GMSCameraPosition.camera(withLatitude: position.coordinate.latitude, longitude: position.coordinate.longitude, zoom: defaultZoomLevel)
+        }
         gmsMapView.delegate = context.coordinator
         gmsMapView.isUserInteractionEnabled = true
         return gmsMapView
     }
 
     func updateUIView(_ uiView: GMSMapView, context: Context) {
+        
+        if let position = storeModel.position{
+            let camera = GMSCameraPosition.camera(withLatitude: position.coordinate.latitude, longitude: position.coordinate.longitude, zoom: defaultZoomLevel)
+            uiView.animate(to: camera)
+        }
     
         storeModel.storeBuffer.forEach {
             $0.marker.map = uiView
@@ -68,4 +77,5 @@ struct GoogleMapView: UIViewRepresentable {
     GoogleMapView()
         .environment(StoreModel())
         .environment(MapViewModeModel())
+        .environment(UserModel())
 }
