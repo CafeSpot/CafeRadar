@@ -20,6 +20,14 @@ struct MapView: View {
         
         NavigationStack {
             VStack{
+                
+                Button(action: {
+                    storeModel.getNearbyFromGoogleMap()
+                }) {
+                    // Button label
+                    Text("Tap me")
+                }
+                
                 SearchBarView(selectionText: $selectionText, selectionsType: $selectionsType)
                 //.foregroundColor(.black)
                     .padding(.top,7)
