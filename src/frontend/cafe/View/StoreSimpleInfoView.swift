@@ -38,11 +38,26 @@ struct StoreSimpleInfoView: View {
                             .cornerRadius(10)
                         Spacer()
                     }
+                    //ForEach(0..<(imgNum - store.images.count)) { _ in
+                    ForEach(0..<(imgNum - min(store.images.count, imgNum)), id: \.self) { _ in
+                        Image(systemName: "plus.square")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 110, height: 110)
+                            .clipped()
+                            .opacity(0.1)
+                            .foregroundStyle(.black)
+                    }
+            
+                    Spacer()
                 }
+                .padding(.leading, 4)
+                
+                Spacer()
                 
                 HStack(alignment: .top){
                     VStack(alignment: .leading){
-                        Text(store.cafename)
+                        Text(store.name)
                             .bold()
                         Text(String(store.distance)+"公尺")
                         Text(store.openTime+"-"+store.closeTime)
@@ -58,6 +73,7 @@ struct StoreSimpleInfoView: View {
                 .font(.system(size: 13))
                 
             }
+            .frame(width: imgNum==2 ? 240 : 350, height: 160)
             .padding(10)
             .foregroundColor(.black)
             .overlay(
@@ -71,8 +87,9 @@ struct StoreSimpleInfoView: View {
 
 #Preview {
     @State var storeInfoModel = StoreInfoModel(stores: [store1] )
+    //@State var storeInfoModel = StoreInfoModel(stores: [] )
     var store: Store = storeInfoModel.stores[0]
     
-    return StoreSimpleInfoView(store: store, imgNum: 2)
+    return StoreSimpleInfoView(store: store, imgNum: 3)
 }
 

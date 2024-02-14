@@ -25,13 +25,23 @@ struct StoreDetailInfo: View {
                             .cornerRadius(17)
                             .clipped()
                     }
+                    ForEach(0..<(3 - min(store.images.count, 3)), id: \.self) { _ in
+                        Image(systemName: "plus.square")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 250, height: 250)
+                            .clipped()
+                            .opacity(0.1)
+                            .foregroundStyle(.black)
+                    }
+                    Spacer()
                 }
             }
             .padding(.leading, 14)
             .padding(.trailing , 14)
             
             HStack{
-                Text(store.cafename)
+                Text(store.name)
                     .fontWeight(.bold)
                     .font(.system(size: 27))
                 //.font(.custom("YourCustomFontName-Bold", size: 24))
@@ -125,6 +135,7 @@ struct StoreDetailInfo: View {
 
 #Preview {
     @State var storeInfoModel = StoreInfoModel(stores: [store1] )
+    //@State var storeInfoModel = StoreInfoModel(stores: [] )
     var store: Store = storeInfoModel.stores[0]
     
     return StoreDetailInfo(store: store)

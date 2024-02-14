@@ -15,7 +15,7 @@ struct cafeApp: App {
     @State private var userModel: UserModel = UserModel()
     
     init(){
-        GMSServices.provideAPIKey("AIzaSyA56wAlcA_gChuocEng24X_qi6OKIGdkaU")
+        GMSServices.provideAPIKey("YOUR_API_KEY")
     }
     
     var body: some Scene {

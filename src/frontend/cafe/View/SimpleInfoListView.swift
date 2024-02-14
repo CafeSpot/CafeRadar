@@ -16,7 +16,7 @@ struct SimpleInfoListView: View {
     
     func filtStore(store: Store) -> Bool{
         var ans: Bool
-        ans = selectionText=="" ? true : store.cafename.contains(selectionText)
+        ans = selectionText=="" ? true : store.name.contains(selectionText)
         if ans{
             //type filter design?
         }//if not choosed by searchtext,not show!

@@ -19,6 +19,7 @@ struct typeView: View {
             Text(type)
                 .font(.system(size: 15))
                 .foregroundColor(.black)
+                .lineLimit(nil)
         }
         .padding(2)
         .overlay(
