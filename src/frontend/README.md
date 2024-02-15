@@ -36,3 +36,16 @@ googmap api reference:
 v0.4
 1. add the structure convert from google map api response to the 'struct-googleInfo"(which is the sub-item in the struct-store). and it will add all the cafe to the buffer in storeModel  
 Note: to use the google map api, plesae add your api key to "CafeApp-GMSServices.provideAPIKey()" and "requestURL ="httprequest...&key=" "
+
+v0.5
+1. add autoArrangeLayout for type item in storeDetailInfo
+2. finish the searchbar function wihch can filt the reprecent cafes and add the distance filter
+3. move the selecType/Text/Distance(in MapView) and filterStore(in SimpleStoreInfoList) to the storeModel
+reference:
+1. custom layout:
+    (1)apple develop document: https://developer.apple.com/documentation/swiftui/custom-layout
+    (2)frame vs bounds: https://jjeremy-xue.medium.com/swift-說說-frame-bounds-ba9bc3fcad1c
+    (3)tutorial: https://www.youtube.com/watch?v=du_Bl7Br9DM&t=10s
+    (4) do note!!!
+2. Bindable - enable @obsevable/@enviroment object to bind in textField
+    https://developer.apple.com/documentation/swiftui/bindable

@@ -23,6 +23,7 @@ struct IdImage: Identifiable {
 struct Idtag: Identifiable {
     let id = UUID()
     let tag: String
+    var selected: Bool = true
     
     init(_ tag: String) {
         self.tag = tag
@@ -100,7 +101,7 @@ struct GoogleInfo: Codable {
     var icon_mask_base_uri: String
     var opening_hours: OpeningHours?
     var geometry: Geometry
-    var photos: [Photo]
+    var photos: [Photo]?
     var place_id: String
     var rating: Float
     var reference: String

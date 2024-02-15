@@ -14,6 +14,7 @@ struct MapView: View {
     @State private var selectionText: String = ""
     @State private var selectionsType: [Bool] = [false, false, false, false, false]
     @State private var selectedMarkerIndex: Int?
+    @State private var selectedDistance: Double = 10000
     
     
     var body: some View {
@@ -21,14 +22,7 @@ struct MapView: View {
         NavigationStack {
             VStack{
                 
-                Button(action: {
-                    storeModel.getNearbyFromGoogleMap()
-                }) {
-                    // Button label
-                    Text("Tap me")
-                }
-                
-                SearchBarView(selectionText: $selectionText, selectionsType: $selectionsType)
+                SearchBarView()
                 //.foregroundColor(.black)
                     .padding(.top,7)
                     .padding(.bottom,10)
@@ -56,7 +50,7 @@ struct MapView: View {
                     VStack{
                         Spacer()
 
-                        SimpleInfoListView(stores: storeModel.storeBuffer, selectionText: $selectionText, selectionsType: $selectionsType)
+                        SimpleInfoListView()
                             .contentShape(Rectangle())
                             .background(Color.white)
                             .gesture(

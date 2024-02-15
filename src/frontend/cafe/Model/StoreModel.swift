@@ -14,22 +14,30 @@ class StoreModel: storeModelSositionManager{
 //class StoreModel{
     //the position of the user. when user move, send the request to get the nearby caffee
     
+    let bufferSize = 100
+    
     var storeBuffer: [Store]
-    var storeCollection: [Store]
+    var storeCollection: [Store] { self.storeBuffer.filter { self.filtStore(store: $0) } }
     
     var types: [String] = ["空位", "插座", "不限時", "讀書", "供應正餐", "音樂", "戶外"]
     
+    var selectionText: String = ""
+    var selectionsType: [Idtag] = []
+    var SelectionsTypeCount: Int = 0
+    var selectedDistance: Double = 10000
+    
     //init() {
     override init() {
+        let loadtype = [Idtag("空位"), Idtag("插座"), Idtag("不限時"), Idtag("讀書"), Idtag("供應正餐"), Idtag("音樂"), Idtag("戶外")]
+        self.selectionsType = loadtype
+        self.SelectionsTypeCount = loadtype.count
         self.storeBuffer = []
-        self.storeCollection = []
         super.init()
         self.initLoad()
     }
     
     func initLoad(){
         self.storeBuffer = testStores
-        self.storeCollection = testStores
     }
     
     //request googlemapAPI-nearbySearch and set the result to the storeBuffer
@@ -37,11 +45,24 @@ class StoreModel: storeModelSositionManager{
         storeBuffer = Array(storeBuffer.prefix(2))
     }
     
+    override func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        self.position = locations.first
+        if let location = locations.first{
+            if ifResquestNearbyData(la: location.coordinate.latitude, lo: location.coordinate.longitude) {
+                getNearbyFromGoogleMap()
+                print("get the nearby store info")
+                
+                self.basicPosition = locations.first
+            }
+        }
+    }//if the psition chanage, this fucyion would be call
+    
     func getNearbyFromGoogleMap(){
         
         let requestURL: String
         if let position = self.position{
-            requestURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cafe&location=\(position.coordinate.latitude)%2C\(position.coordinate.longitude)&radius=5000&key=YOUR_API_KEY"
+            requestURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cafe&location=\(position.coordinate.latitude)%2C\(position.coordinate.longitude)&radius=5000&key=a"
+            //AIzaSyA56wAlcA_gChuocEng24X_qi6OKIGdkaU
         }else{
             requestURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cafe&location=25.05232586760929%2C121.52068772564594&radius=5000&key=YOUR_API_KEY"
         }
@@ -94,6 +115,7 @@ class StoreModel: storeModelSositionManager{
     }
     
     func convertGoogleInfoToStore(googleInfoBuffer: [GoogleInfo]){
+        var count = 0
         for item in googleInfoBuffer{
             let store =  Store(
                 cafeId: "",
@@ -114,8 +136,40 @@ class StoreModel: storeModelSositionManager{
                 crowdRate: 1
             )
             self.storeBuffer.append(store)
-            self.storeCollection.append(store)
+            if(self.storeBuffer.count>bufferSize){
+                self.storeBuffer.removeFirst(1)
+            }
+            count+=1
         }
+        print("find \(count) cafe stores!")
+    }
+    
+    func filtStore(store: Store) -> Bool{
+        var ansText: Bool = false
+        var ansType: Bool = false
+        var ansDistance: Bool = false
+        
+        ansText = selectionText=="" ? true : store.name.contains(selectionText)
+        
+
+        //type filter design?
+        for type in selectionsType{
+            for tag in store.tags{
+                if tag.tag==type.tag && type.selected{
+                    ansType = true
+                }
+            }
+        }
+
+        
+        if let position = self.position{
+            let location1 = CLLocation(latitude: position.coordinate.latitude, longitude:position.coordinate.longitude)
+            let location2 = CLLocation(latitude: store.marker.position.latitude, longitude: store.marker.position.longitude)
+            ansDistance = location1.distance(from: location2) < selectedDistance*100000000 ? true : false
+        }else{
+            ansDistance = true
+        }
+        return ansText && ansType && ansDistance
     }
     
     struct StorePlaceIds: Codable{

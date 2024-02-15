@@ -21,7 +21,12 @@ let store1 =  Store(
     seatNum: 50,
     images: [],
     tags: [
-        Idtag("空位"),
+        Idtag("插座"),
+        Idtag("不限時"),
+        Idtag("讀書"),
+        Idtag("供應正餐"),
+        Idtag("音樂"),
+        Idtag("戶外"),
         Idtag("插座"),
         Idtag("不限時"),
         Idtag("讀書"),
@@ -91,7 +96,6 @@ let store3 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("空位"),
         Idtag("插座"),
         Idtag("不限時"),
         Idtag("讀書"),
@@ -127,7 +131,6 @@ let store4 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("空位"),
         Idtag("插座"),
         Idtag("不限時"),
         Idtag("讀書"),
@@ -162,11 +165,8 @@ let store5 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("空位"),
         Idtag("插座"),
         Idtag("不限時"),
-        Idtag("讀書"),
-        Idtag("供應正餐"),
         Idtag("音樂"),
         Idtag("戶外")],
     commentIds: [
@@ -197,11 +197,9 @@ let store6 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("空位"),
         Idtag("插座"),
         Idtag("不限時"),
         Idtag("讀書"),
-        Idtag("供應正餐"),
         Idtag("音樂"),
         Idtag("戶外")],
     commentIds: [
@@ -232,13 +230,11 @@ let store7 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("空位"),
         Idtag("插座"),
         Idtag("不限時"),
         Idtag("讀書"),
         Idtag("供應正餐"),
-        Idtag("音樂"),
-        Idtag("戶外")],
+        Idtag("音樂")],
     commentIds: [
         "好吃",
         "超派",
@@ -267,9 +263,6 @@ let store8 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("空位"),
-        Idtag("插座"),
-        Idtag("不限時"),
         Idtag("讀書"),
         Idtag("供應正餐"),
         Idtag("音樂"),
@@ -303,7 +296,6 @@ let store9 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("空位"),
         Idtag("插座"),
         Idtag("不限時"),
         Idtag("讀書"),
@@ -338,8 +330,6 @@ let store10 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("空位"),
-        Idtag("插座"),
         Idtag("不限時"),
         Idtag("讀書"),
         Idtag("供應正餐"),

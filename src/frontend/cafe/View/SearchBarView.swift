@@ -11,10 +11,9 @@ import SwiftUI
 struct SearchBarView: View {
     @Environment(StoreModel.self) private var storeModel
     @Environment(MapViewModeModel.self) private var mapViewModeModel
-    @Binding var selectionText: String
-    @Binding var selectionsType: [Bool]
     
     var body: some View {
+        @Bindable var storeModel = storeModel
         VStack(alignment: .leading) {
             //HStack{
                 HStack{
@@ -22,16 +21,21 @@ struct SearchBarView: View {
                         .padding(.leading, 6)
                         .padding(5)
                     
-                    TextField("請輸入內容", text: $selectionText)
+                    TextField("請輸入內容", text: $storeModel.selectionText)
                         .padding(6)
                         .autocapitalization(.none)
                         .textFieldStyle(PlainTextFieldStyle())
-                        .onChange(of: selectionText) { value in
+                        .onChange(of: storeModel.selectionText) { value in
                             mapViewModeModel.ifSearchText(searchText: value)
                         }
                     
                     Button(action: {
-                        selectionText = ""
+                        storeModel.selectionText = ""
+                        storeModel.selectedDistance = 10000
+                        for index in storeModel.selectionsType.indices{
+                            storeModel.selectionsType[index].selected = true
+                            storeModel.SelectionsTypeCount = storeModel.selectionsType.count
+                        }
                     }) {
                         Image(systemName: "x.circle")
                             .foregroundColor(.black)
@@ -44,37 +48,25 @@ struct SearchBarView: View {
                 .cornerRadius(14)
                 .padding(.trailing,20)
             
-                
-                /*
-                //預想是只要輸入搜尋就能夠自動找尋附近資料，但目前可能會遇到問題是這需要打很多次google api，先以search來減少？
-                Button(action: {
-                    if selectionText != ""{
-                        storeModel.searchText(text: selectionText)
-                    }
-                }) {
-                    Text("search")
-                        .font(.system(size: 10))
-                        .padding(5)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                               .stroke(Color.blue, lineWidth: 2)
-                        )
-                }
-                 */
-                
-            //}
-            
             HStack {
                 //slider.horizontal.3
                 Image(systemName: "slider.horizontal.3")
                     .padding(5)
                 ScrollView(.horizontal,showsIndicators: false){
                     HStack{
-                        ForEach(storeModel.types, id: \.self) { type in
+                        ForEach(storeModel.selectionsType.indices, id: \.self) { index in
                             Button(action: {
-                                print("Image button tapped!")
+                                if storeModel.selectionsType[index].selected{
+                                    storeModel.SelectionsTypeCount-=1
+                                    storeModel.selectionsType[index].selected = false
+                                }else{
+                                    storeModel.SelectionsTypeCount+=1
+                                    storeModel.selectionsType[index].selected = true
+                                }
                             }) {
-                                typeView(type: type, typeImage: "questionmark.app.dashed")
+                                typeView(type: storeModel.selectionsType[index].tag,
+                                         typeImage: "questionmark.app.dashed", 
+                                         black: storeModel.selectionsType[index].selected)
                             }
                         }
                     }
@@ -84,6 +76,12 @@ struct SearchBarView: View {
             .padding(.top,5)
             .frame(minWidth: nil, maxWidth: .infinity)
             
+            HStack{
+                Slider(value: $storeModel.selectedDistance, in: 0...10000)
+                Text(String(format: "%.2f", storeModel.selectedDistance/1000)+"km")
+            }
+            .padding(.leading, 30)
+            .padding(.trailing, 30)
         }
     }
 }
@@ -91,7 +89,8 @@ struct SearchBarView: View {
 #Preview {
     @State var selectionText: String = ""
     @State var selectionsType: [Bool] = [false, false, false, false, false]
-    return SearchBarView(selectionText: $selectionText, selectionsType: $selectionsType)
+    @State var selectedDistance: Double = 100000
+    return SearchBarView()
         .environment(StoreModel())
         .environment(MapViewModeModel())
 }

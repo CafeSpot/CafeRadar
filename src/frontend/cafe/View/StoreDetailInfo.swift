@@ -57,7 +57,7 @@ struct StoreDetailInfo: View {
             
             VStack(alignment: .leading){
                 Text("店家類別")
-                LazyVGrid(columns: Array(repeating: GridItem(), count: 5)) {
+                autoArrayLayoutView{
                     ForEach(store.tags) { item in
                         typeView(type: item.tag, typeImage: "questionmark.app.dashed")
                     }
