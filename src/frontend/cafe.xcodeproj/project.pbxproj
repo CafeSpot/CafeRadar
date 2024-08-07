@@ -32,6 +32,7 @@
 		A9CDC9192B6D221B0090FA47 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CDC9182B6D221B0090FA47 /* MapViewController.swift */; };
 		A9CDC91C2B6D3DF90090FA47 /* mapViewModeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CDC91B2B6D3DF90090FA47 /* mapViewModeModel.swift */; };
 		A9D503922B6BF299008324B6 /* CrowdRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D503912B6BF299008324B6 /* CrowdRateView.swift */; };
+		A9E2B82C2C63B62300B6A54D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E2B82B2C63B62300B6A54D /* Color.swift */; };
 		B0225297C033D6694013B094 /* Pods_cafeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13448E0A818C313FEE5AAC8D /* Pods_cafeTests.framework */; };
 		C359D62F0B84A608EE99F62E /* Pods_cafe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7854C039752F88848C5709D /* Pods_cafe.framework */; };
 /* End PBXBuildFile section */
@@ -88,6 +89,7 @@
 		A9CDC9182B6D221B0090FA47 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A9CDC91B2B6D3DF90090FA47 /* mapViewModeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewModeModel.swift; sourceTree = "<group>"; };
 		A9D503912B6BF299008324B6 /* CrowdRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrowdRateView.swift; sourceTree = "<group>"; };
+		A9E2B82B2C63B62300B6A54D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A9ED5DAC2B6F82DA00126B32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BF9367B244CC424D0E57F2E5 /* Pods-cafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cafe.debug.xcconfig"; path = "Target Support Files/Pods-cafe/Pods-cafe.debug.xcconfig"; sourceTree = "<group>"; };
 		E7854C039752F88848C5709D /* Pods_cafe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cafe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,6 +172,7 @@
 		A9186BF22B6B73D400169CD3 /* cafe */ = {
 			isa = PBXGroup;
 			children = (
+				A9E2B82A2C63B5C900B6A54D /* appear */,
 				A9BC4B552C612391000D4CFC /* SecureAPIKeys */,
 				A9ED5DAC2B6F82DA00126B32 /* Info.plist */,
 				A9186BF32B6B73D400169CD3 /* cafeApp.swift */,
@@ -260,6 +263,14 @@
 				A9CDC9182B6D221B0090FA47 /* MapViewController.swift */,
 			);
 			path = googleMap;
+			sourceTree = "<group>";
+		};
+		A9E2B82A2C63B5C900B6A54D /* appear */ = {
+			isa = PBXGroup;
+			children = (
+				A9E2B82B2C63B62300B6A54D /* Color.swift */,
+			);
+			path = appear;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -513,6 +524,7 @@
 				A9D503922B6BF299008324B6 /* CrowdRateView.swift in Sources */,
 				A9186C522B6BB3A400169CD3 /* UserModel.swift in Sources */,
 				A9CDC91C2B6D3DF90090FA47 /* mapViewModeModel.swift in Sources */,
+				A9E2B82C2C63B62300B6A54D /* Color.swift in Sources */,
 				A9186C202B6B742E00169CD3 /* ExploreView.swift in Sources */,
 				A9186C342B6B75C100169CD3 /* StoreDetailInfo.swift in Sources */,
 				A9186C242B6B745D00169CD3 /* SearchBarView.swift in Sources */,

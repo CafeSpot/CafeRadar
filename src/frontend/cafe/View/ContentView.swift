@@ -12,17 +12,17 @@ struct ContentView: View {
         TabView {
             ExploreView()
                 .tabItem {
-                    Label("explore", systemImage: "star")
-                 }
+                    Label("探索", systemImage: "magnifyingglass")                 }
             MapView()
                 .tabItem {
-                    Label("map", systemImage: "star")
+                    Label("咖啡地圖", systemImage: "map.fill")
                 }
             CollectionView()
                 .tabItem {
-                    Label("collection", systemImage: "star")
+                    Label("我的收藏", systemImage: "suit.heart")
                 }
         }
+        .accentColor(CafeColor.basicColor)
     }
 }
 

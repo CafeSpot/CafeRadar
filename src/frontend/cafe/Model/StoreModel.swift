@@ -10,41 +10,45 @@ import CoreLocation
 import GoogleMaps
 
 @Observable
-class StoreModel: storeModelSositionManager{
+class StoreModel: storeModelPositionManager{
 //class StoreModel{
     //the position of the user. when user move, send the request to get the nearby caffee
     
     let bufferSize = 100
     
     var storeBuffer: [Store]
-    var storeCollection: [Store] { self.storeBuffer.filter { self.filtStore(store: $0) } }
+    var storeCollection: [Store] { self.storeBuffer.filter { self.filtStore(store: $0) } }  // the set of the store show on the map page and the command page
     
     var types: [String] = ["空位", "插座", "不限時", "讀書", "供應正餐", "音樂", "戶外"]
     
-    var selectionText: String = ""
-    var selectionsType: [Idtag] = []
-    var SelectionsTypeCount: Int = 0
+    var selectionText: String = ""  // keyword to search
+    var selectionsType: [Idtag] = []  // key type to search
+    var selectionsTypeCount: Int = 0  // how many key type was choosed
     var selectedDistance: Double = 10000
     
     //init() {
     override init() {
         let loadtype = [Idtag("空位"), Idtag("插座"), Idtag("不限時"), Idtag("讀書"), Idtag("供應正餐"), Idtag("音樂"), Idtag("戶外")]
         self.selectionsType = loadtype
-        self.SelectionsTypeCount = loadtype.count
+        self.selectionsTypeCount = loadtype.count
         self.storeBuffer = []
         super.init()
         self.initLoad()
     }
     
+    // [modify] modify to the google map api or ours in the future !!!
+    // the method request the recommend store info from the server, with info user_position, user_id, user_favor...
     func initLoad(){
         self.storeBuffer = testStores
     }
     
-    //request googlemapAPI-nearbySearch and set the result to the storeBuffer
+    //??? request googlemapAPI-nearbySearch and set the result to the storeBuffer
     func searchText(text: String){
         storeBuffer = Array(storeBuffer.prefix(2))
     }
     
+    // get the nearby store
+    //if the psition chanage, this fucyion would be call
     override func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         self.position = locations.first
         if let location = locations.first{
@@ -55,10 +59,12 @@ class StoreModel: storeModelSositionManager{
                 self.basicPosition = locations.first
             }
         }
-    }//if the psition chanage, this fucyion would be call
+    }
     
+    
+    // this function is called by [override func locationManager], used to request the nearby store by google map api
+    // ~~~ move to another file, and return the value
     func getNearbyFromGoogleMap(){
-        
         let requestURL: String
         if let position = self.position{
             requestURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cafe&location=\(position.coordinate.latitude)%2C\(position.coordinate.longitude)&radius=5000&key=a"
@@ -114,6 +120,8 @@ class StoreModel: storeModelSositionManager{
         task.resume()
     }
     
+    // this function is called by [getNearbyFromGoogleMap], used to convert the return data from the google api to the store struct
+    // ~~~ move to another file, and return the value
     func convertGoogleInfoToStore(googleInfoBuffer: [GoogleInfo]){
         var count = 0
         for item in googleInfoBuffer{
@@ -133,7 +141,8 @@ class StoreModel: storeModelSositionManager{
                 place_id: "1223",
                 distance: 200,
                 marker: GMSMarker(position: CLLocationCoordinate2D(latitude: item.geometry.location.lat, longitude: item.geometry.location.lng)),
-                crowdRate: 1
+                crowdRate: 1,
+                rate: item.rating
             )
             self.storeBuffer.append(store)
             if(self.storeBuffer.count>bufferSize){
@@ -144,6 +153,8 @@ class StoreModel: storeModelSositionManager{
         print("find \(count) cafe stores!")
     }
     
+    
+    // this method is the filter function which return if the "store" is correspond the selected conditions
     func filtStore(store: Store) -> Bool{
         var ansText: Bool = false
         var ansType: Bool = false
@@ -180,7 +191,7 @@ class StoreModel: storeModelSositionManager{
 }
 
 @Observable
-class storeModelSositionManager: NSObject, CLLocationManagerDelegate{  //positionManager
+class storeModelPositionManager: NSObject, CLLocationManagerDelegate{  //positionManager
     private var locationManager: CLLocationManager
     var position: CLLocation?
     var basicPosition: CLLocation? = CLLocation()
@@ -198,9 +209,9 @@ class storeModelSositionManager: NSObject, CLLocationManagerDelegate{  //positio
      }
      
      
-     func requestPermission() {
+    func requestPermission() {
         locationManager.requestWhenInUseAuthorization()
-     } // this fubcatuin call to request the position auth from iphone user(optional)
+    } // this fubcatuin call to request the position auth from iphone user(optional)
      
      
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){

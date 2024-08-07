@@ -23,6 +23,10 @@ struct StoreSimpleInfoView: View {
     var store: Store
     var imgNum: Int
     
+    let elementPadding: CGFloat = 6
+    let imageSize: CGFloat = 110
+    let strokeWidth: CGFloat = 4
+    
     var body: some View {
         NavigationLink {
             StoreDetailInfo(store: store)
@@ -33,52 +37,78 @@ struct StoreSimpleInfoView: View {
                         image.image
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 110, height: 110)
+                            .frame(width: imageSize, height: imageSize)
                             .clipped()
-                            .cornerRadius(10)
+                            .cornerRadius(20)
                         Spacer()
                     }
                     //ForEach(0..<(imgNum - store.images.count)) { _ in
                     ForEach(0..<(imgNum - min(store.images.count, imgNum)), id: \.self) { _ in
                         Image(systemName: "plus.square")
                             .resizable()
+                            .cornerRadius(20)
                             .scaledToFit()
-                            .frame(width: 110, height: 110)
+                            .frame(width: imageSize, height: imageSize)
                             .clipped()
                             .opacity(0.1)
                             .foregroundStyle(.black)
                     }
-            
-                    Spacer()
                 }
-                .padding(.leading, 4)
+                .padding(.leading, elementPadding)
                 
                 Spacer()
                 
+                HStack(){
+                    Text(store.name)
+                        .bold()
+                    Spacer()
+                }
+                .padding(.leading, elementPadding)
+                .padding(.bottom, 4)
+                
                 HStack(alignment: .top){
+                    //left
                     VStack(alignment: .leading){
-                        Text(store.name)
-                            .bold()
-                        Text(String(store.distance)+"公尺")
-                        Text(store.openTime+"-"+store.closeTime)
+                        
+                        HStack(){
+                            HStack(spacing: 0){
+                                Text(String(store.rate))
+                                    .foregroundColor(CafeColor.basicColor)
+                                    .font(.system(size: 13))
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(CafeColor.basicColor)
+                                    .font(.system(size: 13))
+                            }
+                            
+                            Text(String(store.distance)+"公尺")
+                                .foregroundColor(CafeColor.basicColor)
+                                .font(.system(size: 13))
+                        }
+                        
+                        Text("營業時間 "+store.openTime+"-"+store.closeTime)
+                            .foregroundColor(CafeColor.basicColor)
+                            .font(.system(size: 13))
                         
                     }
-                    .padding(.leading, 8)
+                    
+                    
                     Spacer()
+                    
+                    // right
                     VStack{
+                        Spacer()
                         CrowdRateView(crowdRate: store.crowdRate)
                     }
                     
                 }
-                .font(.system(size: 13))
-                
+                .padding(.leading, elementPadding)
             }
-            .frame(width: imgNum==2 ? 240 : 350, height: 160)
-            .padding(10)
+            .frame(width: imgNum==2 ? 230 : 350, height: 170)
+            .padding(12)
             .foregroundColor(.black)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.black, lineWidth: 1)
+                    .stroke(CafeColor.basicColor, lineWidth: strokeWidth)
             )
             .background(Color.white)
         }

@@ -68,3 +68,8 @@ reference:
     * reference: 
         * https://medium.com/@gizemturker/ensuring-security-for-secrets-in-ios-app-ff4a25c533a1
         * https://www.danijelavrzan.com/posts/2022/11/xcode-configuration/
+        
+2024/8/7
+1. add the file "src/frontend/cafe/appear/Color".
+    * we can change the topic color of APP in this file directly
+2. modify several appearance design to match the UI/UX design

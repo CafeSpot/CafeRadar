@@ -77,6 +77,7 @@ struct Store: Identifiable{
     
     //condition now
     var crowdRate: Int = -1
+    var rate: Float = 3.5
 }
  /*
   //place_id: str # google api提供

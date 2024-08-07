@@ -19,7 +19,13 @@ let store1 =  Store(
     openTime: "8:00",
     closeTime: "18:00",
     seatNum: 50,
-    images: [],
+    images: [
+        IdImage(Image("cafe1")),
+        IdImage(Image("cafe2")),
+        IdImage(Image("cafe3")),
+        IdImage(Image("cafe4")),
+        IdImage(Image("cafe5")),
+        IdImage(Image("cafe6"))],
     tags: [
         Idtag("插座"),
         Idtag("不限時"),
