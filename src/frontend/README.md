@@ -75,3 +75,40 @@ reference:
 1. add the file "src/frontend/cafe/appear/Color".
     * we can change the topic color of APP in this file directly
 2. modify several appearance design to match the UI/UX design
+
+2024/8/7
+1. firebase
+    1. firebase local emulator
+        1. firebase Local Emulator install
+            * reference: https://firebase.google.com/docs/emulator-suite/install_and_configure
+            1. requirement:
+                1. Node.js version 16.0 or higher.
+                2. Java JDK version 11 or higher.
+                * install
+                    1. ```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"```
+                    2. ```brew update```
+                    3. ```brew install node```
+                        * ```softwareupdate --install-rosetta```(modify the cpu arch from x86 to m1)
+                        * verify nodejs: ```node -v```
+                    4. ```brew install --cask temurin```
+                        * verify java: ```java -version```
+            2. install Firebase CLI. (under /src/frontend/)
+                1. ```npm install -g firebase-tools```
+                    * there is problem when you install Firebase CLI with ```curl -sL https://firebase.tools | bash``` for ui emulator (https://github.com/firebase/firebase-tools/issues/6931) 
+                2. You will need CLI version 8.14.0 or higher to use the Emulator Suite. You can check which version you have installed using the following command: ```firebase --version```
+                3. If you haven't already done so, initialize the current working directory as a Firebase project, following the onscreen prompts to specify which products to use
+                    1. ```firebase login``` (login with your gmail on firebase)
+                    2. ```firebase init```(under the directory of project)
+                4. ```firebase init``` select the emulator->authentication Emulator
+        2. use
+            * reference: https://firebase.google.com/docs/emulator-suite/connect_auth#swift
+            * reference: https://mayankchoudharydotcom.medium.com/firebase-offline-simplify-development-with-firebase-local-emulator-suite-ios-android-web-07c9b2fc860c
+            1. run the Firebase emulator by using this command: ```firebase emulators:start```
+            2. visit: http://127.0.0.1:port/auth to access our Firebase emulator UI
+    2. SwiftUI app with firebase
+        * reference: https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/利用-firebase-實現-ios-app-的登入功能-cf1795ccec00
+            * firebase api in SwiftUI
+        * reference: https://mayankchoudharydotcom.medium.com/firebase-offline-simplify-development-with-firebase-local-emulator-suite-ios-android-web-07c9b2fc860c
+            * SwiftUI + emulator
+2. add the WelcomeView
+    * test the firebase auth

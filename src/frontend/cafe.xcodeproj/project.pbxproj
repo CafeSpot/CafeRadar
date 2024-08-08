@@ -35,6 +35,8 @@
 		A9D62A712C648AE6000842BF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A9D62A702C648AE6000842BF /* FirebaseAuth */; };
 		A9D62A732C648AE6000842BF /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = A9D62A722C648AE6000842BF /* FirebaseAuthCombine-Community */; };
 		A9D62A752C6493A6000842BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9D62A742C6493A6000842BF /* GoogleService-Info.plist */; };
+		A9D62A7B2C64FFEC000842BF /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D62A7A2C64FFEC000842BF /* WelcomeView.swift */; };
+		A9D62A7D2C6501DD000842BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9D62A7C2C6501DD000842BF /* GoogleService-Info.plist */; };
 		A9E2B82C2C63B62300B6A54D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E2B82B2C63B62300B6A54D /* Color.swift */; };
 		B0225297C033D6694013B094 /* Pods_cafeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13448E0A818C313FEE5AAC8D /* Pods_cafeTests.framework */; };
 		C359D62F0B84A608EE99F62E /* Pods_cafe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7854C039752F88848C5709D /* Pods_cafe.framework */; };
@@ -93,6 +95,8 @@
 		A9CDC91B2B6D3DF90090FA47 /* mapViewModeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewModeModel.swift; sourceTree = "<group>"; };
 		A9D503912B6BF299008324B6 /* CrowdRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrowdRateView.swift; sourceTree = "<group>"; };
 		A9D62A742C6493A6000842BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A9D62A7A2C64FFEC000842BF /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		A9D62A7C2C6501DD000842BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A9E2B82B2C63B62300B6A54D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A9ED5DAC2B6F82DA00126B32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BF9367B244CC424D0E57F2E5 /* Pods-cafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cafe.debug.xcconfig"; path = "Target Support Files/Pods-cafe/Pods-cafe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				A9D62A742C6493A6000842BF /* GoogleService-Info.plist */,
+				A9D62A7C2C6501DD000842BF /* GoogleService-Info.plist */,
 				A9E2B82A2C63B5C900B6A54D /* appear */,
 				A9BC4B552C612391000D4CFC /* SecureAPIKeys */,
 				A9ED5DAC2B6F82DA00126B32 /* Info.plist */,
@@ -233,6 +238,7 @@
 				A9C090342B72621500FFD98A /* typeView.swift */,
 				A9186C332B6B75C100169CD3 /* StoreDetailInfo.swift */,
 				A9B3202C2B7E770400775832 /* autoArrayLayout.swift */,
+				A9D62A7A2C64FFEC000842BF /* WelcomeView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -397,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9186BFB2B6B73D600169CD3 /* Preview Assets.xcassets in Resources */,
+				A9D62A7D2C6501DD000842BF /* GoogleService-Info.plist in Resources */,
 				A9186BF82B6B73D600169CD3 /* Assets.xcassets in Resources */,
 				A9D62A752C6493A6000842BF /* GoogleService-Info.plist in Resources */,
 			);
@@ -539,6 +546,7 @@
 				A9D503922B6BF299008324B6 /* CrowdRateView.swift in Sources */,
 				A9186C522B6BB3A400169CD3 /* UserModel.swift in Sources */,
 				A9CDC91C2B6D3DF90090FA47 /* mapViewModeModel.swift in Sources */,
+				A9D62A7B2C64FFEC000842BF /* WelcomeView.swift in Sources */,
 				A9E2B82C2C63B62300B6A54D /* Color.swift in Sources */,
 				A9186C202B6B742E00169CD3 /* ExploreView.swift in Sources */,
 				A9186C342B6B75C100169CD3 /* StoreDetailInfo.swift in Sources */,

@@ -12,14 +12,32 @@ struct GoogleMapView: UIViewRepresentable {
     @Environment(StoreModel.self) private var storeModel
     @Environment(UserModel.self) private var userModel
     var markerTappedAction: ((Int) -> Void)?
-    private let gmsMapView = GMSMapView(frame: .zero)
     private let defaultZoomLevel: Float = 10
+    
+    class MapViewCoordinator: NSObject, GMSMapViewDelegate {
+        var mapView: GoogleMapView
+
+        init(_ googleMapView: GoogleMapView) {
+            self.mapView = googleMapView
+        }
+
+        
+        func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+            //mapView.delegate = self
+            print("tap the marker")
+            if let index = self.mapView.storeModel.storeBuffer.firstIndex(where: { $0.marker == marker }) {
+                self.mapView.markerTappedAction?(index)
+            }
+            return true
+        }
+    }
 
 
     func makeUIView(context: Context) -> GMSMapView {
         // Create a GMSMapView centered around the city of San Francisco, California
         //let sanFrancisco = CLLocationCoordinate2D(latitude: 37.7576, longitude: -122.4194)
         //gmsMapView.camera = GMSCameraPosition.camera(withTarget: sanFrancisco, zoom: defaultZoomLevel)
+        let gmsMapView = GMSMapView(frame: .zero)
         if let position = storeModel.position{
             gmsMapView.camera = GMSCameraPosition.camera(withLatitude: position.coordinate.latitude, longitude: position.coordinate.longitude, zoom: defaultZoomLevel)
         }
@@ -51,24 +69,6 @@ struct GoogleMapView: UIViewRepresentable {
     //map view's delegate
     func makeCoordinator() -> MapViewCoordinator {
         return MapViewCoordinator(self)
-    }
-    
-    final class MapViewCoordinator: NSObject, GMSMapViewDelegate {
-        var mapView: GoogleMapView
-
-        init(_ googleMapView: GoogleMapView) {
-            self.mapView = googleMapView
-        }
-
-        
-        func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-            mapView.delegate = self
-            print("tap the marker")
-            if let index = self.mapView.storeModel.storeBuffer.firstIndex(where: { $0.marker == marker }) {
-                self.mapView.markerTappedAction?(index)
-            }
-            return true
-        }
     }
 }
 
