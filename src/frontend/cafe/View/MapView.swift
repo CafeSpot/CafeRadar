@@ -30,8 +30,6 @@ struct MapView: View {
                     .background(Color.clear)
                 
                 ZStack(alignment: .top){
-                    
-                    //GoogleMapView()
                     VStack {
                         NavigationLink(
                             destination: selectedMarkerIndex.map { StoreDetailInfo(store: self.storeModel.storeBuffer[$0]) },

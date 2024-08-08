@@ -32,6 +32,9 @@
 		A9CDC9192B6D221B0090FA47 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CDC9182B6D221B0090FA47 /* MapViewController.swift */; };
 		A9CDC91C2B6D3DF90090FA47 /* mapViewModeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CDC91B2B6D3DF90090FA47 /* mapViewModeModel.swift */; };
 		A9D503922B6BF299008324B6 /* CrowdRateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D503912B6BF299008324B6 /* CrowdRateView.swift */; };
+		A9D62A712C648AE6000842BF /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A9D62A702C648AE6000842BF /* FirebaseAuth */; };
+		A9D62A732C648AE6000842BF /* FirebaseAuthCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = A9D62A722C648AE6000842BF /* FirebaseAuthCombine-Community */; };
+		A9D62A752C6493A6000842BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9D62A742C6493A6000842BF /* GoogleService-Info.plist */; };
 		A9E2B82C2C63B62300B6A54D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E2B82B2C63B62300B6A54D /* Color.swift */; };
 		B0225297C033D6694013B094 /* Pods_cafeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13448E0A818C313FEE5AAC8D /* Pods_cafeTests.framework */; };
 		C359D62F0B84A608EE99F62E /* Pods_cafe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7854C039752F88848C5709D /* Pods_cafe.framework */; };
@@ -89,6 +92,7 @@
 		A9CDC9182B6D221B0090FA47 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		A9CDC91B2B6D3DF90090FA47 /* mapViewModeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewModeModel.swift; sourceTree = "<group>"; };
 		A9D503912B6BF299008324B6 /* CrowdRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrowdRateView.swift; sourceTree = "<group>"; };
+		A9D62A742C6493A6000842BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A9E2B82B2C63B62300B6A54D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A9ED5DAC2B6F82DA00126B32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BF9367B244CC424D0E57F2E5 /* Pods-cafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cafe.debug.xcconfig"; path = "Target Support Files/Pods-cafe/Pods-cafe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -102,6 +106,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C359D62F0B84A608EE99F62E /* Pods_cafe.framework in Frameworks */,
+				A9D62A732C648AE6000842BF /* FirebaseAuthCombine-Community in Frameworks */,
+				A9D62A712C648AE6000842BF /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +178,7 @@
 		A9186BF22B6B73D400169CD3 /* cafe */ = {
 			isa = PBXGroup;
 			children = (
+				A9D62A742C6493A6000842BF /* GoogleService-Info.plist */,
 				A9E2B82A2C63B5C900B6A54D /* appear */,
 				A9BC4B552C612391000D4CFC /* SecureAPIKeys */,
 				A9ED5DAC2B6F82DA00126B32 /* Info.plist */,
@@ -291,6 +298,10 @@
 			dependencies = (
 			);
 			name = cafe;
+			packageProductDependencies = (
+				A9D62A702C648AE6000842BF /* FirebaseAuth */,
+				A9D62A722C648AE6000842BF /* FirebaseAuthCombine-Community */,
+			);
 			productName = cafe;
 			productReference = A9186BF02B6B73D400169CD3 /* cafe.app */;
 			productType = "com.apple.product-type.application";
@@ -366,6 +377,9 @@
 				Base,
 			);
 			mainGroup = A9186BE72B6B73D400169CD3;
+			packageReferences = (
+				A9D62A6F2C648AE6000842BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = A9186BF12B6B73D400169CD3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -384,6 +398,7 @@
 			files = (
 				A9186BFB2B6B73D600169CD3 /* Preview Assets.xcassets in Resources */,
 				A9186BF82B6B73D600169CD3 /* Assets.xcassets in Resources */,
+				A9D62A752C6493A6000842BF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,7 +726,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = henry.cafe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.henry861010.CafeRadar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -725,7 +740,7 @@
 		};
 		A9186C162B6B73D600169CD3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FCB7D47EDE68D9C0EE5299FF /* Pods-cafe.release.xcconfig */;
+			baseConfigurationReference = BF9367B244CC424D0E57F2E5 /* Pods-cafe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -746,7 +761,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = henry.cafe;
+				PRODUCT_BUNDLE_IDENTIFIER = com.henry861010.CafeRadar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -874,6 +889,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A9D62A6F2C648AE6000842BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A9D62A702C648AE6000842BF /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9D62A6F2C648AE6000842BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		A9D62A722C648AE6000842BF /* FirebaseAuthCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9D62A6F2C648AE6000842BF /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseAuthCombine-Community";
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A9186BE82B6B73D400169CD3 /* Project object */;
 }

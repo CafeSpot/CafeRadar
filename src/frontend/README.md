@@ -68,6 +68,8 @@ reference:
     * reference: 
         * https://medium.com/@gizemturker/ensuring-security-for-secrets-in-ios-app-ff4a25c533a1
         * https://www.danijelavrzan.com/posts/2022/11/xcode-configuration/
+        * https://blog.arturofm.com/untitled-2/
+            * use ```(Bundle.main.infoDictionary?["GOOGLE_API_KEY"] as? String)!``` to fetch the env var
         
 2024/8/7
 1. add the file "src/frontend/cafe/appear/Color".
