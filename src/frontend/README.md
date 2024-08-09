@@ -76,7 +76,7 @@ reference:
     * we can change the topic color of APP in this file directly
 2. modify several appearance design to match the UI/UX design
 
-2024/8/7
+2024/8/8
 1. firebase
     1. firebase local emulator
         1. firebase Local Emulator install
@@ -112,3 +112,42 @@ reference:
             * SwiftUI + emulator
 2. add the WelcomeView
     * test the firebase auth
+    
+
+2024/8/9
+1. google login with firebase
+    * Oauth overview:
+        * reference: https://www.technice.com.tw/experience/12520/
+        * non
+            1. Resource Owner: user
+            2. Client: our app
+            3. Resource Server/Authorization Server: managed by google, meta
+            4. Authorization Grant ...
+            5. Redirect URI（Callback URL）...
+            6. Access Token ...
+            7. Scope ...
+    * reference:
+        1. firebase document for google login: https://firebase.google.com/docs/auth/ios/google-signin
+        2. application: https://medium.com/@mdhsieh8/swift-swiftui-and-firebase-authentication-google-sign-in-part-4-bfa2192c7405
+            * the best one !!! (github: https://github.com/mdhsieh/sign-in-options-example)
+            * where ```GIDSignIn.sharedInstance.signIn(with: config, presenting: rootViewController) { [unowned self] user, error in``` was modified to ```GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] result, error in```. and the return "use" was replaced by "result"(the credential is accessed by result->user->credential, following firebase document mentioned previously)
+            * all the possible solution is define in the auth class named "AuthModel". the "FirebaseApp.configure()" run in appdelegate too late for firebase instance, if we replace the @observableobject by the @observable. it make the firebase instance run before the FirebaseApp.configure(). to avoid that, I move the FirebaseApp.configure() from appdelegate to the init() in the AuthModel.
+    * note
+        1. in ```GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [weak self] result, error in``` the rootViewController is our app instance. In the firebase document, this value is setted to "self". however we impement authorization in others file. there are additioanl lien to retrieve this instance. we use ```guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return };guard let rootViewController = windowScene.windows.first?.rootViewController else { return }``` to retrieve it.
+    * project seeting
+        1. firebase: enable the google authorization at the firebase web. then download googleService-info under oroot directory of the project.
+        2. copy the "REVERSED_CLIENT_ID" in the googleService-info to the project->info->URL type(add and copy the REVERSED_CLIENT_ID)
+            * reference: https://medium.com/@matteocuzzolin/google-sign-in-with-firebase-in-swiftui-app-c8dc7b7ed4f9
+    * debug
+        1. ```duplicate "Duplicate interface definition for class GTMSessionFetcherUserDefaultsFactory```
+            * reference:  https://forums.developer.apple.com/forums/thread/658012
+                1. open xcode with project -> product(on top menu) -> select "clean the build folder"
+                2. Close Xcode completely
+                3. Clear derived data: ```rm -rf ~/Library/Developer/Xcode/DerivedData/```
+                4. Empty mac bin: make sure to empty your Mac's Trash (Bin)
+                5. Start Xcode and clean build folder again
+                6. Build succeeded without any error and able to run on device
+    * next work
+        1. add the user setting page(login, logout, settin, ...)
+        2. test the other function in AuthModel
+        3. connect to firebase web

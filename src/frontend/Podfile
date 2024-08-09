@@ -6,7 +6,9 @@ target 'cafe' do
   use_frameworks!
 
   # Pods for cafe
-  pod 'GoogleMaps', '9.0.0.0'
+  pod 'GoogleSignIn'
+  pod 'GoogleMaps'
+
 
 
   target 'cafeTests' do

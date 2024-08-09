@@ -30,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:29888971522:ios:2413317a175d09f866781b</string>
+	<key>DATABASE_URL</key>
+	<string>https://caferadar-17e3b-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 </dict>
 </plist>

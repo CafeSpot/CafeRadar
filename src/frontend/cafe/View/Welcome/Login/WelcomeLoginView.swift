@@ -1,15 +1,14 @@
 //
-//  WelcomeView.swift
+//  WelcomeLoginView.swift
 //  cafe
 //
-//  Created by 蔡沅恆 on 2024/8/8.
+//  Created by 蔡沅恆 on 2024/8/9.
 //
 
 import SwiftUI
 import FirebaseAuth
 
-
-struct WelcomeView: View {
+struct WelcomeLoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     
@@ -45,30 +44,34 @@ struct WelcomeView: View {
     
     func createUser_method1(){
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
-                    
-             guard let user = result?.user,
-                   error == nil else {
-                 print(error?.localizedDescription)
-                 return
-             }
-             print(user.email, user.uid)
+                        
+            guard let user = result?.user, error == nil else {
+                if let errorMessage = error?.localizedDescription {
+                    print(errorMessage)
+                } else {
+                    print("Unknown error occurred.")
+                }
+                return
+            }
+            print(user.email ?? "No email", user.uid)
         }
     }
 
     func login_method1(){
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
-             guard error == nil else {
-                print(error?.localizedDescription)
+            guard error == nil else {
+                if let errorMessage = error?.localizedDescription {
+                    print(errorMessage)
+                } else {
+                    print("Unknown error occurred.")
+                }
                 return
-             }
-           print("success")
+            }
+            print("Success")
         }
     }
 }
 
-
-struct WelcomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        WelcomeView()
-    }
+#Preview {
+    WelcomeLoginView()
 }

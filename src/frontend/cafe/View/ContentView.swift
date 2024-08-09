@@ -8,21 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @Environment(AuthModel.self) var authModel
+    
     var body: some View {
-        TabView {
-            ExploreView()
-                .tabItem {
-                    Label("探索", systemImage: "magnifyingglass")                 }
-            MapView()
-                .tabItem {
-                    Label("咖啡地圖", systemImage: "map.fill")
-                }
-            CollectionView()
-                .tabItem {
-                    Label("我的收藏", systemImage: "suit.heart")
-                }
+        if authModel.signedIn || authModel.notRequireAuth{
+            TabView {
+                ExploreView()
+                    .tabItem {
+                        Label("探索", systemImage: "magnifyingglass")                 }
+                MapView()
+                    .tabItem {
+                        Label("咖啡地圖", systemImage: "map.fill")
+                    }
+                CollectionView()
+                    .tabItem {
+                        Label("我的收藏", systemImage: "suit.heart")
+                    }
+            }
+            .accentColor(CafeColor.basicColor)
         }
-        .accentColor(CafeColor.basicColor)
+        else{
+            WelcomeView()
+        }
     }
 }
 
@@ -31,5 +39,6 @@ struct ContentView: View {
         .environment(StoreModel())
         .environment(MapViewModeModel())
         .environment(UserModel())
+        .environment(AuthModel())
 
 }

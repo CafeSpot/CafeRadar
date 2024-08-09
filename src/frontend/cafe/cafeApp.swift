@@ -9,6 +9,7 @@ import SwiftUI
 import GoogleMaps
 import FirebaseCore
 import FirebaseAuth
+import GoogleSignIn
 
 
 //import FirebaseCore
@@ -18,10 +19,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // [google map service]
         GMSServices.provideAPIKey((Bundle.main.infoDictionary?["GOOGLE_API_KEY"] as? String)!)
         
-        // [direbae service]
-        FirebaseApp.configure()
-        
         return true
+    }
+    
+    func application(_ app: UIApplication,
+                     open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+      return GIDSignIn.sharedInstance.handle(url)
     }
 
     // MARK: UISceneSession Lifecycle
@@ -61,11 +65,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct cafeApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     @State private var storeModel = StoreModel()
     @State private var mapViewModeModel = MapViewModeModel()
-    @State private var userModel: UserModel = UserModel()
-    
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var userModel = UserModel()
+    @State private var authModel = AuthModel()
     
     init(){
     }
@@ -76,6 +81,7 @@ struct cafeApp: App {
                 .environment(storeModel)
                 .environment(mapViewModeModel)
                 .environment(userModel)
+                .environment(authModel)
         }
     }
 }
