@@ -19,6 +19,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // [google map service]
         GMSServices.provideAPIKey((Bundle.main.infoDictionary?["GOOGLE_API_KEY"] as? String)!)
         
+        if FirebaseApp.app() == nil {
+            FirebaseApp.configure()
+        }
+        
         return true
     }
     

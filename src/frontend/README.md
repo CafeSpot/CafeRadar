@@ -148,6 +148,19 @@ reference:
                 5. Start Xcode and clean build folder again
                 6. Build succeeded without any error and able to run on device
     * next work
-        1. add the user setting page(login, logout, settin, ...)
-        2. test the other function in AuthModel
-        3. connect to firebase web
+        1. add the user setting page(login, logout, setting, ...) ~ done(2024/8/10)
+        2. test the other function in AuthModel ~ done(2024/8/10)
+        3. connect to firebase web ~ done(2024/8/10)
+        
+2024/8/10
+1. work
+    1. add the welcomeview and the loginview. 
+        * the welcome page call the login page by the .sheet
+    2. finish and test the basic function of the firebase
+2. future work
+    1. animator in the welcome page
+        * reference: https://mobileappsacademy.medium.com/animated-onboarding-ui-in-swiftui-80bea68e9c8f
+    2. make the tab in tab view overlay any other view
+    3. in the storemode
+        1. the filter of the "select the type"
+        2. when i search the store by the text, the recommand should not be modify(add thwe new list, and the filted stores are stored in that list)

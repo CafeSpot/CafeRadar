@@ -25,6 +25,10 @@ struct ContentView: View {
                     .tabItem {
                         Label("我的收藏", systemImage: "suit.heart")
                     }
+                SettingView()
+                    .tabItem {
+                        Label("設定", systemImage: "book.and.wrench")
+                    }
             }
             .accentColor(CafeColor.basicColor)
         }

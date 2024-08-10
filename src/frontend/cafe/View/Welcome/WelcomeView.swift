@@ -11,102 +11,62 @@ import Firebase
 import GoogleSignIn
 
 struct WelcomeView: View {
-    //@Environment(AuthModel.self) private var authModel
-    
-    @State private var email: String = ""
-    @State private var password: String = ""
-
-    
-    init() {
-    }
+    @Environment(AuthModel.self) private var authModel
+    @State private var showLoginPage = false
 
     var body: some View {
-        VStack{
-            Text("Hello")
-                .font(.system(size: 40)) // Set the font size to make it bigger
-                .fontWeight(.bold) // Make the text thick (bold)
-            
-            
-            TextField("email", text: $email)
-                .padding(6)
-                .autocapitalization(.none)
-                .textFieldStyle(PlainTextFieldStyle())
-                .frame(width: 300, height: 30)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5) // Matching the corner radius
-                        .stroke(Color.gray, lineWidth: 1) // Outline color and width
-                )
-            TextField("passward", text: $password)
-                .padding(6)
-                .autocapitalization(.none)
-                .textFieldStyle(PlainTextFieldStyle())
-                .frame(width: 300, height: 30)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5) // Matching the corner radius
-                        .stroke(Color.gray, lineWidth: 1) // Outline color and width
-                )
-            Button {
-                print("[WelcomeView] Tapped Create with email & passward")
-                //authModel.regularCreateAccount(email: email, password: password)
-            } label: {
-                Text("Create with email & passward")
-                    .foregroundColor(.black)
-            }
-            Button {
-                print("[WelcomeView] Sign in with email & passward")
-                //authModel.regularSignIn(??)
-            } label: {
-                Text("Sign in with email & passward")
-                    .foregroundColor(.black)
-            }
-            
-            Text("or")
-            
-            // sign in with google account
-            Button {
-                print("[WelcomeView] Tapped google sign in")
-                //authModel.googleSignIn()
-            } label: {
-                HStack(){
-                    Image("google")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 45)
-                    Text("Sign in with Google")
-                        .foregroundColor(.black)
+        ZStack{
+            VStack{
+                Spacer()
+                
+                Image(systemName: "cup.and.saucer.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 90)
+                    .foregroundColor(CafeColor.basicColor)
+                Text("Coffee Spotter")
+                    .font(.system(size: 27))
+                    .fontWeight(.bold)
+                    .foregroundColor(CafeColor.basicColor)
+                
+                Spacer()
+                
+                VStack(){
+                    Button(action: {
+                        showLoginPage = true
+                    }) {
+                        Text("Login")
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                    }
+                    .sheet(isPresented: $showLoginPage) {
+                        LoginView()
+                    }
+                    
+                    Text("or")
+                        .font(.system(size: 15))
+                    
+                    Button {
+                        print("[WelcomeView] Just visit")
+                        authModel.notRequireAuth = true
+                    } label: {
+                        Text("Just visit")
+                            .fontWeight(.bold)
+                            .foregroundColor(.black)
+                    }
                 }
+                .padding(.bottom, 50)
             }
-            
-            // sign in with google account
-            Button {
-                print("[WelcomeView] Sign in with Apple")
-                //authModel.authorizationController()
-            } label: {
-                HStack(){
-                    Image("apple")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30)
-                    Text("Sign in with Apple")
-                        .foregroundColor(.black)
-                }
-            }
-            
-            Button {
-                print("[WelcomeView] Just visit")
-                //authModel.notRequireAuth = true
-            } label: {
-                Text("Just visit")
-                    .foregroundColor(.black)
-            }
-            .padding(.top, 80)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(CafeColor.basicColor_background)
+        .ignoresSafeArea()
     }
 }
 
 
 #Preview {
     WelcomeView()
-        //.environment(AuthModel())
+        .environment(AuthModel())
 }
 

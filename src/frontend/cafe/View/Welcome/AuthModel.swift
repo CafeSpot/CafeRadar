@@ -22,8 +22,9 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate {
     var currentNonce: String?
     
     override init() {
-        FirebaseApp.configure()
-        
+        if FirebaseApp.app() == nil {
+            FirebaseApp.configure()
+        }
         super.init()
         Auth.auth().addStateDidChangeListener() { auth, user in
             if user != nil {
