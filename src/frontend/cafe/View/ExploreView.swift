@@ -29,73 +29,44 @@ struct ExploreView: View {
                 ScrollView(showsIndicators: false) {
                     
                     // 本月主打
-                    HStack {
-                        Text("本月主打")
-                            .font(.system(size: 24))
-                            .bold()
-                        Spacer()
-                    }
-                    .padding()
-                    Image("cafe1")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 250, height: 250)
-                        .cornerRadius(17)
-                        .clipped()
-                    
-                    // 貓店長值班
-                    HStack {
-                        Text("貓店長值班")
-                            .font(.system(size: 24))
-                            .bold()
-                        Spacer()
-                    }
-                    .padding()
-                    ScrollView(.horizontal, showsIndicators: false) {
+                    VStack(){
                         HStack {
-                            ForEach(storeModel.storeCollection) { store in
-                                StoreSimpleInfoView(store: store,imgNum: 2)
-                            }
+                            Text("本月主打")
+                                .font(.system(size: 24))
+                                .bold()
+                            Spacer()
                         }
+                        .padding()
+                        Image("cafe1")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 250, height: 250)
+                            .cornerRadius(17)
+                            .clipped()
                     }
-                    .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
-                    .frame(minHeight: 160)
+                    .padding(10)
                     
-                    // 好氣份好心情
-                    HStack {
-                        Text("好氣份好心情")
-                            .font(.system(size: 24))
-                            .bold()
-                        Spacer()
-                    }
-                    .padding()
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(storeModel.storeCollection) { store in
-                                StoreSimpleInfoView(store: store,imgNum: 2)
+                    // different topic
+                    ForEach(0..<storeModel.storeRecommends.count, id: \.self) { index in
+                        VStack(){
+                            HStack {
+                                Text(storeModel.recommends[index].title)
+                                    .font(.system(size: 24))
+                                    .bold()
+                                Spacer()
                             }
-                        }
-                    }
-                    .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
-                    .frame(minHeight: 160)
-                    
-                    // 網友高分推薦
-                    HStack {
-                        Text("網友高分推薦")
-                            .font(.system(size: 24))
-                            .bold()
-                        Spacer()
-                    }
-                    .padding()
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach(storeModel.storeCollection) { store in
-                                StoreSimpleInfoView(store: store,imgNum: 2)
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    ForEach(storeModel.storeRecommends[index]) { store in
+                                        StoreSimpleInfoView(store: store,imgNum: 2)
+                                    }
+                                }
                             }
+                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 12))
+                            .frame(minHeight: 160)
                         }
+                        .padding(10)
                     }
-                    .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
-                    .frame(minHeight: 160)
                 }
             }
         }

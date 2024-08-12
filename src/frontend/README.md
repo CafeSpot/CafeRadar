@@ -157,10 +157,8 @@ reference:
     1. add the welcomeview and the loginview. 
         * the welcome page call the login page by the .sheet
     2. finish and test the basic function of the firebase
-2. future work
-    1. animator in the welcome page
-        * reference: https://mobileappsacademy.medium.com/animated-onboarding-ui-in-swiftui-80bea68e9c8f
-    2. make the tab in tab view overlay any other view
-    3. in the storemode
-        1. the filter of the "select the type"
-        2. when i search the store by the text, the recommand should not be modify(add thwe new list, and the filted stores are stored in that list)
+        
+2024/8/13
+1. work
+    1. modify the type list to the One-Hot Encoding
+    2. add the logo animator

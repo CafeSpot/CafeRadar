@@ -27,8 +27,12 @@
 		A9186C522B6BB3A400169CD3 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C512B6BB3A300169CD3 /* UserModel.swift */; };
 		A9186C542B6BB47500169CD3 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C532B6BB47500169CD3 /* StoreModel.swift */; };
 		A9186C5A2B6BBDB100169CD3 /* Stores.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C592B6BBDB100169CD3 /* Stores.swift */; };
+		A952D94B2C6A8F8200EC458A /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952D94A2C6A8F8200EC458A /* LogoView.swift */; };
+		A952D94E2C6A91C800EC458A /* logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = A952D94D2C6A91C800EC458A /* logo.gif */; };
+		A952D9502C6A9E9800EC458A /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952D94F2C6A9E9800EC458A /* Size.swift */; };
 		A95418302C67AD8100215420 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A954182F2C67AD8000215420 /* SettingView.swift */; };
 		A95418322C67BC4F00215420 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95418312C67BC4F00215420 /* LoginView.swift */; };
+		A96BF5712C6934B5002E9795 /* googleMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96BF5702C6934B5002E9795 /* googleMap.swift */; };
 		A9B3202D2B7E770400775832 /* autoArrayLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B3202C2B7E770400775832 /* autoArrayLayout.swift */; };
 		A9C090352B72621500FFD98A /* typeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C090342B72621500FFD98A /* typeView.swift */; };
 		A9CDC9192B6D221B0090FA47 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CDC9182B6D221B0090FA47 /* MapViewController.swift */; };
@@ -90,8 +94,12 @@
 		A9186C512B6BB3A300169CD3 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A9186C532B6BB47500169CD3 /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
 		A9186C592B6BBDB100169CD3 /* Stores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stores.swift; sourceTree = "<group>"; };
+		A952D94A2C6A8F8200EC458A /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
+		A952D94D2C6A91C800EC458A /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = logo.gif; path = ../../../../../../Downloads/logo.gif; sourceTree = "<group>"; };
+		A952D94F2C6A9E9800EC458A /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		A954182F2C67AD8000215420 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A95418312C67BC4F00215420 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		A96BF5702C6934B5002E9795 /* googleMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = googleMap.swift; sourceTree = "<group>"; };
 		A9B3202C2B7E770400775832 /* autoArrayLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autoArrayLayout.swift; sourceTree = "<group>"; };
 		A9BC4B562C6123B0000D4CFC /* secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secrets.xcconfig; sourceTree = "<group>"; };
 		A9C090342B72621500FFD98A /* typeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = typeView.swift; sourceTree = "<group>"; };
@@ -186,6 +194,7 @@
 		A9186BF22B6B73D400169CD3 /* cafe */ = {
 			isa = PBXGroup;
 			children = (
+				A952D94C2C6A91AB00EC458A /* resource */,
 				A9FBF4072C65E7EF00471D78 /* GoogleService-Info.plist */,
 				A9E2B82A2C63B5C900B6A54D /* appear */,
 				A9BC4B552C612391000D4CFC /* SecureAPIKeys */,
@@ -243,6 +252,7 @@
 				A9C090342B72621500FFD98A /* typeView.swift */,
 				A9186C332B6B75C100169CD3 /* StoreDetailInfo.swift */,
 				A9B3202C2B7E770400775832 /* autoArrayLayout.swift */,
+				A952D94A2C6A8F8200EC458A /* LogoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -250,6 +260,7 @@
 		A9186C4A2B6B99B200169CD3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A96BF56F2C693477002E9795 /* storeModel_extension */,
 				A9186C3D2B6B97F300169CD3 /* store.swift */,
 				A9186C512B6BB3A300169CD3 /* UserModel.swift */,
 				A9186C532B6BB47500169CD3 /* StoreModel.swift */,
@@ -264,6 +275,22 @@
 				A9186C592B6BBDB100169CD3 /* Stores.swift */,
 			);
 			path = TestData;
+			sourceTree = "<group>";
+		};
+		A952D94C2C6A91AB00EC458A /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				A952D94D2C6A91C800EC458A /* logo.gif */,
+			);
+			path = resource;
+			sourceTree = "<group>";
+		};
+		A96BF56F2C693477002E9795 /* storeModel_extension */ = {
+			isa = PBXGroup;
+			children = (
+				A96BF5702C6934B5002E9795 /* googleMap.swift */,
+			);
+			path = storeModel_extension;
 			sourceTree = "<group>";
 		};
 		A9BC4B552C612391000D4CFC /* SecureAPIKeys */ = {
@@ -286,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				A9E2B82B2C63B62300B6A54D /* Color.swift */,
+				A952D94F2C6A9E9800EC458A /* Size.swift */,
 			);
 			path = appear;
 			sourceTree = "<group>";
@@ -418,6 +446,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A952D94E2C6A91C800EC458A /* logo.gif in Resources */,
 				A9186BFB2B6B73D600169CD3 /* Preview Assets.xcassets in Resources */,
 				A9186BF82B6B73D600169CD3 /* Assets.xcassets in Resources */,
 				A9FBF4082C65E7EF00471D78 /* GoogleService-Info.plist in Resources */,
@@ -585,6 +614,8 @@
 				A9186C4C2B6BA17A00169CD3 /* GoogleMapView.swift in Sources */,
 				A9186C322B6B75AE00169CD3 /* SimpleInfoListView.swift in Sources */,
 				A9C090352B72621500FFD98A /* typeView.swift in Sources */,
+				A96BF5712C6934B5002E9795 /* googleMap.swift in Sources */,
+				A952D9502C6A9E9800EC458A /* Size.swift in Sources */,
 				A9186C1E2B6B740F00169CD3 /* CollectionView.swift in Sources */,
 				A9FBF40A2C65F0A200471D78 /* AuthModel.swift in Sources */,
 				A9186BF62B6B73D400169CD3 /* ContentView.swift in Sources */,
@@ -592,6 +623,7 @@
 				A9186C3E2B6B97F300169CD3 /* store.swift in Sources */,
 				A9186C542B6BB47500169CD3 /* StoreModel.swift in Sources */,
 				A9B3202D2B7E770400775832 /* autoArrayLayout.swift in Sources */,
+				A952D94B2C6A8F8200EC458A /* LogoView.swift in Sources */,
 				A9186C222B6B744500169CD3 /* MapView.swift in Sources */,
 				A9186C5A2B6BBDB100169CD3 /* Stores.swift in Sources */,
 				A9D503922B6BF299008324B6 /* CrowdRateView.swift in Sources */,

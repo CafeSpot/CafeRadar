@@ -101,12 +101,13 @@ struct autoArrayLayoutView: Layout {
 
 struct aa: View {
     var store: Store
+    @State var storeModel = StoreModel()
     
     var body: some View {
         VStack{
             autoArrayLayoutView{
-                ForEach(store.tags) { item in
-                    typeView(type: item.tag, typeImage: "questionmark.app.dashed")
+                ForEach(store.tags.indices, id: \.self) { index in
+                    typeView(typeName: storeModel.typeNames[index], typeImage: "questionmark.app.dashed")
                 }
             }
             .border(Color.red, width: 2)

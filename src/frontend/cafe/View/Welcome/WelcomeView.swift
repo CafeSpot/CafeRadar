@@ -17,8 +17,9 @@ struct WelcomeView: View {
     var body: some View {
         ZStack{
             VStack{
-                Spacer()
+                Spacer() 
                 
+                /*
                 Image(systemName: "cup.and.saucer.fill")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -28,6 +29,13 @@ struct WelcomeView: View {
                     .font(.system(size: 27))
                     .fontWeight(.bold)
                     .foregroundColor(CafeColor.basicColor)
+                */
+                ZStack(){
+                    Image("logo_final")
+                        .resizable()
+                        .frame(width: logoSize, height: logoSize)
+                    LogoView()
+                }
                 
                 Spacer()
                 

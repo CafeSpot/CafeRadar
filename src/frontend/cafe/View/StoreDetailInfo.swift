@@ -12,131 +12,135 @@ struct StoreDetailInfo: View {
     var store: Store
     var leadingAmount: CGFloat = 20
     
+    @Environment(StoreModel.self) private var storeModel
+    
     var body: some View {
-        VStack(alignment: .leading){
-            //images
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(store.images) { image in
-                        image.image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 250, height: 250)
-                            .cornerRadius(17)
-                            .clipped()
-                    }
-                    ForEach(0..<(3 - min(store.images.count, 3)), id: \.self) { _ in
-                        Image(systemName: "plus.square")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 250, height: 250)
-                            .clipped()
-                            .opacity(0.1)
-                            .foregroundStyle(.black)
-                    }
-                    Spacer()
-                }
-            }
-            .padding(.leading, 14)
-            .padding(.trailing , 14)
-            
-            HStack{
-                Text(store.name)
-                    .fontWeight(.bold)
-                    .font(.system(size: 27))
-                //.font(.custom("YourCustomFontName-Bold", size: 24))
-                Spacer()
-                CrowdRateView(crowdRate: store.crowdRate)
-            }
-            .padding(.leading, leadingAmount)
-            .padding(.trailing, 20)
-            .padding(.top, 10)
-            .padding(.bottom, 20)
-            
-            Divider()
-            
+        ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading){
-                Text("店家類別")
-                autoArrayLayoutView{
-                    ForEach(store.tags) { item in
-                        typeView(type: item.tag, typeImage: "questionmark.app.dashed")
+                //images
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(store.images) { image in
+                            image.image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 250, height: 250)
+                                .cornerRadius(17)
+                                .clipped()
+                        }
+                        ForEach(0..<(3 - min(store.images.count, 3)), id: \.self) { _ in
+                            Image(systemName: "plus.square")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 250, height: 250)
+                                .clipped()
+                                .opacity(0.1)
+                                .foregroundStyle(.black)
+                        }
+                        Spacer()
                     }
                 }
-            }
-            .padding(.trailing, leadingAmount)
-            .padding(.leading, leadingAmount)
-            
-            Divider()
-            
-            VStack{
-                Text("菜單")
-            }
-            .padding(.leading, leadingAmount)
-            
-            Divider()
-            
-            VStack(alignment: .leading){
-                Text("店家地址")
-                Link(store.address, destination: URL(string: store.addressLink)!)
-                    .foregroundColor(.black)
-            }
-            .padding(.leading, leadingAmount)
-            
-            Divider()
-            
-            VStack(alignment: .leading){
-                Text("聯絡資訊")
+                .padding(.leading, 14)
+                .padding(.trailing , 14)
+                
                 HStack{
-                    Image(systemName: "phone.fill")
-                    Link(store.phone, destination: URL(string: "tel:\(store.phone)")!)
-                        .foregroundColor(.black)
+                    Text(store.name)
+                        .fontWeight(.bold)
+                        .font(.system(size: 27))
+                    //.font(.custom("YourCustomFontName-Bold", size: 24))
                     Spacer()
-                    Image(systemName: "f.square")
-                    Link(store.ig, destination: URL(string: store.igLink)!)
-                        .foregroundColor(.black)
-                    Spacer()
-                    Image(systemName: "i.square")
-                    Link(store.fb, destination: URL(string: store.fbLink)!)
-                        .foregroundColor(.black)
+                    CrowdRateView(crowdRate: store.crowdRate)
                 }
-            }
-            .padding(.trailing, leadingAmount)
-            .padding(.leading, leadingAmount)
-            
-            Divider()
-            
-            Divider()
-            
-            HStack{
+                .padding(.leading, leadingAmount)
+                .padding(.trailing, 20)
+                .padding(.top, 10)
+                .padding(.bottom, 20)
+                
+                Divider()
+                
                 VStack(alignment: .leading){
-                    Text(String(store.distance)+"公尺")
-                    Text("營業時間 "+String(store.openTime)+"~"+String(store.closeTime))
+                    Text("店家類別")
+                    autoArrayLayoutView{
+                        ForEach(store.tags.indices, id: \.self) { index in
+                            typeView(typeName: storeModel.typeNames[index], typeImage: "questionmark.app.dashed")
+                        }
+                    }
                 }
+                .padding(.trailing, leadingAmount)
+                .padding(.leading, leadingAmount)
                 
-                Spacer()
+                Divider()
                 
-                Button(action: {
-                    print("go to map!")
-                }) {
-                    Text("前往導航")
-                        .padding()
+                VStack{
+                    Text("菜單")
+                }
+                .padding(.leading, leadingAmount)
+                
+                Divider()
+                
+                VStack(alignment: .leading){
+                    Text("店家地址")
+                    Link(store.address, destination: URL(string: store.addressLink)!)
                         .foregroundColor(.black)
-                        .background(Color(UIColor.lightGray))
-                        .cornerRadius(8)
                 }
+                .padding(.leading, leadingAmount)
+                
+                Divider()
+                
+                VStack(alignment: .leading){
+                    Text("聯絡資訊")
+                    HStack{
+                        Image(systemName: "phone.fill")
+                        Link(store.phone, destination: URL(string: "tel:\(store.phone)")!)
+                            .foregroundColor(.black)
+                        Spacer()
+                        Image(systemName: "f.square")
+                        Link(store.ig, destination: URL(string: store.igLink)!)
+                            .foregroundColor(.black)
+                        Spacer()
+                        Image(systemName: "i.square")
+                        Link(store.fb, destination: URL(string: store.fbLink)!)
+                            .foregroundColor(.black)
+                    }
+                }
+                .padding(.trailing, leadingAmount)
+                .padding(.leading, leadingAmount)
+                
+                Divider()
+                
+                Divider()
+                
+                HStack{
+                    VStack(alignment: .leading){
+                        Text(String(store.distance)+"公尺")
+                        Text("營業時間 "+String(store.openTime)+"~"+String(store.closeTime))
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        print("go to map!")
+                    }) {
+                        Text("前往導航")
+                            .padding()
+                            .foregroundColor(.black)
+                            .background(Color(UIColor.lightGray))
+                            .cornerRadius(8)
+                    }
+                }
+                .padding(.top, 20)
+                .padding(.trailing, leadingAmount)
+                .padding(.leading, leadingAmount)
+                
             }
-            .padding(.top, 20)
-            .padding(.trailing, leadingAmount)
-            .padding(.leading, leadingAmount)
-            
         }
     }
 }
 
 #Preview {
     @State var storeInfoModel = StoreInfoModel(stores: [store1] )
-    //@State var storeInfoModel = StoreInfoModel(stores: [] )
     var store: Store = storeInfoModel.stores[0]
     
     return StoreDetailInfo(store: store)
+        .environment(StoreModel())
 }

@@ -11,10 +11,25 @@ import GoogleMaps
 import CoreLocation
 
 let testStores: [Store] = [store1, store2 ,store3 ,store4 ,store5 ,store6 ,store7 ,store8 ,store9 ,store10]
-//let testStores: [Store] = []
+let testRecommends: [Recommend] = [Recommend(title: "貓店長值班",storeIDs: [1,2,3,4]),
+                                  Recommend(title: "好氣份好心情",storeIDs: [4,5,6,7]),
+                                  Recommend(title: "網友高分推薦",storeIDs: [8,9,10])]
+let testTypeNames: [String] = [
+    "插座",
+    "不限時",
+    "讀書",
+    "供應正餐",
+    "音樂",
+    "戶外",
+    "插座",
+    "不限時",
+    "讀書",
+    "供應正餐",
+    "音樂",
+    "戶外"]
 
 let store1 =  Store(
-    cafeId: "1",
+    cafeId: 1,
     name: "85 degree cafe",
     openTime: "8:00",
     closeTime: "18:00",
@@ -27,18 +42,19 @@ let store1 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("插座"),
-        Idtag("不限時"),
-        Idtag("讀書"),
-        Idtag("供應正餐"),
-        Idtag("音樂"),
-        Idtag("戶外"),
-        Idtag("插座"),
-        Idtag("不限時"),
-        Idtag("讀書"),
-        Idtag("供應正餐"),
-        Idtag("音樂"),
-        Idtag("戶外")],
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外"
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外" ]
+        ],
     commentIds: [
         "好吃",
         "超派",
@@ -54,7 +70,7 @@ let store1 =  Store(
 )
 
 let store2 =  Store(
-    cafeId: "1",
+    cafeId: 2,
     name: "starbas",
     openTime: "8:00",
     closeTime: "18:00",
@@ -67,13 +83,19 @@ let store2 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("空位"),
-        Idtag("插座"),
-        Idtag("不限時"),
-        Idtag("讀書"),
-        Idtag("供應正餐"),
-        Idtag("音樂"),
-        Idtag("戶外")],
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外"
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外" ]
+        ],
     commentIds: [
         "好吃",
         "超派",
@@ -89,8 +111,8 @@ let store2 =  Store(
 )
 
 let store3 =  Store(
-    cafeId: "1",
-    name: "dfvr",
+    cafeId: 3,
+    name: "3",
     openTime: "8:00",
     closeTime: "18:00",
     seatNum: 50,
@@ -102,12 +124,19 @@ let store3 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("插座"),
-        Idtag("不限時"),
-        Idtag("讀書"),
-        Idtag("供應正餐"),
-        Idtag("音樂"),
-        Idtag("戶外")],
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外"
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外" ]
+        ],
     commentIds: [
         "好吃",
         "超派",
@@ -124,8 +153,8 @@ let store3 =  Store(
 
 
 let store4 =  Store(
-    cafeId: "1",
-    name: "1",
+    cafeId: 4,
+    name: "4",
     openTime: "8:00",
     closeTime: "18:00",
     seatNum: 50,
@@ -137,12 +166,19 @@ let store4 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("插座"),
-        Idtag("不限時"),
-        Idtag("讀書"),
-        Idtag("供應正餐"),
-        Idtag("音樂"),
-        Idtag("戶外")],
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外"
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外" ]
+        ],
     commentIds: [
         "好吃",
         "超派",
@@ -158,8 +194,8 @@ let store4 =  Store(
 )
 
 let store5 =  Store(
-    cafeId: "1",
-    name: "1",
+    cafeId: 5,
+    name: "5",
     openTime: "8:00",
     closeTime: "18:00",
     seatNum: 50,
@@ -171,10 +207,19 @@ let store5 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("插座"),
-        Idtag("不限時"),
-        Idtag("音樂"),
-        Idtag("戶外")],
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外"
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外" ]
+        ],
     commentIds: [
         "好吃",
         "超派",
@@ -190,8 +235,8 @@ let store5 =  Store(
 )
 
 let store6 =  Store(
-    cafeId: "1",
-    name: "1",
+    cafeId: 6,
+    name: "6",
     openTime: "8:00",
     closeTime: "18:00",
     seatNum: 50,
@@ -203,11 +248,19 @@ let store6 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("插座"),
-        Idtag("不限時"),
-        Idtag("讀書"),
-        Idtag("音樂"),
-        Idtag("戶外")],
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外"
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外" ]
+        ],
     commentIds: [
         "好吃",
         "超派",
@@ -223,8 +276,8 @@ let store6 =  Store(
 )
 
 let store7 =  Store(
-    cafeId: "1",
-    name: "1",
+    cafeId: 7,
+    name: "7",
     openTime: "8:00",
     closeTime: "18:00",
     seatNum: 50,
@@ -236,11 +289,19 @@ let store7 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("插座"),
-        Idtag("不限時"),
-        Idtag("讀書"),
-        Idtag("供應正餐"),
-        Idtag("音樂")],
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外"
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外" ]
+        ],
     commentIds: [
         "好吃",
         "超派",
@@ -256,8 +317,8 @@ let store7 =  Store(
 )
 
 let store8 =  Store(
-    cafeId: "1",
-    name: "1",
+    cafeId: 8,
+    name: "8",
     openTime: "8:00",
     closeTime: "18:00",
     seatNum: 50,
@@ -269,10 +330,19 @@ let store8 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("讀書"),
-        Idtag("供應正餐"),
-        Idtag("音樂"),
-        Idtag("戶外")],
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外"
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外" ]
+        ],
     commentIds: [
         "好吃",
         "超派",
@@ -289,8 +359,8 @@ let store8 =  Store(
 
 
 let store9 =  Store(
-    cafeId: "1",
-    name: "1",
+    cafeId: 9,
+    name: "9",
     openTime: "8:00",
     closeTime: "18:00",
     seatNum: 50,
@@ -302,12 +372,19 @@ let store9 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("插座"),
-        Idtag("不限時"),
-        Idtag("讀書"),
-        Idtag("供應正餐"),
-        Idtag("音樂"),
-        Idtag("戶外")],
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外"
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外" ]
+        ],
     commentIds: [
         "好吃",
         "超派",
@@ -323,8 +400,8 @@ let store9 =  Store(
 )
 
 let store10 =  Store(
-    cafeId: "1",
-    name: "1",
+    cafeId: 10,
+    name: "10",
     openTime: "8:00",
     closeTime: "18:00",
     seatNum: 50,
@@ -336,11 +413,19 @@ let store10 =  Store(
         IdImage(Image("cafe5")),
         IdImage(Image("cafe6"))],
     tags: [
-        Idtag("不限時"),
-        Idtag("讀書"),
-        Idtag("供應正餐"),
-        Idtag("音樂"),
-        Idtag("戶外")],
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外"
+        true, //"插座"
+        true, //"不限時"
+        true, //"讀書"
+        true, //"供應正餐"
+        true, //"音樂"
+        true, //"戶外" ]
+        ],
     commentIds: [
         "好吃",
         "超派",

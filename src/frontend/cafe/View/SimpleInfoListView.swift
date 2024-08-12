@@ -42,7 +42,7 @@ struct SimpleInfoListView: View {
                         .cornerRadius(5)
                         .padding(.top, 9)
                         .padding(.bottom, 3)
-                    Text("搜尋到\(storeModel.storeCollection.count)家咖啡廳")
+                    Text("搜尋到\(storeModel.storeMap.count)家咖啡廳")
                         .font(.system(size: 20))
                         .bold()
                         .padding(4)
@@ -52,7 +52,7 @@ struct SimpleInfoListView: View {
             if mapViewModeModel.mode == .small{
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(storeModel.storeCollection) { store in
+                        ForEach(storeModel.storeMap) { store in
                             StoreSimpleInfoView(store: store,imgNum: 2)
                         }
                     }
@@ -62,7 +62,7 @@ struct SimpleInfoListView: View {
             }else if mapViewModeModel.mode == .large{
                 ScrollView(showsIndicators: false) {
                     VStack {
-                        ForEach(storeModel.storeCollection) { store in
+                        ForEach(storeModel.storeMap) { store in
                             StoreSimpleInfoView(store: store,imgNum: 3)
                         }
                     }

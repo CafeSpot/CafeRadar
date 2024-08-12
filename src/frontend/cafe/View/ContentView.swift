@@ -10,25 +10,29 @@ import SwiftUI
 struct ContentView: View {
     
     @Environment(AuthModel.self) var authModel
+    var bottomPadding : CGFloat = 10
+    var topPadding : CGFloat = 10
     
     var body: some View {
         if authModel.signedIn || authModel.notRequireAuth{
             TabView {
-                ExploreView()
+                    ExploreView()
                     .tabItem {
-                        Label("探索", systemImage: "magnifyingglass")                 }
-                MapView()
-                    .tabItem {
-                        Label("咖啡地圖", systemImage: "map.fill")
+                        Label("探索", systemImage: "magnifyingglass")
                     }
-                CollectionView()
-                    .tabItem {
-                        Label("我的收藏", systemImage: "suit.heart")
-                    }
-                SettingView()
-                    .tabItem {
-                        Label("設定", systemImage: "book.and.wrench")
-                    }
+                    MapView()
+                        .padding(.bottom, bottomPadding)
+                        .tabItem {
+                            Label("咖啡地圖", systemImage: "map.fill")
+                        }
+                    CollectionView()
+                        .tabItem {
+                            Label("我的收藏", systemImage: "suit.heart")
+                        }
+                    SettingView()
+                        .tabItem {
+                            Label("設定", systemImage: "book.and.wrench")
+                        }
             }
             .accentColor(CafeColor.basicColor)
         }

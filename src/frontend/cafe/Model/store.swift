@@ -41,7 +41,7 @@ struct Comment: Identifiable {
 struct Store: Identifiable{
     //id
     let id = UUID()
-    var cafeId: String = ""
+    var cafeId: Int = 0
     var name: String = ""
     
     //basic info
@@ -49,7 +49,7 @@ struct Store: Identifiable{
     var closeTime: String = ""
     var seatNum: Int = -1
     var images: [IdImage] = []
-    var tags: [Idtag] = []
+    var tags: [Bool] = []
     
     //ratuing info
     var commentIds: [String] = []
@@ -78,6 +78,60 @@ struct Store: Identifiable{
     //condition now
     var crowdRate: Int = -1
     var rate: Float = 3.5
+    
+    // Initializer
+    init(
+        cafeId: Int = 0,
+        name: String = "",
+        openTime: String = "",
+        closeTime: String = "",
+        seatNum: Int = -1,
+        images: [IdImage] = [],
+        tags: [Bool] = [],
+        commentIds: [String] = [],
+        envRating: Int = -1,
+        spaceScore: Int = -1,
+        lightScore: Int = -1,
+        plugNum: Int = -1,
+        place_id: String = "",
+        distance: Int = -1,
+        marker: GMSMarker = GMSMarker(),
+        address: String = "no address",
+        addressLink: String = "https://maps.app.goo.gl/5dyExrTXkTU1SBH79",
+        phone: String = "03-5205766",
+        ig: String = "ilikecoffee",
+        igLink: String = "https://",
+        fb: String = "ilikecoffee",
+        fbLink: String = "https://",
+        crowdRate: Int = -1,
+        rate: Float = 3.5
+    ) {
+        self.cafeId = cafeId
+        self.name = name
+        self.openTime = openTime
+        self.closeTime = closeTime
+        self.seatNum = seatNum
+        self.images = images
+        self.tags = tags
+        self.commentIds = commentIds
+        self.envRating = envRating
+        self.spaceScore = spaceScore
+        self.lightScore = lightScore
+        self.plugNum = plugNum
+        self.place_id = place_id
+        self.distance = distance
+        self.marker = marker
+        self.address = address
+        self.addressLink = addressLink
+        self.phone = phone
+        self.ig = ig
+        self.igLink = igLink
+        self.fb = fb
+        self.fbLink = fbLink
+        self.crowdRate = crowdRate
+        self.rate = rate
+    }
+
 }
  /*
   //place_id: str # google api提供
@@ -206,6 +260,17 @@ struct GoogleInfo: Codable {
  }
 ]
  */
+
+struct Recommend: Identifiable {
+    let id = UUID()
+    let title: String
+    let storeIDs: [Int]
+    
+    init(title: String, storeIDs: [Int]) {
+        self.title = title
+        self.storeIDs = storeIDs
+    }
+}
 
 
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct typeView: View {
-    var type: String
+    var typeName: String
     var typeImage: String
     var ifChoose: Bool = true
     
@@ -16,7 +16,7 @@ struct typeView: View {
         HStack{
             Image(systemName: typeImage)
                 .foregroundColor(ifChoose ? .white : CafeColor.basicColor)
-            Text(type)
+            Text(typeName)
                 .font(.system(size: 15))
                 .foregroundColor(ifChoose ? .white : CafeColor.basicColor)
                 .lineLimit(nil)
@@ -35,7 +35,7 @@ struct typeView: View {
 
 #Preview {
     VStack(){
-        typeView(type: "aaa", typeImage: "questionmark.app.dashed", ifChoose: true)
-        typeView(type: "aaa", typeImage: "questionmark.app.dashed", ifChoose: false)
+        typeView(typeName: "aaa", typeImage: "questionmark.app.dashed", ifChoose: true)
+        typeView(typeName: "aaa", typeImage: "questionmark.app.dashed", ifChoose: false)
     }
 }

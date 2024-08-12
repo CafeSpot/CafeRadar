@@ -11,27 +11,38 @@ import GoogleMaps
 
 @Observable
 class StoreModel: storeModelPositionManager{
-//class StoreModel{
-    //the position of the user. when user move, send the request to get the nearby caffee
     
+    // [class setting]
     let bufferSize = 100
     
+    // [data from server] - global
     var storeBuffer: [Store]
-    var storeCollection: [Store] { self.storeBuffer.filter { self.filtStore(store: $0) } }  // the set of the store show on the map page and the command page
+    var recommends: [Recommend]
+    var typeNames: [String]
     
-    var types: [String] = ["空位", "插座", "不限時", "讀書", "供應正餐", "音樂", "戶外"]
+    // [data from server] - user??
     
+    
+    // [maintain data]
+    var storeCollection: [Store] { self.storeBuffer.filter { self.filtStore_selection(store: $0) } }  // the set of the store show on the map page and the command page
+    var storeMap: [Store] { self.storeBuffer.filter { self.filtStore_selection(store: $0) } }
+    var storeRecommends: [[Store]] {
+        self.recommends.map { recommand in
+            self.storeBuffer.filter { store in
+                recommand.storeIDs.contains(store.cafeId)
+            }
+        }
+    }
     var selectionText: String = ""  // keyword to search
-    var selectionsType: [Idtag] = []  // key type to search
-    var selectionsTypeCount: Int = 0  // how many key type was choosed
+    var selectionsType: [Bool] = []  // key type to search
     var selectedDistance: Double = 10000
     
     //init() {
     override init() {
-        let loadtype = [Idtag("空位"), Idtag("插座"), Idtag("不限時"), Idtag("讀書"), Idtag("供應正餐"), Idtag("音樂"), Idtag("戶外")]
-        self.selectionsType = loadtype
-        self.selectionsTypeCount = loadtype.count
         self.storeBuffer = []
+        self.recommends = []
+        self.typeNames = []
+        
         super.init()
         self.initLoad()
     }
@@ -40,6 +51,10 @@ class StoreModel: storeModelPositionManager{
     // the method request the recommend store info from the server, with info user_position, user_id, user_favor...
     func initLoad(){
         self.storeBuffer = testStores
+        self.recommends = testRecommends
+        self.typeNames = testTypeNames
+        
+        self.selectionsType = Array(repeating: true, count: self.typeNames.count)
     }
     
     //??? request googlemapAPI-nearbySearch and set the result to the storeBuffer
@@ -126,13 +141,26 @@ class StoreModel: storeModelPositionManager{
         var count = 0
         for item in googleInfoBuffer{
             let store =  Store(
-                cafeId: "",
+                cafeId: 0,
                 name: item.name,
                 openTime: "8:00",
                 closeTime: "18:00",
                 seatNum: 50,
                 images: [],
-                tags: item.types.map{Idtag($0.replacingOccurrences(of: "_", with: " "))},
+                tags: [
+                    true, //"插座"
+                    true, //"不限時"
+                    true, //"讀書"
+                    true, //"供應正餐"
+                    true, //"音樂"
+                    true, //"戶外"
+                    true, //"插座"
+                    true, //"不限時"
+                    true, //"讀書"
+                    true, //"供應正餐"
+                    true, //"音樂"
+                    true, //"戶外" ]
+                    ],
                 commentIds: [],
                 envRating: 1,
                 spaceScore: 3,
@@ -155,7 +183,7 @@ class StoreModel: storeModelPositionManager{
     
     
     // this method is the filter function which return if the "store" is correspond the selected conditions
-    func filtStore(store: Store) -> Bool{
+    func filtStore_selection(store: Store) -> Bool{
         var ansText: Bool = false
         var ansType: Bool = false
         var ansDistance: Bool = false
@@ -164,12 +192,8 @@ class StoreModel: storeModelPositionManager{
         
 
         //type filter design?
-        for type in selectionsType{
-            for tag in store.tags{
-                if tag.tag==type.tag && type.selected{
-                    ansType = true
-                }
-            }
+        for index in typeNames.indices{
+            ansType = selectionsType[index] && store.tags[index]
         }
 
         

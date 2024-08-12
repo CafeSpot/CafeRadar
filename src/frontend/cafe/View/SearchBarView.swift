@@ -40,8 +40,7 @@ struct SearchBarView: View {
                         storeModel.selectionText = ""
                         storeModel.selectedDistance = 10000
                         for index in storeModel.selectionsType.indices{
-                            storeModel.selectionsType[index].selected = true
-                            storeModel.selectionsTypeCount = storeModel.selectionsType.count
+                            storeModel.selectionsType[index] = true
                         }
                     }) {
                         Image(systemName: "xmark")
@@ -65,17 +64,15 @@ struct SearchBarView: View {
                         HStack{
                             ForEach(storeModel.selectionsType.indices, id: \.self) { index in
                                 Button(action: {
-                                    if storeModel.selectionsType[index].selected{
-                                        storeModel.selectionsTypeCount-=1
-                                        storeModel.selectionsType[index].selected = false
+                                    if storeModel.selectionsType[index]{
+                                        storeModel.selectionsType[index] = false
                                     }else{
-                                        storeModel.selectionsTypeCount+=1
-                                        storeModel.selectionsType[index].selected = true
+                                        storeModel.selectionsType[index] = true
                                     }
                                 }) {
-                                    typeView(type: storeModel.selectionsType[index].tag,
+                                    typeView(typeName: storeModel.typeNames[index],
                                              typeImage: "questionmark.app.dashed",
-                                             ifChoose: storeModel.selectionsType[index].selected)
+                                             ifChoose: storeModel.selectionsType[index])
                                 }
                             }
                         }
