@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @Environment(AuthModel.self) var authModel
+    @EnvironmentObject var authModel : AuthModel
     var bottomPadding : CGFloat = 10
     var topPadding : CGFloat = 10
     
@@ -47,6 +47,6 @@ struct ContentView: View {
         .environment(StoreModel())
         .environment(MapViewModeModel())
         .environment(UserModel())
-        .environment(AuthModel())
+        .environmentObject(AuthModel())
 
 }

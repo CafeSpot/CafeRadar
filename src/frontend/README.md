@@ -162,3 +162,11 @@ reference:
 1. work
     1. modify the type list to the One-Hot Encoding
     2. add the logo animator
+    
+20324/8/17
+1. work:
+    1. modify the "AuthModel" from "@obversable" to "@obserobject". the firebase.configuration must be in appdelegate, however, the older method require set this line in authmodel init(), because it initialize defore appdelegate
+    2. api\_key
+1. error:
+    1. ```Error for queryMetaDataSync: 2```: ignore it (ref: https://forums.developer.apple.com/forums/thread/736978)
+

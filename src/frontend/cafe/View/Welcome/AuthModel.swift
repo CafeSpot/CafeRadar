@@ -13,38 +13,37 @@ import CryptoKit
 import AuthenticationServices
 import GoogleSignIn
 
-@Observable
-class AuthModel: NSObject, ASAuthorizationControllerDelegate {
-    var signedIn:Bool = false
-    var notRequireAuth:Bool = false
+
+class AuthModel: NSObject, ASAuthorizationControllerDelegate, ObservableObject {
+    @Published var signedIn:Bool = false
+    @Published var notRequireAuth:Bool = false
     
     // Unhashed nonce.
-    var currentNonce: String?
-    
+    @Published var currentNonce: String?
+
     override init() {
-        if FirebaseApp.app() == nil {
-            FirebaseApp.configure()
-        }
         super.init()
+        
         Auth.auth().addStateDidChangeListener() { auth, user in
             if user != nil {
                 self.signedIn = true
-                print("Auth state changed, is signed in")
+                print("[AuthModel]: ","Auth state changed, Login now")
             } else {
                 self.signedIn = false
-                print("Auth state changed, is signed out")
+                print("[AuthModel]: ","Auth state changed, Loog out")
             }
         }
     }
+
     
     // MARK: - Password Account
     func regularCreateAccount(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let e = error {
-                print(e.localizedDescription)
+                print("[AuthModel]: ",e.localizedDescription)
                 
             } else {
-                print("Successfully created password account")
+                print("[AuthModel]: ","Successfully created password account")
             }
         }
     }
@@ -55,8 +54,9 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate {
         Auth.auth().signIn(withEmail: email, password: password) {  authResult, error in
             if let e = error {
                 completion(e)
+                print("[AuthModel]: ","regularSignIn error")
             } else {
-                print("Login success")
+                print("[AuthModel]: ","Login success")
                 completion(nil)
             }
         }
@@ -70,7 +70,7 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate {
             try firebaseAuth.signOut()
             completion(nil)
         } catch let signOutError as NSError {
-          print("Error signing out: %@", signOutError)
+          print("[AuthModel]: ","Error signing out: %@", signOutError)
           completion(signOutError)
         }
     }
@@ -90,7 +90,7 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate {
           let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
           if errorCode != errSecSuccess {
             fatalError(
-              "Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
+                "[AuthModel]: Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)"
             )
           }
           return random
@@ -141,14 +141,14 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             guard let nonce = currentNonce else {
-                fatalError("Invalid state: A login callback was received, but no login request was sent.")
+                fatalError("[AuthModel]: Invalid state: A login callback was received, but no login request was sent.")
             }
             guard let appleIDToken = appleIDCredential.identityToken else {
-                print("Unable to fetch identity token")
+                print("[AuthModel]: ","Unable to fetch identity token")
                 return
             }
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                print("[AuthModel]: ","Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                 return
             }
             // Initialize a Firebase credential.
@@ -162,12 +162,12 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate {
                     // Error. If error.code == .MissingOrInvalidNonce, make sure
                     // you're sending the SHA256-hashed nonce as a hex string with
                     // your request to Apple.
-                    print(error?.localizedDescription)
+                    print("[AuthModel]: ",error?.localizedDescription)
                     return
                 }
                 // User is signed in to Firebase with Apple.
                 // ...
-                print("Apple sign in!")
+                print("[AuthModel]: ","Apple sign in!")
                 
                 // Allow proceed to next screen
             }
@@ -178,6 +178,8 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate {
         // Handle error.
         print("Sign in with Apple errored: \(error)")
     }
+    
+
     func googleSignIn() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
 
@@ -223,4 +225,5 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate {
         GIDSignIn.sharedInstance.signOut()
         print("Google sign out")
     }
+    
 }

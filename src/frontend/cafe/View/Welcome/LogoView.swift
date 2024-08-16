@@ -33,7 +33,7 @@ extension UIImage {
     }
 }
 
-struct LogoView: UIViewRepresentable {
+struct LogoDynamicView: UIViewRepresentable {
     func makeUIView(context: Context) -> UIImageView {
         let imageView = UIImageView()
         var images = [UIImage]()
@@ -44,7 +44,7 @@ struct LogoView: UIViewRepresentable {
             }
         }
         imageView.animationImages = images
-        imageView.animationDuration = 1.6
+        imageView.animationDuration = 1.3
         imageView.animationRepeatCount = 1  // Play the animation only once
         imageView.startAnimating()
 
@@ -62,6 +62,19 @@ struct LogoView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UIImageView, context: Context) {}
+}
+
+struct LogoView: View {
+    var body: some View {
+        ZStack(){
+            Image("logo_final")
+                .resizable()
+                .frame(width: logoSize, height: logoSize)
+            LogoDynamicView()
+        }        
+        .background(CafeColor.basicColor_background)
+
+    }
 }
 
 

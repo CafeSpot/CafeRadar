@@ -37,10 +37,10 @@ struct ExploreView: View {
                             Spacer()
                         }
                         .padding()
-                        Image("cafe1")
+                        Image("cafe_first")
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 250, height: 250)
+                            .frame(maxWidth: .infinity)
                             .cornerRadius(17)
                             .clipped()
                     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingView: View {
-    @Environment(AuthModel.self) private var authModel
+    @EnvironmentObject var authModel : AuthModel
     @State private var showLoginPage = false
     
     var body: some View {
@@ -30,15 +30,15 @@ struct SettingView: View {
                         .foregroundColor(.black)
                 }
                 .sheet(isPresented: $showLoginPage) {
-                    LoginView()
+                    AccountView()
                 }
                 .padding(5)
                 
                 Button {
-                    print("[SettingView] Tapped google sign out")
+                    print("[SettingView]: Tapped google sign out")
                     authModel.regularSignOut() { error in
                         if let e = error {
-                            print("[WelcomeView] google sign out ~~ ",e.localizedDescription)
+                            print("[SettingView]: google sign out ~~ ",e.localizedDescription)
                         }
                     }
                     authModel.googleSignOut()
@@ -57,5 +57,5 @@ struct SettingView: View {
 
 #Preview {
     SettingView()
-        .environment(AuthModel())
+        .environmentObject(AuthModel())
 }

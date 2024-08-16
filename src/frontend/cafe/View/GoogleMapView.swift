@@ -8,6 +8,7 @@
 import SwiftUI
 import GoogleMaps
 
+
 struct GoogleMapView: UIViewRepresentable {
     @Environment(StoreModel.self) private var storeModel
     @Environment(UserModel.self) private var userModel
@@ -24,7 +25,7 @@ struct GoogleMapView: UIViewRepresentable {
         
         func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
             //mapView.delegate = self
-            print("tap the marker")
+            print("[GoogleMapView]: tap the marker")
             if let index = self.mapView.storeModel.storeBuffer.firstIndex(where: { $0.marker == marker }) {
                 self.mapView.markerTappedAction?(index)
             }
@@ -37,6 +38,7 @@ struct GoogleMapView: UIViewRepresentable {
         // Create a GMSMapView centered around the city of San Francisco, California
         //let sanFrancisco = CLLocationCoordinate2D(latitude: 37.7576, longitude: -122.4194)
         //gmsMapView.camera = GMSCameraPosition.camera(withTarget: sanFrancisco, zoom: defaultZoomLevel)
+         
         let gmsMapView = GMSMapView(frame: .zero)
         if let position = storeModel.position{
             gmsMapView.camera = GMSCameraPosition.camera(withLatitude: position.coordinate.latitude, longitude: position.coordinate.longitude, zoom: defaultZoomLevel)
@@ -72,6 +74,7 @@ struct GoogleMapView: UIViewRepresentable {
     }
 }
 
+
  
 #Preview {
     GoogleMapView()
@@ -79,3 +82,4 @@ struct GoogleMapView: UIViewRepresentable {
         .environment(MapViewModeModel())
         .environment(UserModel())
 }
+

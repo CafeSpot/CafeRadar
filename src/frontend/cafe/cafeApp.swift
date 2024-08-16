@@ -9,29 +9,31 @@ import SwiftUI
 import GoogleMaps
 import FirebaseCore
 import FirebaseAuth
-import GoogleSignIn
+//import GoogleSignIn
 
 
 //import FirebaseCore
 class AppDelegate: NSObject, UIApplicationDelegate {
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         // [google map service]
         GMSServices.provideAPIKey((Bundle.main.infoDictionary?["GOOGLE_API_KEY"] as? String)!)
         
-        if FirebaseApp.app() == nil {
-            FirebaseApp.configure()
-        }
+        // [firebase service]
+        FirebaseApp.configure()
         
         return true
     }
     
-    func application(_ app: UIApplication,
-                     open url: URL,
-                     options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-      return GIDSignIn.sharedInstance.handle(url)
-    }
-
+    
+    //  GoogleSignIn
+    //func application(_ app: UIApplication,
+    //                 open url: URL,
+    //                 options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+    //  return GIDSignIn.sharedInstance.handle(url)
+    //}
+ 
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
@@ -74,7 +76,7 @@ struct cafeApp: App {
     @State private var storeModel = StoreModel()
     @State private var mapViewModeModel = MapViewModeModel()
     @State private var userModel = UserModel()
-    @State private var authModel = AuthModel()
+    @StateObject var authModel =  AuthModel()
     
     init(){
     }
@@ -85,7 +87,7 @@ struct cafeApp: App {
                 .environment(storeModel)
                 .environment(mapViewModeModel)
                 .environment(userModel)
-                .environment(authModel)
+                .environmentObject(authModel)
         }
     }
 }

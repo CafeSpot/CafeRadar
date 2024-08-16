@@ -55,6 +55,7 @@ class StoreModel: storeModelPositionManager{
         self.typeNames = testTypeNames
         
         self.selectionsType = Array(repeating: true, count: self.typeNames.count)
+        print("get the ",self.storeBuffer.count," stores from the test data")
     }
     
     //??? request googlemapAPI-nearbySearch and set the result to the storeBuffer
@@ -68,8 +69,8 @@ class StoreModel: storeModelPositionManager{
         self.position = locations.first
         if let location = locations.first{
             if ifResquestNearbyData(la: location.coordinate.latitude, lo: location.coordinate.longitude) {
-                getNearbyFromGoogleMap()
-                print("get the nearby store info")
+                //getNearbyFromGoogleMap()
+                //print("get the nearby store info")
                 
                 self.basicPosition = locations.first
             }
@@ -178,7 +179,6 @@ class StoreModel: storeModelPositionManager{
             }
             count+=1
         }
-        print("find \(count) cafe stores!")
     }
     
     
@@ -196,7 +196,7 @@ class StoreModel: storeModelPositionManager{
             ansType = selectionsType[index] && store.tags[index]
         }
 
-        
+
         if let position = self.position{
             let location1 = CLLocation(latitude: position.coordinate.latitude, longitude:position.coordinate.longitude)
             let location2 = CLLocation(latitude: store.marker.position.latitude, longitude: store.marker.position.longitude)
@@ -204,6 +204,7 @@ class StoreModel: storeModelPositionManager{
         }else{
             ansDistance = true
         }
+        
         return ansText && ansType && ansDistance
     }
     
@@ -230,6 +231,7 @@ class storeModelPositionManager: NSObject, CLLocationManagerDelegate{  //positio
         locationManager.distanceFilter = 0.4
         locationManager.startUpdatingLocation()
         locationManager.requestWhenInUseAuthorization()
+
      }
      
      
@@ -243,7 +245,7 @@ class storeModelPositionManager: NSObject, CLLocationManagerDelegate{  //positio
         if let location = locations.first{
             if ifResquestNearbyData(la: location.coordinate.latitude, lo: location.coordinate.longitude) {
                 //sent the request api to get the nearby store
-                print("get the nearby store info")
+                print("[storeModelPositionManager]: get the nearby store info")
                 
                 self.basicPosition = locations.first
             }
@@ -259,21 +261,21 @@ class storeModelPositionManager: NSObject, CLLocationManagerDelegate{  //positio
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-       print("Location manager failed with error: \(error.localizedDescription)")
+       print("[storeModelPositionManager]: Location manager failed with error: \(error.localizedDescription)")
     }//show if there is error
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
            case .notDetermined:
-           print("status: Not Determined")
+           print("[storeModelPositionManager]: status ~ Not Determined")
         case .restricted:
-           print("status: Restricted")
+           print("[storeModelPositionManager]: status ~ Restricted")
            case .denied:
-        print("status: Denied")
+        print("[storeModelPositionManager]: status ~ Denied")
            case .authorizedAlways, .authorizedWhenInUse:
-           print("status: Authorized")
+           print("[storeModelPositionManager]: status ~ Authorized")
         @unknown default:
-           print("status: Unknown")
+           print("[storeModelPositionManager]: status ~ Unknown")
         }
     }//to show the autorization change
  }

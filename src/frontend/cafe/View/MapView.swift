@@ -40,7 +40,6 @@ struct MapView: View {
                             label: { EmptyView() }
                         )
                         GoogleMapView() { index in
-                            // This closure will be called when a marker is tapped
                             self.selectedMarkerIndex = index
                         }
                     }

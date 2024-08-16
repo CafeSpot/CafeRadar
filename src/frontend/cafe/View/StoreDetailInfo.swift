@@ -123,8 +123,8 @@ struct StoreDetailInfo: View {
                     }) {
                         Text("前往導航")
                             .padding()
-                            .foregroundColor(.black)
-                            .background(Color(UIColor.lightGray))
+                            .background(CafeColor.basicColor)
+                            .foregroundColor(.white)
                             .cornerRadius(8)
                     }
                 }

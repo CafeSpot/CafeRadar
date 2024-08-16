@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '16.0'
 
 target 'cafe' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -7,7 +7,7 @@ target 'cafe' do
 
   # Pods for cafe
   pod 'GoogleSignIn'
-  pod 'GoogleMaps'
+  pod 'GoogleMaps', '9.0.0'
 
 
 
@@ -17,6 +17,7 @@ target 'cafe' do
   end
 
   target 'cafeUITests' do
+    inherit! :search_paths
     # Pods for testing
   end
 
