@@ -33,7 +33,6 @@
 		A9300A7A2C6D1853005A5E91 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9300A792C6D1853005A5E91 /* SignUpView.swift */; };
 		A936313E2C6FCECB00B79530 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A936313C2C6FCC2700B79530 /* CoreTelephony.framework */; };
 		A952D94B2C6A8F8200EC458A /* LogoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952D94A2C6A8F8200EC458A /* LogoView.swift */; };
-		A952D94E2C6A91C800EC458A /* logo.gif in Resources */ = {isa = PBXBuildFile; fileRef = A952D94D2C6A91C800EC458A /* logo.gif */; };
 		A952D9502C6A9E9800EC458A /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952D94F2C6A9E9800EC458A /* Size.swift */; };
 		A95418302C67AD8100215420 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A954182F2C67AD8000215420 /* SettingView.swift */; };
 		A95418322C67BC4F00215420 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95418312C67BC4F00215420 /* AccountView.swift */; };
@@ -100,18 +99,17 @@
 		A9300A792C6D1853005A5E91 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		A936313C2C6FCC2700B79530 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		A952D94A2C6A8F8200EC458A /* LogoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoView.swift; sourceTree = "<group>"; };
-		A952D94D2C6A91C800EC458A /* logo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = logo.gif; path = ../../../../../../Downloads/logo.gif; sourceTree = "<group>"; };
 		A952D94F2C6A9E9800EC458A /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
 		A954182F2C67AD8000215420 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A95418312C67BC4F00215420 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		A9B3202C2B7E770400775832 /* autoArrayLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autoArrayLayout.swift; sourceTree = "<group>"; };
-		A9BC4B562C6123B0000D4CFC /* secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secrets.xcconfig; sourceTree = "<group>"; };
 		A9C090342B72621500FFD98A /* typeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = typeView.swift; sourceTree = "<group>"; };
 		A9CDC91B2B6D3DF90090FA47 /* mapViewModeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mapViewModeModel.swift; sourceTree = "<group>"; };
 		A9D503912B6BF299008324B6 /* CrowdRateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrowdRateView.swift; sourceTree = "<group>"; };
 		A9D62A7A2C64FFEC000842BF /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		A9E2B82B2C63B62300B6A54D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A9ED5DAC2B6F82DA00126B32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A9F3763B2C75122700F2F4F6 /* secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secrets.xcconfig; sourceTree = "<group>"; };
 		A9FBF4072C65E7EF00471D78 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A9FBF4092C65F0A200471D78 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		F91B93BF7AE1C4535AEBABA0 /* Pods-cafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cafe.debug.xcconfig"; path = "Target Support Files/Pods-cafe/Pods-cafe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -196,7 +194,6 @@
 		A9186BF22B6B73D400169CD3 /* cafe */ = {
 			isa = PBXGroup;
 			children = (
-				A952D94C2C6A91AB00EC458A /* resource */,
 				A9FBF4072C65E7EF00471D78 /* GoogleService-Info.plist */,
 				A9E2B82A2C63B5C900B6A54D /* appear */,
 				A9BC4B552C612391000D4CFC /* SecureAPIKeys */,
@@ -275,18 +272,10 @@
 			path = TestData;
 			sourceTree = "<group>";
 		};
-		A952D94C2C6A91AB00EC458A /* resource */ = {
-			isa = PBXGroup;
-			children = (
-				A952D94D2C6A91C800EC458A /* logo.gif */,
-			);
-			path = resource;
-			sourceTree = "<group>";
-		};
 		A9BC4B552C612391000D4CFC /* SecureAPIKeys */ = {
 			isa = PBXGroup;
 			children = (
-				A9BC4B562C6123B0000D4CFC /* secrets.xcconfig */,
+				A9F3763B2C75122700F2F4F6 /* secrets.xcconfig */,
 			);
 			path = SecureAPIKeys;
 			sourceTree = "<group>";
@@ -429,7 +418,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A952D94E2C6A91C800EC458A /* logo.gif in Resources */,
 				A9186BFB2B6B73D600169CD3 /* Preview Assets.xcassets in Resources */,
 				A9186BF82B6B73D600169CD3 /* Assets.xcassets in Resources */,
 				A9FBF4082C65E7EF00471D78 /* GoogleService-Info.plist in Resources */,
@@ -625,7 +613,7 @@
 /* Begin XCBuildConfiguration section */
 		A9186C122B6B73D600169CD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9BC4B562C6123B0000D4CFC /* secrets.xcconfig */;
+			baseConfigurationReference = A9F3763B2C75122700F2F4F6 /* secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -689,7 +677,7 @@
 		};
 		A9186C132B6B73D600169CD3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9BC4B562C6123B0000D4CFC /* secrets.xcconfig */;
+			baseConfigurationReference = A9F3763B2C75122700F2F4F6 /* secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

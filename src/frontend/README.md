@@ -163,10 +163,21 @@ reference:
     1. modify the type list to the One-Hot Encoding
     2. add the logo animator
     
-20324/8/17
+2024/8/17
 1. work:
     1. modify the "AuthModel" from "@obversable" to "@obserobject". the firebase.configuration must be in appdelegate, however, the older method require set this line in authmodel init(), because it initialize defore appdelegate
     2. api\_key
 1. error:
     1. ```Error for queryMetaDataSync: 2```: ignore it (ref: https://forums.developer.apple.com/forums/thread/736978)
+    
+2024/8/20
+1. study
+    1. custom modifier - BottomSheet (ref: https://github.com/lucaszischka/BottomSheet/tree/main)
+        * modify the storeList in mapView() to this one
+        * NOTE: I have tried the build-in .sheet() to implement the "draggable bottom sheet" for the store list which requires different list styles and  height of the list. but there is problem is let the .sheet cover the tabBar (idealy, the tab bar should not be covered by any component at the bottom)
+        * ref: 
+            1. custom modifier: https://www.hackingwithswift.com/books/ios-swiftui/custom-modifiers
+            2. chatgpt: In SwiftUI, a modifier is essentially a function that takes the view (self) it's called on, modifies it in some way, and then returns a new view. This is why modifiers can be chained together.
+    2. ```@Namespace``` (ref: https://medium.com/@chavanakshay.d/what-is-namespace-in-swiftui-3fce811dd067)
+        * @Namespace is a property wrapper used to create a namespace for coordinating animations between different views. It is commonly used when you want to create smooth transitions between views, especially during navigation or view state changes.
 
