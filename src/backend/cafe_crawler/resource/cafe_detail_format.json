@@ -1,0 +1,353 @@
+{
+    "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E",
+    "id": "ChIJLemzQ901aDQRH56DkeKXk_E",
+    "types": [
+        "cafe",
+        "food",
+        "point_of_interest",
+        "establishment"
+    ],
+    "nationalPhoneNumber": "03 561 5998",
+    "internationalPhoneNumber": "+886 3 561 5998",
+    "formattedAddress": "No. 312\u865f, Gongyuan Rd, East District, Hsinchu City, Taiwan 300",
+    "addressComponents": [
+        {
+            "longText": "312\u865f",
+            "shortText": "312\u865f",
+            "types": [
+                "street_number"
+            ],
+            "languageCode": "en-US"
+        },
+        {
+            "longText": "Gongyuan Road",
+            "shortText": "Gongyuan Rd",
+            "types": [
+                "route"
+            ],
+            "languageCode": "en"
+        },
+        {
+            "longText": "\u516c\u5712\u91cc",
+            "shortText": "\u516c\u5712\u91cc",
+            "types": [
+                "administrative_area_level_3",
+                "political"
+            ],
+            "languageCode": "zh-TW"
+        },
+        {
+            "longText": "East District",
+            "shortText": "East District",
+            "types": [
+                "administrative_area_level_2",
+                "political"
+            ],
+            "languageCode": "en"
+        },
+        {
+            "longText": "Hsinchu City",
+            "shortText": "Hsinchu City",
+            "types": [
+                "administrative_area_level_1",
+                "political"
+            ],
+            "languageCode": "en"
+        },
+        {
+            "longText": "Taiwan",
+            "shortText": "TW",
+            "types": [
+                "country",
+                "political"
+            ],
+            "languageCode": "en"
+        },
+        {
+            "longText": "300",
+            "shortText": "300",
+            "types": [
+                "postal_code"
+            ],
+            "languageCode": "en-US"
+        }
+    ],
+    "plusCode": {
+        "globalCode": "7QP2RX2H+Q2",
+        "compoundCode": "RX2H+Q2 Taiwan, \u65b0\u7af9\u5e02\u6771\u5340\u516c\u5712\u91cc"
+    },
+    "location": {
+        "latitude": 24.8019704,
+        "longitude": 120.9776206
+    },
+    "viewport": {
+        "low": {
+            "latitude": 24.800550919708495,
+            "longitude": 120.9763241197085
+        },
+        "high": {
+            "latitude": 24.803248880291502,
+            "longitude": 120.97902208029149
+        }
+    },
+    "rating": 4.2,
+    "googleMapsUri": "https://maps.google.com/?cid=17407423984076824095",
+    "websiteUri": "https://www.facebook.com/zhucoffee",
+    "utcOffsetMinutes": 480,
+    "adrFormatAddress": "<span class=\"street-address\">No. 312\u865f, Gongyuan Rd, \u516c\u5712\u91cc</span> <span class=\"locality\">East District</span>, <span class=\"region\">Hsinchu City</span>, <span class=\"country-name\">Taiwan</span> <span class=\"postal-code\">300</span>",
+    "businessStatus": "CLOSED_TEMPORARILY",
+    "priceLevel": "PRICE_LEVEL_MODERATE",
+    "userRatingCount": 662,
+    "iconMaskBaseUri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/cafe_pinlet",
+    "iconBackgroundColor": "#FF9E67",
+    "displayName": {
+        "text": "\u7bc9\u5496\u5561 ZHU COFFEE",
+        "languageCode": "en"
+    },
+    "primaryTypeDisplayName": {
+        "text": "Cafe",
+        "languageCode": "en"
+    },
+    "takeout": true,
+    "delivery": false,
+    "servesBreakfast": true,
+    "servesLunch": false,
+    "servesDinner": false,
+    "servesBeer": false,
+    "servesWine": false,
+    "servesBrunch": true,
+    "servesVegetarianFood": false,
+    "primaryType": "cafe",
+    "shortFormattedAddress": "No. 312\u865f, Gongyuan Rd",
+    "reviews": [
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/reviews/ChdDSUhNMG9nS0VJQ0FnSUNpeF8tWHVBRRAB",
+            "relativePublishTimeDescription": "3 years ago",
+            "rating": 5,
+            "text": {
+                "text": "Quiet small, designer coffee shop with food. On the first floor are a few seats alongside designer products to buy and the counter to order at. The second floor houses the main seating area (if you can call it that with less than 30 seats). Zhu Coffee had a really nice cool vibe and a view onto the park. I bought a excellent Kenyan coffee (180 NT) and the most expensive cake they had (a nice homemade cinnamon roll at 150NT). You're paying for the ambiance as much as the drinks/food, but it was worth it.",
+                "languageCode": "en"
+            },
+            "originalText": {
+                "text": "Quiet small, designer coffee shop with food. On the first floor are a few seats alongside designer products to buy and the counter to order at. The second floor houses the main seating area (if you can call it that with less than 30 seats). Zhu Coffee had a really nice cool vibe and a view onto the park. I bought a excellent Kenyan coffee (180 NT) and the most expensive cake they had (a nice homemade cinnamon roll at 150NT). You're paying for the ambiance as much as the drinks/food, but it was worth it.",
+                "languageCode": "en"
+            },
+            "authorAttribution": {
+                "displayName": "Bob Cook",
+                "uri": "https://www.google.com/maps/contrib/113314347498798056711/reviews",
+                "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjXnVtt9YJqcF1nKU0HYeFRnAskfJtzUZjJ7wzw1xsyOyTpVQFIGmQ=s128-c0x00000000-cc-rp-mo-ba6"
+            },
+            "publishTime": "2020-11-17T13:38:45Z"
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/reviews/ChZDSUhNMG9nS0VJQ0FnSUNvajhhU0RnEAE",
+            "relativePublishTimeDescription": "5 years ago",
+            "rating": 5,
+            "text": {
+                "text": "Stylish cafe for hipsters. If u want some privacy to have conversations with friends then u will have to book the good spots in advance. The rest of the seats are too close n if u wish to talk something personal then won\u2019t be a good choice.",
+                "languageCode": "en"
+            },
+            "originalText": {
+                "text": "Stylish cafe for hipsters. If u want some privacy to have conversations with friends then u will have to book the good spots in advance. The rest of the seats are too close n if u wish to talk something personal then won\u2019t be a good choice.",
+                "languageCode": "en"
+            },
+            "authorAttribution": {
+                "displayName": "Sara Bellavita",
+                "uri": "https://www.google.com/maps/contrib/110592975610302224885/reviews",
+                "photoUri": "https://lh3.googleusercontent.com/a/ACg8ocI80eXKadT1mCAizG0LDY2bPCUJCmCPk_Jh7SSwPi34rMuZCQ=s128-c0x00000000-cc-rp-mo-ba3"
+            },
+            "publishTime": "2019-03-05T13:41:34Z"
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/reviews/ChdDSUhNMG9nS0VJQ0FnSURRNWVmRTR3RRAB",
+            "relativePublishTimeDescription": "8 years ago",
+            "rating": 5,
+            "text": {
+                "text": "The breakfast was very good. I got the bacon omelette, which includes brocollini and mushrooms inside with a heap of oregano and pepper. Also comes with roasted tomato and a few chunks of potato. Really, really good.\n\nThey also provided me with yogurt which I would also recommend.\n\nBut the real reason I came here was to try the coffee. I'm a bit of a snob and hadn't enjoyed anything I tried in Hsinchu all week. Normally I get a latte or cap, but it was really hot out during my trek here so I opted for the iced latte.\n\nAmbience and service were also good. I enjoyed the jazz music and the view from upstairs.",
+                "languageCode": "en"
+            },
+            "originalText": {
+                "text": "The breakfast was very good. I got the bacon omelette, which includes brocollini and mushrooms inside with a heap of oregano and pepper. Also comes with roasted tomato and a few chunks of potato. Really, really good.\n\nThey also provided me with yogurt which I would also recommend.\n\nBut the real reason I came here was to try the coffee. I'm a bit of a snob and hadn't enjoyed anything I tried in Hsinchu all week. Normally I get a latte or cap, but it was really hot out during my trek here so I opted for the iced latte.\n\nAmbience and service were also good. I enjoyed the jazz music and the view from upstairs.",
+                "languageCode": "en"
+            },
+            "authorAttribution": {
+                "displayName": "Aaron Miller",
+                "uri": "https://www.google.com/maps/contrib/104924671558439959736/reviews",
+                "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjXVsmliybME7yyLgCcqsYEo9qxRQKDFkAOhnPSeyS8QljjM03kq=s128-c0x00000000-cc-rp-mo"
+            },
+            "publishTime": "2016-04-07T03:29:33Z"
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/reviews/ChZDSUhNMG9nS0VJQ0FnSUNBaElmQVhBEAE",
+            "relativePublishTimeDescription": "6 years ago",
+            "rating": 4,
+            "text": {
+                "text": "Eggs Benedict was just average but the waffles were great (serving could be larger tho). A nice place to study or just chill indeed! Great view out the windows and cozy interior design \ud83d\ude0d",
+                "languageCode": "en"
+            },
+            "originalText": {
+                "text": "Eggs Benedict was just average but the waffles were great (serving could be larger tho). A nice place to study or just chill indeed! Great view out the windows and cozy interior design \ud83d\ude0d",
+                "languageCode": "en"
+            },
+            "authorAttribution": {
+                "displayName": "Agnes Wan",
+                "uri": "https://www.google.com/maps/contrib/113720247158851953354/reviews",
+                "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjUb_Y_djsRHyKvoaFIT7xh2B61ospDpyAhTqPv8rqZsHTrqqPU0=s128-c0x00000000-cc-rp-mo-ba3"
+            },
+            "publishTime": "2018-05-20T08:16:44Z"
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/reviews/ChdDSUhNMG9nS0VJQ0FnSUNNeDlpWnB3RRAB",
+            "relativePublishTimeDescription": "4 years ago",
+            "rating": 5,
+            "text": {
+                "text": "The cafe has a quiet environment to meet a friend.",
+                "languageCode": "en"
+            },
+            "originalText": {
+                "text": "The cafe has a quiet environment to meet a friend.",
+                "languageCode": "en"
+            },
+            "authorAttribution": {
+                "displayName": "Ssuyu Pan",
+                "uri": "https://www.google.com/maps/contrib/103568300142289607895/reviews",
+                "photoUri": "https://lh3.googleusercontent.com/a-/ALV-UjU797EiITwYf88aZcBeOsZcRqdGOfgF3FkmqNBn4YtsuaX5HLUU=s128-c0x00000000-cc-rp-mo-ba3"
+            },
+            "publishTime": "2019-12-08T07:16:33Z"
+        }
+    ],
+    "photos": [
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/photos/AXCi2Q6XesioU7pfHlSy-5q131wM3pmpPklKDil91Mmbo7tqOET-P3oMCtKcv4m_cXBaRCQgjSdEbB7GYcCbz73on_kV8mneluAFKDq9a3tjV00ZUFPWTNgzjsjrU26s_2eH5S8Hd8ooP1ZR-4KtsAcTQ7CQnAj2n7cUzg6x",
+            "widthPx": 4096,
+            "heightPx": 3072,
+            "authorAttributions": [
+                {
+                    "displayName": "\u9322\u4f2f\u9ec3",
+                    "uri": "//maps.google.com/maps/contrib/115880752642164796275",
+                    "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjXMMLSRBnyR5oJU_k1PLTi3Xt9dugaAKZ1orXIqMMJCtRU5aXTP=s100-p-k-no-mo"
+                }
+            ]
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/photos/AXCi2Q61sX0eSADzHxJyqLHxVmLr_z1q4Pv4UxRjCupDCr_zX2nbcBBfgTSu56Q_1gCYrQeEX2fPOMOdBafhn76VCFB9kNyJ_JNZFXW8_cTseJHZHAyiNBVbS5lsPGgehEVcr0ePiP4GQ9mIeh12Oa8UbT1oPODssQOSd2zz",
+            "widthPx": 768,
+            "heightPx": 769,
+            "authorAttributions": [
+                {
+                    "displayName": "\u7bc9\u5496\u5561 ZHU COFFEE",
+                    "uri": "//maps.google.com/maps/contrib/100799864640254906637",
+                    "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjVbprXiNhM7arw9joaWZLay13is6qs7cxnoMMwcKygkjz2d79qi=s100-p-k-no-mo"
+                }
+            ]
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/photos/AXCi2Q4jtMcdT3IKPUeJ3OA2tAnElKAb3M0fIB9B8ZsYxyAo_P4Q-MHNx4z1KiIqr6vnfFqNosW0h4AHBC3LTpoaM1e3_AXWYLGW1eN3_3by7QsmFLby0nTWFEGjIIF-kFUv0u7xdICMtofRi92NRJRea-ttGisDoiN-3PAs",
+            "widthPx": 3000,
+            "heightPx": 4000,
+            "authorAttributions": [
+                {
+                    "displayName": "Liao",
+                    "uri": "//maps.google.com/maps/contrib/111701847961734013635",
+                    "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjV5DlxwommnDLFybUMSOribB9g_J8xD8frDRi1OYMMtBS7wN0Waeg=s100-p-k-no-mo"
+                }
+            ]
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/photos/AXCi2Q4yTGQCJwEFB0GJeMleEq1SR5KjvrhgNcqQJZZaiWe7bxMVtF5w8-uLEK_R9W_0HM0_chHygfB5M2mCs5U53QgkTp8kBaslLqIG8NnuuI9t39EGf7WfG895zOaIfEerEP4Lpo7ByWLKot07GXE0iZreXP69r9omu2gh",
+            "widthPx": 4032,
+            "heightPx": 3024,
+            "authorAttributions": [
+                {
+                    "displayName": "\u80e1\u6137\u8343",
+                    "uri": "//maps.google.com/maps/contrib/112764007149140574053",
+                    "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjV5dtMNwboecGC6USL2UsX6je0SxAcVGQvPcFbI6RvXMGTTex9A=s100-p-k-no-mo"
+                }
+            ]
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/photos/AXCi2Q5DRv97vhkNCBz0K1wxeb14mYv288795aBF_-AyQMF6F7Az5VF7t4ePL9GaCOqDUlDH-1R_tRsKpn8nAWjQ1z1RPNaGp17Z1B2HOZRUgey1YKQ9UulX_M_EjD8_hq-5dbX9If3Z73k6D-DgXgct2dthX0QF_jusvAyn",
+            "widthPx": 4032,
+            "heightPx": 3024,
+            "authorAttributions": [
+                {
+                    "displayName": "cc wang",
+                    "uri": "//maps.google.com/maps/contrib/103808950029192546633",
+                    "photoUri": "//lh3.googleusercontent.com/a/ACg8ocI_IQCoxv_qEXiKJVylRX4UrOuDeMeL5Nb1Yzz0AOyLuJlITQ=s100-p-k-no-mo"
+                }
+            ]
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/photos/AXCi2Q4PnoO-yk3KX1GcA0GPD_Ren8F-sjRWl6MYx_qaJqlrDESzCBJHboLoaBo1A5LgrlzeEp0o2dcAkuHwGpok_zcqS3ZP79wpZL68XUV7aaM1dD-E3-JPgjBdvPBkKuiXySfrCRYdYn-jZpFtdJILEaSWXZFokfk2mYM4",
+            "widthPx": 4032,
+            "heightPx": 3024,
+            "authorAttributions": [
+                {
+                    "displayName": "T.J. Hou (T.J.)",
+                    "uri": "//maps.google.com/maps/contrib/113944268896547407667",
+                    "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjUojk5zjkFm4JavD2IpW4jrg8wpZIa7iXGU6lj-eaO-ef-tHn05Bg=s100-p-k-no-mo"
+                }
+            ]
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/photos/AXCi2Q5LlLfU2IZlPwUfRDuFEPdEM-5ErMtByVut5dIibH7q7Rs5zjJX-3s55yhvYxjzH2cpVoyhN6QCtWxXEdT9PubXZ6dm2EsHIbPJo413pe8d98_HtS2tLm_Deuv7AP22ezCxzYOpl9nK_KhQT-ZVKGqx1KYpC7n6Hjkd",
+            "widthPx": 4032,
+            "heightPx": 3024,
+            "authorAttributions": [
+                {
+                    "displayName": "Yin Yu Tseng",
+                    "uri": "//maps.google.com/maps/contrib/111268368793894335785",
+                    "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjXxbWeA_czvKVJVI-Sj6yDvOlvt9hP7W8lC-9Ex8xoLiwYkwDIv=s100-p-k-no-mo"
+                }
+            ]
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/photos/AXCi2Q4B-II9qltU4_vYNOGZdcW4h-Kjr09ACPJSo8nbXCiEVjY0xTKWHJFjAN7A7YSEja8QkYwyvXjh5-Ph4NNMAvmRt_GnIpp9ZbegeOmuYzjz6bEAWrme-nHfdAUeSRYxO_SPGDkWG2yHcSEHb1tpzzoJqJxiCXonAVgk",
+            "widthPx": 3006,
+            "heightPx": 4008,
+            "authorAttributions": [
+                {
+                    "displayName": "YC Lin",
+                    "uri": "//maps.google.com/maps/contrib/109718677824646116279",
+                    "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjXwydZfR452jVg15NbRn0rpdNxhh3Ej1Yt_5ntZROWHVDZQp8Bf=s100-p-k-no-mo"
+                }
+            ]
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/photos/AXCi2Q6cKU-nFoYxkKde-_7u6X7kxyXDyQQUJkJOa66CcD8zWdHBV5Fn_WtKnOj6_7s4eSjz73QoMAhWZHUzWsDCn_e_Ev_twBAE-L-ijylxvcFijW0dgx9NKjwwIoKsEI6-wAUEKiswlRxcula31L_SbeIKwPfGT5zDKGGD",
+            "widthPx": 3024,
+            "heightPx": 4032,
+            "authorAttributions": [
+                {
+                    "displayName": "Hsu Jeremy",
+                    "uri": "//maps.google.com/maps/contrib/112658307895125270885",
+                    "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjW_A21cDPotQwZkg2Xo9tVTJpSjclSUZ0abL_5JSJlTNxqAxuYz=s100-p-k-no-mo"
+                }
+            ]
+        },
+        {
+            "name": "places/ChIJLemzQ901aDQRH56DkeKXk_E/photos/AXCi2Q6I1-l4OYPjuTcm6QN5Z9PJGOj_ciipzCxpAJGDxI0wnQfdLBaBGOVuaxOXPBa7sykmuP4HKEnc9-nqie_4O8WVvseZInzNRRrsMPZNvWWyB84e7CWLPpHg8YADJJpbS8nAzcz8KskmDEiyxaiY11rHEFypsDyphfzs",
+            "widthPx": 4624,
+            "heightPx": 3468,
+            "authorAttributions": [
+                {
+                    "displayName": "Rock Wang",
+                    "uri": "//maps.google.com/maps/contrib/101875984622128421858",
+                    "photoUri": "//lh3.googleusercontent.com/a-/ALV-UjUrcXA4bIG67EGxdPQAPVw-dasOu9-r1EE0CChiqBejKPBFhGXd3Q=s100-p-k-no-mo"
+                }
+            ]
+        }
+    ],
+    "outdoorSeating": true,
+    "menuForChildren": false,
+    "servesDessert": true,
+    "servesCoffee": true,
+    "goodForChildren": true,
+    "restroom": true,
+    "paymentOptions": {
+        "acceptsCreditCards": true,
+        "acceptsDebitCards": true,
+        "acceptsCashOnly": false,
+        "acceptsNfc": true
+    }
+}
