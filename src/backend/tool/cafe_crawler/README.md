@@ -13,7 +13,10 @@
     3. Push the cafe's details from second function to DB
         * Usage: flag ```-push_db```
 * [ENV_Setting]
-    1. command in shell: ```pip install -r requirements.txt```
+    1. Command in shell: ```pip install -r requirements.txt```
+    2. Add the env var to the .env file, required term:
+        * MONGODB_URL
+        * GOOGLE_API_KEY
 * [Runing]
     1. Update cafe's ID list: ```python crawler.py -id```
     2. Update cafe's Detail list: ```python crawler.py -detail -detail_limit [times]```
