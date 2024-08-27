@@ -1,6 +1,6 @@
 from passlib.context import CryptContext
 
-from src.backend.database import *
+from src.backend.repository.connection import *
 from src.backend.models.userModel import *
 
 # 用sha256來加密密碼

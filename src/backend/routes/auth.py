@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, Body
 
-from src.backend.database import *
+from src.backend.repository.connection import *
 from src.backend.models.userModel import *
 from src.backend.models.tokenModel import *
 from src.backend.functions.hasher import Hasher

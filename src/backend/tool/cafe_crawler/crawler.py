@@ -6,6 +6,7 @@ import time
 import json
 import argparse
 from bson import ObjectId 
+import gridfs
 
 ### load the env variables
 load_dotenv()
@@ -94,7 +95,7 @@ def google_map_testSearch_post(querys, api_key, place_ids):
     new version of "map/place api" for "place datail". It uses the http get method with placae id to get the store information
     ref: https://developers.google.com/maps/documentation/places/web-service/place-details?hl=zh-tw
 
-    [purpose]: using the a list of "place id" got from "google_map_testSearch_post()" to retrive the detail info of the cafe.
+    [purpose]: using the list of "place id" got from "google_map_testSearch_post()" to retrive the detail info of the cafe.
 
     [parameter]:
         1. A list of the place ID (["place_id"])
@@ -103,7 +104,6 @@ def google_map_testSearch_post(querys, api_key, place_ids):
     NOTE: 
 '''
 def google_map_placeDetail_get(place_ids, place_details, limit_times):
-
     print(f"[google_map_placeDetail_get] begin! there are {len(place_details)} place details NOW.")
     len_old = len(place_details)
 
@@ -145,8 +145,30 @@ def google_map_placeDetail_get(place_ids, place_details, limit_times):
     print("")
     return place_details
 
+'''
+    new version of "map/place api" for "Place Photo". It uses the http get method with the photo name to get the photo
+    ref: https://developers.google.com/maps/documentation/places/web-service/place-photos?hl=zh-tw
+    [purpose]: retrieve the place photos of the place
+    [parameter]: place detail dictionary(obtain from "google_map_placeDetail_get()")
+    [return]: return the list of the images
+'''
+def google_map_images_get(cafe):
+    images = []
+    for index, photo in enumerate(cafe["photos"]):
+        url = f"https://places.googleapis.com/v1/places/{photo["name"]}?maxHeightPx={photo["heightPx"]}&maxWidthPx={photo["widthPx"]}&key={api_key}"
 
-def google_map_querys():
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            with open(f"resource/img/{cafe["id"]}/{index}.jpg", "wb") as file:
+                file.write(response.content)
+            images.append(response.content)
+            print("Image saved successfully.")
+        else:
+            print(f"Error: {response.status_code}")
+    return images
+
+def google_map_querys_generator():
     ### [google_map_querys] import the "cafe_keyword.json" file
     if os.path.exists('resource/cafe_keyword.json'):
         with open('resource/cafe_keyword.json', 'r', encoding='utf-8') as file:
@@ -162,6 +184,46 @@ def google_map_querys():
                     querys.append(f"{city}{district}{village}的{keyword_class}")
     return querys
 
+'''
+    Convert the location field from Google's format to GeoJSON. GeoJSON is especially useful 
+    for MongoDB's geospatial indexing and search capabilities.
+    ref: https://blog.csdn.net/weixin_55633225/article/details/129948116
+    
+    * Format:
+        1. Google: {"longitude": xxx, "latitude": yyy}
+        2. GeoJSON: {"type": "Point", "coordinates": [xxx, yyy] }
+'''
+def add_location_GeoJSON(doc, cafe_collection):
+    longitude = doc['location']['longitude']
+    latitude = doc['location']['latitude']
+    
+    loc_GeoJSON = { "type": "Point", 
+                    "coordinates": [longitude, latitude] }
+
+    cafe_collection.update_one(
+        {"_id": doc["_id"]},
+        {"$set": {"location_geojson": loc_GeoJSON}}
+    )
+
+def add_image(doc, db, cafe_collection):
+    image_ids = []
+    fs = gridfs.GridFS(db)
+    
+    for index in enumerate(doc["id"]["photos"]):
+        with open(f"resource/img/{doc["id"]}/{index}.jpg", "rb") as file:
+            filename = f"img_{doc["id"]}_{index}.jpg"
+            image = fs.find_one({"filename": filename})
+            if image:
+                image_id = image._id
+            else:
+                image_id = fs.put(file, filename=filename)
+            image_ids.append(image_id)
+
+    cafe_collection.update_one(
+        {"_id": doc["_id"]},
+        {"$set": {"image_ids": image_ids}}
+    )
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -169,6 +231,7 @@ if __name__ == '__main__':
     parser.add_argument('-detail', "--detail", action='store_true', help="costly command!!! call the google map api to get more place_detail(please ensure add new id before run)")
     parser.add_argument('-detail_limit', "--detail_limit", type=int, default=5, help="limit the google api palceDetail requesr times per program yuns")
     parser.add_argument('-push_db', "--push_db", action='store_true', help="push the cafe detail infos to DB")
+    parser.add_argument('-update_db', "--update_db", action='store_true', help="modify the DB")
     args = parser.parse_args()
 
     ### [get place_id] import the "cafe_place_ids.json" file ([place_id])
@@ -189,7 +252,7 @@ if __name__ == '__main__':
 
     if args.id:
         ### [get place_id] generate querys
-        querys = google_map_querys()
+        querys = google_map_querys_generator()
 
         ### [get place_id] request the place_ids with the keywords(querys)
         place_ids = google_map_testSearch_post(querys, api_key, place_ids)
@@ -210,9 +273,8 @@ if __name__ == '__main__':
         count_old = cafe_collection.count_documents({})
         print(f"[push_db] there are {count_old} documents in DB")
 
-        #cafe_collection.create_index([("id", 1)], unique=True)  #************
-
         place_details_list = [place_details[palce_id] for palce_id in place_details]
+        place_details_list = [add_location_GeoJSON(palce) for palce in place_details_list]
 
         try:
             # Insert documents, skipping duplicates
@@ -225,6 +287,39 @@ if __name__ == '__main__':
 
         count = cafe_collection.count_documents({})
         print(f"[push_db] there are {count} documents in DB, Increase {count-count_old} documents")
+
+    if args.update_db:
+        mongodb_url = os.getenv("MONGODB_URL")
+        client = MongoClient(mongodb_url)
+
+        db = client["info"]
+        cafe_collection = db["cafe"]
+
+        '''
+            create 2dsphere index in collection cafe
+            * ref: [2dsphere index] https://deepinout.com/mongodb/mongodb-questions/34_mongodb_does_anyone_know_a_working_example_of_2dsphere_index_in_pymongo.html
+        '''
+        cafe_collection.create_index([("location_geojson", "2dsphere")])
+
+        '''
+            add the new field "location_geojson" with geojson format value to exist documents
+            *red: [GeoJSON] https://blog.csdn.net/weixin_55633225/article/details/129948116
+        '''
+        # Find all documents that have the old location format
+        documents = cafe_collection.find({"location.latitude": {"$exists": True}})
+        for doc in documents:
+            add_location_GeoJSON(doc, cafe_collection)
+
+        '''
+            add the image
+        '''
+        documents = cafe_collection.find()
+        for doc in documents:
+            add_image(doc, db, cafe_collection)
+
+        
+
+    
 
 
 

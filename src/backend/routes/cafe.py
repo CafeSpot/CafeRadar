@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, Depends, Body
+from fastapi import APIRouter, HTTPException, Depends, Body, Query
 
-from src.backend.database import cafe_collection
+from src.backend.repository.connection import cafe_collection
 from src.backend.models.cafeModel import *
+from src.backend.repository.query import *
 
 router = APIRouter(prefix='/cafe')
 
@@ -26,3 +27,22 @@ async def postCafeInfo(response: dict):
         end_time=result.get("opening_hours", {}).get("weekday_text", [""])[-1]
     )
     return CafeModel(**cafe_info)
+
+@router.get("/search/")
+async def search_items(
+    lon: float = Query(0, description="longitude of the require"),
+    lat: float = Query(0, description="latitude of the require"),
+    dis: int = Query(5000, description="max search distances"),
+    text: str = Query("", description="search text"),
+    types: Optional[List[str]] = Query([], description="List of types to filter by"),
+    nextToken: int = Query(0, description="search text"),
+):
+    cafes_db, nextToken = await get_cafe_search(lon=lon, lat=lat, search_dis=dis, search_text=text, search_types=types, nextToken=nextToken)
+    cafes = cafes_convertor(cafes_db)
+
+    response = {
+        "nextToken": nextToken,
+        "data": cafes
+    }
+
+    return response

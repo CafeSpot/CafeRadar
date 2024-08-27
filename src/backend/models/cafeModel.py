@@ -1,7 +1,6 @@
 from pydantic import BaseModel, conint
 from typing import List, Optional
 
-
 class CafeModel(BaseModel):
     place_id: str # google api提供
     comment_id: Optional[List[str]] # User評論的id

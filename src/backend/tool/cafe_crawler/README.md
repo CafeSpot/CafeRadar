@@ -5,11 +5,13 @@
         * You can set the key keyword in ```/resource/cafe_keyword.json```.
             * NOTE: The format is "{city}{district}{village}+{class}" now. For example, 新竹市東區東香里咖啡廳
         * The result is the list of string. It would be saved at ```/resource/cafe_place_ids.json```
+        * ref: https://developers.google.com/maps/documentation/places/web-service/text-search?hl=zh-tw
     2. Fetch the cafe's detail infos from Google map service with cafe's ID
         * Usage: flag ```-detail```&```-detail_limit INT```(optional)
             * NOTE: This function incurs an API cost. To prevent abuse, the default usage limit per program run is set to 5. To manually increase this limit, use the ```-detail_limit``` flag followed by the desired value.
         * The result is dictionary which uses cafe's ID as key. The structure of value can be found at ```/resource/cafe_detail_format.json```
         * The result would be saved at ```/resource/cafe_place_details.json```
+        * ref: https://developers.google.com/maps/documentation/places/web-service/place-details?hl=zh-tw
     3. Push the cafe's details from second function to DB
         * Usage: flag ```-push_db```
 * [ENV_Setting]
