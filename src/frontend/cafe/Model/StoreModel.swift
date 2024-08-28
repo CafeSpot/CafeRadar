@@ -21,6 +21,8 @@ class StoreModel: storeModelPositionManager{
     var typeNames: [String]
     
     // [data from server] - user??
+    var user_lon: Float = 23
+    var user_lat: Float = 23
     
     
     // [maintain data]
@@ -62,18 +64,33 @@ class StoreModel: storeModelPositionManager{
     func searchText(text: String){
         storeBuffer = Array(storeBuffer.prefix(2))
     }
-    
-    // get the nearby store
-    //if the psition chanage, this fucyion would be call
-    override func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        self.position = locations.first
-        if let location = locations.first{
-            if ifResquestNearbyData(la: location.coordinate.latitude, lo: location.coordinate.longitude) {
-                //getNearbyFromGoogleMap()
-                //print("get the nearby store info")
-                
-                self.basicPosition = locations.first
-            }
+
+    // while the basicPosition change, this function would be called and send the http get request to our server
+    override func basicPositionDidChange() {
+        if let position = basicPosition {
+            print("[StoreModel - Current Location]: Latitude: \(position.coordinate.latitude), Longitude: \(position.coordinate.longitude)")
+            
+             //guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(position.coordinate.longitude)&lat=\(position.coordinate.latitude)&text=\(selectionText)&dis=\(selectedDistance)") else { return }
+            guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(120.9675)&lat=\(24.8138)&text=\(selectionText)&dis=\(selectedDistance)") else { return }
+            
+            URLSession.shared.dataTask(with: url) { data, response, error in
+                print("[StoreModel - URLSession] ~~~~~~~~~~~~~test1")
+                if let data = data {
+                    do {
+                        print("[StoreModel - URLSession] ~~~~~~~~~~~~~test2")
+                        let decodedData = try JSONDecoder().decode(Response.self, from: data)
+                        print("[StoreModel - URLSession] ~~~~~~~~~~~~~test3")
+                        
+                        // Update the UI on the main thread
+                        DispatchQueue.main.async {
+                            self.storeBuffer = decodedData.data
+                            print("Data received and decoded: \(self.storeBuffer.count)")
+                        }
+                    } catch {
+                        print("Error decoding data: \(error)")
+                    }
+                }
+            }.resume()
         }
     }
     
@@ -162,6 +179,8 @@ class StoreModel: storeModelPositionManager{
                     true, //"音樂"
                     true, //"戶外" ]
                     ],
+                lon: item.geometry.location.lng,
+                lat: item.geometry.location.lat,
                 commentIds: [],
                 envRating: 1,
                 spaceScore: 3,
@@ -169,7 +188,6 @@ class StoreModel: storeModelPositionManager{
                 plugNum: 4,
                 place_id: "1223",
                 distance: 200,
-                marker: GMSMarker(position: CLLocationCoordinate2D(latitude: item.geometry.location.lat, longitude: item.geometry.location.lng)),
                 crowdRate: 1,
                 rate: item.rating
             )
@@ -199,7 +217,7 @@ class StoreModel: storeModelPositionManager{
 
         if let position = self.position{
             let location1 = CLLocation(latitude: position.coordinate.latitude, longitude:position.coordinate.longitude)
-            let location2 = CLLocation(latitude: store.marker.position.latitude, longitude: store.marker.position.longitude)
+            let location2 = CLLocation(latitude: store.lat, longitude: store.lon)
             ansDistance = location1.distance(from: location2) < selectedDistance*100000000 ? true : false
         }else{
             ansDistance = true
@@ -219,10 +237,10 @@ class StoreModel: storeModelPositionManager{
 class storeModelPositionManager: NSObject, CLLocationManagerDelegate{  //positionManager
     private var locationManager: CLLocationManager
     var position: CLLocation?
-    var basicPosition: CLLocation? = CLLocation()
+    var basicPosition: CLLocation? = CLLocation() {
+        didSet {basicPositionDidChange()}
+    }
     
-    
-
     override init() {
         locationManager = CLLocationManager()
         super.init()
@@ -234,11 +252,16 @@ class storeModelPositionManager: NSObject, CLLocationManagerDelegate{  //positio
 
      }
      
-     
     func requestPermission() {
+        print("[storeModelPositionManager]: requestWhenInUseAuthorization")
         locationManager.requestWhenInUseAuthorization()
     } // this fubcatuin call to request the position auth from iphone user(optional)
-     
+    
+    func basicPositionDidChange() {
+        if let position = basicPosition {
+            print("Current Location: Latitude: \(position.coordinate.latitude), Longitude: \(position.coordinate.longitude)")
+        }
+    }
      
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         self.position = locations.first

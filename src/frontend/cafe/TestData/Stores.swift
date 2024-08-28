@@ -55,6 +55,8 @@ let store1 =  Store(
         true, //"音樂"
         true, //"戶外" ]
         ],
+    lon: 23,
+    lat: 23,
     commentIds: [
         "好吃",
         "超派",
@@ -65,7 +67,6 @@ let store1 =  Store(
     plugNum: 4,
     place_id: "1223",
     distance: 200,
-    marker: GMSMarker(position: CLLocationCoordinate2D(latitude: 23, longitude: 23)),
     crowdRate: 1
 )
 
@@ -96,6 +97,8 @@ let store2 =  Store(
         true, //"音樂"
         true, //"戶外" ]
         ],
+    lon: 23.5,
+    lat: 23.5,
     commentIds: [
         "好吃",
         "超派",
@@ -106,7 +109,6 @@ let store2 =  Store(
     plugNum: 4,
     place_id: "1223",
     distance: 200,
-    marker: GMSMarker(position: CLLocationCoordinate2D(latitude: 24, longitude: 24)),
     crowdRate: 2
 )
 
@@ -137,6 +139,8 @@ let store3 =  Store(
         true, //"音樂"
         true, //"戶外" ]
         ],
+    lon: 24,
+    lat: 24,
     commentIds: [
         "好吃",
         "超派",
@@ -147,7 +151,6 @@ let store3 =  Store(
     plugNum: 4,
     place_id: "1223",
     distance: 200,
-    marker: GMSMarker(position: CLLocationCoordinate2D(latitude: 25, longitude: 25)),
     crowdRate: 3
 )
 
@@ -179,6 +182,8 @@ let store4 =  Store(
         true, //"音樂"
         true, //"戶外" ]
         ],
+    lon: 24.5,
+    lat: 24.5,
     commentIds: [
         "好吃",
         "超派",
@@ -189,7 +194,6 @@ let store4 =  Store(
     plugNum: 4,
     place_id: "1223",
     distance: 200,
-    marker: GMSMarker(position: CLLocationCoordinate2D(latitude: 26, longitude: 26)),
     crowdRate: 2
 )
 
@@ -220,6 +224,8 @@ let store5 =  Store(
         true, //"音樂"
         true, //"戶外" ]
         ],
+    lon: 25,
+    lat: 25,
     commentIds: [
         "好吃",
         "超派",
@@ -230,7 +236,6 @@ let store5 =  Store(
     plugNum: 4,
     place_id: "1223",
     distance: 200,
-    marker: GMSMarker(position: CLLocationCoordinate2D(latitude: 27, longitude: 27)),
     crowdRate: 3
 )
 
@@ -261,6 +266,8 @@ let store6 =  Store(
         true, //"音樂"
         true, //"戶外" ]
         ],
+    lon: 25.5,
+    lat: 25.5,
     commentIds: [
         "好吃",
         "超派",
@@ -271,7 +278,6 @@ let store6 =  Store(
     plugNum: 4,
     place_id: "1223",
     distance: 200,
-    marker: GMSMarker(position: CLLocationCoordinate2D(latitude: 28, longitude: 28)),
     crowdRate: 3
 )
 
@@ -302,6 +308,8 @@ let store7 =  Store(
         true, //"音樂"
         true, //"戶外" ]
         ],
+    lon: 26,
+    lat: 26,
     commentIds: [
         "好吃",
         "超派",
@@ -312,7 +320,6 @@ let store7 =  Store(
     plugNum: 4,
     place_id: "1223",
     distance: 200,
-    marker: GMSMarker(position: CLLocationCoordinate2D(latitude: 29, longitude: 29)),
     crowdRate: 3
 )
 
@@ -343,6 +350,8 @@ let store8 =  Store(
         true, //"音樂"
         true, //"戶外" ]
         ],
+    lon: 26.5,
+    lat: 26.5,
     commentIds: [
         "好吃",
         "超派",
@@ -353,7 +362,6 @@ let store8 =  Store(
     plugNum: 4,
     place_id: "1223",
     distance: 200,
-    marker: GMSMarker(position: CLLocationCoordinate2D(latitude: 30, longitude: 30)),
     crowdRate: 3
 )
 
@@ -385,6 +393,8 @@ let store9 =  Store(
         true, //"音樂"
         true, //"戶外" ]
         ],
+    lon: 27,
+    lat: 27,
     commentIds: [
         "好吃",
         "超派",
@@ -395,7 +405,6 @@ let store9 =  Store(
     plugNum: 4,
     place_id: "1223",
     distance: 200,
-    marker: GMSMarker(position: CLLocationCoordinate2D(latitude: 31, longitude: 31)),
     crowdRate: 3
 )
 
@@ -426,6 +435,8 @@ let store10 =  Store(
         true, //"音樂"
         true, //"戶外" ]
         ],
+    lon: 27.5,
+    lat: 27.5,
     commentIds: [
         "好吃",
         "超派",
@@ -436,7 +447,6 @@ let store10 =  Store(
     plugNum: 4,
     place_id: "1223",
     distance: 200,
-    marker: GMSMarker(position: CLLocationCoordinate2D(latitude: 32, longitude: 32)),
     crowdRate: 3
 )
 

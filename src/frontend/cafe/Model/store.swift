@@ -11,36 +11,61 @@ import GoogleMaps
 import CoreLocation
 
 
-struct IdImage: Identifiable {
-    let id = UUID()
-    let image: Image
+struct IdImage: Identifiable, Decodable {
+    var id: UUID
+    var image: Image
+    
+    private enum CodingKeys: String, CodingKey {
+        case imageData = "image" // Assuming the image data is stored in this key
+    }
     
     init(_ image: Image) {
         self.image = image
+        self.id = UUID()
     }
-}
-
-struct Idtag: Identifiable {
-    let id = UUID()
-    let tag: String
-    var selected: Bool = true
     
-    init(_ tag: String) {
-        self.tag = tag
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        self.id = UUID()
+        
+        // Assuming image data is a base64 encoded string
+        let imageData = try container.decode(String.self, forKey: .imageData)
+        if let data = Data(base64Encoded: imageData),
+           let uiImage = UIImage(data: data) {
+            self.image = Image(uiImage: uiImage) // Convert UIImage to SwiftUI Image
+        } else {
+            self.image = Image(systemName: "photo") // Fallback if decoding fails
+        }
     }
 }
 
-struct Comment: Identifiable {
-    let id = UUID()
+struct Comment: Identifiable, Decodable {
+    var id : UUID // Kept as let, but will be assigned a default in init
     var commentId: String
     var userId: String
     var cafeId: String
     var content: String
+
+    // Coding keys to map JSON keys to properties
+    private enum CodingKeys: String, CodingKey {
+        case commentId, userId, cafeId, content
+    }
+
+    // Custom initializer for Decodable conformance
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = UUID() // Generate a new UUID instead of decoding it
+        self.commentId = try container.decode(String.self, forKey: .commentId)
+        self.userId = try container.decode(String.self, forKey: .userId)
+        self.cafeId = try container.decode(String.self, forKey: .cafeId)
+        self.content = try container.decode(String.self, forKey: .content)
+    }
 }
 
-struct Store: Identifiable{
+struct Store: Identifiable, Decodable{
     //id
-    let id = UUID()
+    var id = UUID()
     var cafeId: Int = 0
     var name: String = ""
     
@@ -50,6 +75,8 @@ struct Store: Identifiable{
     var seatNum: Int = -1
     var images: [IdImage] = []
     var tags: [Bool] = []
+    var lon: Double = 0
+    var lat: Double = 0
     
     //ratuing info
     var commentIds: [String] = []
@@ -61,10 +88,6 @@ struct Store: Identifiable{
     //google map info
     var place_id: String = ""
     var distance: Int = -1
-    var marker: GMSMarker
-        //https://developers.google.com/maps/documentation/ios-sdk/reference/interface_g_m_s_marker
-        //  let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: x, longitude: y))
-        //  marker.title = "name"
     
     //contact
     var address = "no address no"
@@ -79,6 +102,37 @@ struct Store: Identifiable{
     var crowdRate: Int = -1
     var rate: Float = 3.5
     
+    // CodingKeys enum to map JSON keys to struct properties
+    enum CodingKeys: String, CodingKey {
+        case id
+        case cafeId
+        case name
+        case openTime
+        case closeTime
+        case seatNum
+        case images
+        case tags
+        case lon
+        case lat
+        case commentIds
+        case envRating
+        case spaceScore
+        case lightScore
+        case plugNum
+        case place_id
+        case distance
+        case address
+        case addressLink
+        case phone
+        case ig
+        case igLink
+        case fb
+        case fbLink
+        case crowdRate
+        case rate
+    }
+
+    
     // Initializer
     init(
         cafeId: Int = 0,
@@ -88,6 +142,8 @@ struct Store: Identifiable{
         seatNum: Int = -1,
         images: [IdImage] = [],
         tags: [Bool] = [],
+        lon: Double = 0,
+        lat: Double = 0,
         commentIds: [String] = [],
         envRating: Int = -1,
         spaceScore: Int = -1,
@@ -95,7 +151,6 @@ struct Store: Identifiable{
         plugNum: Int = -1,
         place_id: String = "",
         distance: Int = -1,
-        marker: GMSMarker = GMSMarker(),
         address: String = "no address",
         addressLink: String = "https://maps.app.goo.gl/5dyExrTXkTU1SBH79",
         phone: String = "03-5205766",
@@ -113,6 +168,8 @@ struct Store: Identifiable{
         self.seatNum = seatNum
         self.images = images
         self.tags = tags
+        self.lat = lat
+        self.lon = lon
         self.commentIds = commentIds
         self.envRating = envRating
         self.spaceScore = spaceScore
@@ -120,7 +177,6 @@ struct Store: Identifiable{
         self.plugNum = plugNum
         self.place_id = place_id
         self.distance = distance
-        self.marker = marker
         self.address = address
         self.addressLink = addressLink
         self.phone = phone
@@ -131,7 +187,35 @@ struct Store: Identifiable{
         self.crowdRate = crowdRate
         self.rate = rate
     }
-
+    init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            id = (try? container.decode(UUID.self, forKey: .id)) ?? UUID()
+            cafeId = try container.decodeIfPresent(Int.self, forKey: .cafeId) ?? 0
+            name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+            openTime = try container.decodeIfPresent(String.self, forKey: .openTime) ?? ""
+            closeTime = try container.decodeIfPresent(String.self, forKey: .closeTime) ?? ""
+            seatNum = try container.decodeIfPresent(Int.self, forKey: .seatNum) ?? 0
+            images = try container.decodeIfPresent([IdImage].self, forKey: .images) ?? []
+            tags = try container.decodeIfPresent([Bool].self, forKey: .tags) ?? []
+            lon = try container.decodeIfPresent(Double.self, forKey: .lon) ?? 0
+            lat = try container.decodeIfPresent(Double.self, forKey: .lat) ?? 0
+            commentIds = try container.decodeIfPresent([String].self, forKey: .commentIds) ?? []
+            envRating = try container.decodeIfPresent(Int.self, forKey: .envRating) ?? 0
+            spaceScore = try container.decodeIfPresent(Int.self, forKey: .spaceScore) ?? 0
+            lightScore = try container.decodeIfPresent(Int.self, forKey: .lightScore) ?? 0
+            plugNum = try container.decodeIfPresent(Int.self, forKey: .plugNum) ?? 0
+            place_id = try container.decodeIfPresent(String.self, forKey: .place_id) ?? ""
+            distance = try container.decodeIfPresent(Int.self, forKey: .distance) ?? 0
+            address = try container.decodeIfPresent(String.self, forKey: .address) ?? "no address"
+            addressLink = try container.decodeIfPresent(String.self, forKey: .addressLink) ?? "https://maps.app.goo.gl/5dyExrTXkTU1SBH79"
+            phone = try container.decodeIfPresent(String.self, forKey: .phone) ?? "03-5205766"
+            ig = try container.decodeIfPresent(String.self, forKey: .ig) ?? "ilikecoffee"
+            igLink = try container.decodeIfPresent(String.self, forKey: .igLink) ?? "https://"
+            fb = try container.decodeIfPresent(String.self, forKey: .fb) ?? "ilikecoffee"
+            fbLink = try container.decodeIfPresent(String.self, forKey: .fbLink) ?? "https://"
+            crowdRate = try container.decodeIfPresent(Int.self, forKey: .crowdRate) ?? 1
+            rate = try container.decodeIfPresent(Float.self, forKey: .rate) ?? 3.5
+        }
 }
  /*
   //place_id: str # google api提供

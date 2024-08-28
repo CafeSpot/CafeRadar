@@ -28,6 +28,7 @@
 		A9186C522B6BB3A400169CD3 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C512B6BB3A300169CD3 /* UserModel.swift */; };
 		A9186C542B6BB47500169CD3 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C532B6BB47500169CD3 /* StoreModel.swift */; };
 		A9186C5A2B6BBDB100169CD3 /* Stores.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C592B6BBDB100169CD3 /* Stores.swift */; };
+		A919A8F42C7F9DC500CCDFC2 /* response.swift in Sources */ = {isa = PBXBuildFile; fileRef = A919A8F32C7F9DC500CCDFC2 /* response.swift */; };
 		A922A2242C6F3C040029050A /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A922A2232C6F3C040029050A /* FirebaseAuth */; };
 		A9300A782C6D1832005A5E91 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9300A772C6D1832005A5E91 /* LoginView.swift */; };
 		A9300A7A2C6D1853005A5E91 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9300A792C6D1853005A5E91 /* SignUpView.swift */; };
@@ -95,6 +96,8 @@
 		A9186C512B6BB3A300169CD3 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A9186C532B6BB47500169CD3 /* StoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModel.swift; sourceTree = "<group>"; };
 		A9186C592B6BBDB100169CD3 /* Stores.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stores.swift; sourceTree = "<group>"; };
+		A919A8F12C7F2FB700CCDFC2 /* secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = secrets.xcconfig; path = cafe/secrets.xcconfig; sourceTree = SOURCE_ROOT; };
+		A919A8F32C7F9DC500CCDFC2 /* response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = response.swift; sourceTree = "<group>"; };
 		A9300A772C6D1832005A5E91 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A9300A792C6D1853005A5E91 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		A936313C2C6FCC2700B79530 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -109,7 +112,6 @@
 		A9D62A7A2C64FFEC000842BF /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		A9E2B82B2C63B62300B6A54D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A9ED5DAC2B6F82DA00126B32 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		A9F3763B2C75122700F2F4F6 /* secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = secrets.xcconfig; sourceTree = "<group>"; };
 		A9FBF4072C65E7EF00471D78 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A9FBF4092C65F0A200471D78 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		F91B93BF7AE1C4535AEBABA0 /* Pods-cafe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cafe.debug.xcconfig"; path = "Target Support Files/Pods-cafe/Pods-cafe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 				A9186C512B6BB3A300169CD3 /* UserModel.swift */,
 				A9186C532B6BB47500169CD3 /* StoreModel.swift */,
 				A9CDC91B2B6D3DF90090FA47 /* mapViewModeModel.swift */,
+				A919A8F32C7F9DC500CCDFC2 /* response.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -275,7 +278,7 @@
 		A9BC4B552C612391000D4CFC /* SecureAPIKeys */ = {
 			isa = PBXGroup;
 			children = (
-				A9F3763B2C75122700F2F4F6 /* secrets.xcconfig */,
+				A919A8F12C7F2FB700CCDFC2 /* secrets.xcconfig */,
 			);
 			path = SecureAPIKeys;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				A9186C522B6BB3A400169CD3 /* UserModel.swift in Sources */,
 				A9CDC91C2B6D3DF90090FA47 /* mapViewModeModel.swift in Sources */,
 				A9D62A7B2C64FFEC000842BF /* WelcomeView.swift in Sources */,
+				A919A8F42C7F9DC500CCDFC2 /* response.swift in Sources */,
 				A9E2B82C2C63B62300B6A54D /* Color.swift in Sources */,
 				A9186C202B6B742E00169CD3 /* ExploreView.swift in Sources */,
 				A9186C342B6B75C100169CD3 /* StoreDetailInfo.swift in Sources */,
@@ -613,7 +617,7 @@
 /* Begin XCBuildConfiguration section */
 		A9186C122B6B73D600169CD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9F3763B2C75122700F2F4F6 /* secrets.xcconfig */;
+			baseConfigurationReference = A919A8F12C7F2FB700CCDFC2 /* secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -677,7 +681,7 @@
 		};
 		A9186C132B6B73D600169CD3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9F3763B2C75122700F2F4F6 /* secrets.xcconfig */;
+			baseConfigurationReference = A919A8F12C7F2FB700CCDFC2 /* secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;

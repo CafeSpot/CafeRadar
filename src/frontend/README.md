@@ -60,7 +60,7 @@ reference:
 2. step:
     1. create the "group" under the project dict by "new group" with name "SecureAPIKeys"
     2. creat the configuration file under "SecureAPIKeys/" by "new file"->"configuration setting..."->"file name secrets"
-    3. add the "GOOGLE_API_KEY = "AIzaSyA56wAlcA_gChuocEng24X_qi6OKIaaaaU" to the SecureAPIKeys/secrets
+    3. add the "GOOGLE_API_KEY = AIzaSyA56wAlcA_gChuocEng24X_qi6OKIaaaaU" to the SecureAPIKeys/secrets
     4. add the "src/SecureAPIKeys/\*" to the .gitignore
     4. modfiy the api key in the api function in project code with "func("GOOGLE_API_KEY")"
     5. go to "project"->"porject/project_name"->"info(tab)"->"configuration"->under "reference" and "debug", modify the project\_name to secrets(configuration file)
