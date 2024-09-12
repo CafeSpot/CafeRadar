@@ -71,6 +71,18 @@ async def get_cafe_search(lat=0, lon=0, search_dis=5000, search_text="", search_
         * Return: 
 '''
 def cafes_convertor(cafes_db):
+    table1 = ["restaurant", "food", "store", "cafe", "coffee_shop", "vegan_restaurant", "health", "brunch_restaurant", "breakfast_restaurant", "sandwich_shop", "bakery", "book_store"]
+    table2 = ["restaurant", "food", "store", "cafe", "coffee", "vegan", "health", "brunch", "breakfast", "sandwich", "bakery", "book"]
+    def covert_type(types):
+        #types_one = [False for _ in range(len(table1))]
+        #for type in types:
+        #    try:
+        #        types_one[table1.index(type)] = True
+        #    except ValueError:
+        #        pass
+        types_one = [True for _ in range(len(table1))]
+        return types_one
+
     def convertor(cafe_db):
         cafe = {}
         cafe["place_id"] = cafe_db.get("id", "")
@@ -103,6 +115,8 @@ def cafes_convertor(cafes_db):
             cafe["tags"].append("dessert")
         if cafe_db.get("servesCoffee",False):
             cafe["tags"].append("coffee")
+        cafe["tags"] = covert_type(cafe["tags"])
+        #cafe["tags_table"] = table2
         #cafe["reviews"] = cafe_db["reviews"]
         return cafe
 

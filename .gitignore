@@ -164,5 +164,4 @@ src/frontend/cafe/SecureAPIKeys/*
 src/frontend/pods/
 .DS_Store
 # backend/tool/cafe_crawler
-/src/backend/tool/cafe_crawler/resource/cafe_place_details.json
-
+/src/backend/tool/cafe_crawler/resource/img/*

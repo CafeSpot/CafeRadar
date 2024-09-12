@@ -145,21 +145,18 @@ struct Store: Identifiable, Decodable{
         lon: Double = 0,
         lat: Double = 0,
         commentIds: [String] = [],
-        envRating: Int = -1,
+        envRate: Int = -1,
         spaceScore: Int = -1,
         lightScore: Int = -1,
         plugNum: Int = -1,
-        place_id: String = "",
+        placeId: String = "",
         distance: Int = -1,
         address: String = "no address",
         addressLink: String = "https://maps.app.goo.gl/5dyExrTXkTU1SBH79",
         phone: String = "03-5205766",
         ig: String = "ilikecoffee",
-        igLink: String = "https://",
         fb: String = "ilikecoffee",
-        fbLink: String = "https://",
         crowdRate: Int = -1,
-        rate: Float = 3.5
     ) {
         self.cafeId = cafeId
         self.name = name

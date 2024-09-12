@@ -67,6 +67,9 @@ class StoreModel: storeModelPositionManager{
 
     // while the basicPosition change, this function would be called and send the http get request to our server
     override func basicPositionDidChange() {
+        requestStoreInfo()
+    }
+    func requestStoreInfo() {
         if let position = basicPosition {
             print("[StoreModel - Current Location]: Latitude: \(position.coordinate.latitude), Longitude: \(position.coordinate.longitude)")
             

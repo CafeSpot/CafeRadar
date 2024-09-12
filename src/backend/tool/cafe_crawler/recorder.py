@@ -22,7 +22,9 @@ if __name__ == '__main__':
     ### [get place_id] import the "cafe_place_ids.json" file ([place_id])
     if os.path.exists('resource/cafe_place_ids.json'):
         with open('resource/cafe_place_ids.json', 'r') as file:
-            place_ids = json.load(file)
+            data = json.load(file)
+            place_ids_delete = data["delete"]
+            place_ids = data["all"]
 
     ### [get place_detail] import the "cafe_place_details.json" file ({place_id: {...}}
     if os.path.exists('resource/cafe_place_details.json'):
@@ -36,13 +38,21 @@ if __name__ == '__main__':
                 cafe_types[cafe_type] = 0
             cafe_types[cafe_type]+=1
 
-    for index, cafe_type in enumerate(cafe_types):
-        print(f"{index}. {cafe_type}: {cafe_types[cafe_type]}")
+    nonrelation = ["event_venue","sushi_restaurant","japanese_restaurant","pizza_restaurant","political","brazilian_restaurant","hamburger_restaurant","convenience_store","atm","finance","thai_restaurant","meal_delivery","gift_shop","korean_restaurant","seafood_restaurant","chinese_restaurant","vietnamese_restaurant","grocery_store","ramen_restaurant","bar","farm","supermarket","bed_and_breakfast","lodging","hotel","fast_food_restaurant","gym","spanish_restaurant","wedding_venue","banquet_hall","ice_cream_shop","night_club","playground","amusement_center","market","liquor_store","campground","jewelry_store","mexican_restaurant","steak_house","fitness_center","sports_complex","private_guest_room","clothing_store","indian_restaurant","amusement_park","pharmacy","parking","hair_salon","hair_care","beauty_salon","shopping_mall","department_store","movie_theater"]
+    #for index, cafe_type in enumerate(cafe_types):
+    
+    #for index, cafe_type in enumerate(nonrelation):
+        #print(f"{index}. {cafe_type}: {cafe_types[cafe_type]}")
+        #print(f"\"{cafe_type}\", ", end="")
+        #print(f"\"{cafe_type}\",",end="")
 
-        for cafe_id in place_details:
-            if cafe_type in place_details[cafe_id]["types"]:
-                print(f"    {place_details[cafe_id]["displayName"]["text"]},  {place_details[cafe_id]["id"]}")
-
+        #for cafe_id in place_details:
+        #    if cafe_type in place_details[cafe_id]["types"]:
+        #        print(f"    {place_details[cafe_id]["displayName"]["text"]},  {place_details[cafe_id]["id"]}")
+    '''
+        尋路Cafe, ChIJWeK9sSIwaDQRfPLCG5BRG4o
+    '''
+        
     
     
 

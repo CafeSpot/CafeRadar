@@ -44,5 +44,6 @@ async def search_items(
         "nextToken": nextToken,
         "data": cafes
     }
+    print(f"send {len(cafes)} cafes")
 
     return response

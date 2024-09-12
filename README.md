@@ -24,7 +24,7 @@
 
 4. Run the app using uvicorn:
     ```bash
-    uvicorn src.backend.main:app -- reload
+    uvicorn src.backend.main:app --reload
     ```
 
 5. View the result in your browser at [http://127.0.0.1:8000](http://127.0.0.1:8000)

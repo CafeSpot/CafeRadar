@@ -8,6 +8,6 @@
 import Foundation
 
 struct Response: Decodable{
-    var nextToken: Int
+    var nextToken: Int?
     var data: [Store]
 }
