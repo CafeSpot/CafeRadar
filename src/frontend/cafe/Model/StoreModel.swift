@@ -20,10 +20,6 @@ class StoreModel: storeModelPositionManager{
     var recommends: [Recommend]
     var typeNames: [String]
     
-    // [data from server] - user??
-    var user_lon: Float = 23
-    var user_lat: Float = 23
-    
     
     // [maintain data]
     var storeCollection: [Store] { self.storeBuffer.filter { self.filtStore_selection(store: $0) } }  // the set of the store show on the map page and the command page
@@ -31,7 +27,7 @@ class StoreModel: storeModelPositionManager{
     var storeRecommends: [[Store]] {
         self.recommends.map { recommand in
             self.storeBuffer.filter { store in
-                recommand.storeIDs.contains(store.cafeId)
+                recommand.cafeIds.contains(store.cafeId)
             }
         }
     }
@@ -71,22 +67,20 @@ class StoreModel: storeModelPositionManager{
     }
     func requestStoreInfo() {
         if let position = basicPosition {
-            print("[StoreModel - Current Location]: Latitude: \(position.coordinate.latitude), Longitude: \(position.coordinate.longitude)")
+            print("[StoreModel - Current Location]: Latitude: \(position.coordinate.latitude), Longitude: \(position.coordinate.longitude), distance:\(selectedDistance)")
             
              //guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(position.coordinate.longitude)&lat=\(position.coordinate.latitude)&text=\(selectionText)&dis=\(selectedDistance)") else { return }
             guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(120.9675)&lat=\(24.8138)&text=\(selectionText)&dis=\(selectedDistance)") else { return }
             
             URLSession.shared.dataTask(with: url) { data, response, error in
-                print("[StoreModel - URLSession] ~~~~~~~~~~~~~test1")
                 if let data = data {
                     do {
-                        print("[StoreModel - URLSession] ~~~~~~~~~~~~~test2")
                         let decodedData = try JSONDecoder().decode(Response.self, from: data)
-                        print("[StoreModel - URLSession] ~~~~~~~~~~~~~test3")
                         
                         // Update the UI on the main thread
                         DispatchQueue.main.async {
                             self.storeBuffer = decodedData.data
+                            print(self.storeBuffer[0])
                             print("Data received and decoded: \(self.storeBuffer.count)")
                         }
                     } catch {
@@ -100,107 +94,7 @@ class StoreModel: storeModelPositionManager{
     
     // this function is called by [override func locationManager], used to request the nearby store by google map api
     // ~~~ move to another file, and return the value
-    func getNearbyFromGoogleMap(){
-        let requestURL: String
-        if let position = self.position{
-            requestURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cafe&location=\(position.coordinate.latitude)%2C\(position.coordinate.longitude)&radius=5000&key=a"
-            //AIzaSyA56wAlcA_gChuocEng24X_qi6OKIGdkaU
-        }else{
-            requestURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cafe&location=25.05232586760929%2C121.52068772564594&radius=5000&key=YOUR_API_KEY"
-        }
-        
-        guard let url = URL(string: requestURL) else {
-            print("Invalid URL")
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("Error: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let httpResponse = response as? HTTPURLResponse,
-                  (200...299).contains(httpResponse.statusCode) else {
-                print("Invalid response")
-                return
-            }
-            
-            if let data = data {
-                
-                //if let jsonString = String(data: data, encoding: .utf8) {print("JSON: \(jsonString)")}
-                
-                do {
-                    let decoder = JSONDecoder()
-                    let result = try decoder.decode(StorePlaceIds.self, from: data)
-                    DispatchQueue.main.async {
-                        self.convertGoogleInfoToStore(googleInfoBuffer: result.results)
-                        print("call the google map api and add the info to buffer successfully!!!")
-                    }
-                } catch let DecodingError.dataCorrupted(context) {
-                    print(context)
-                } catch let DecodingError.keyNotFound(key, context) {
-                    print("Key '\(key)' not found:", context.debugDescription)
-                    print("codingPath:", context.codingPath)
-                } catch let DecodingError.valueNotFound(value, context) {
-                    print("Value '\(value)' not found:", context.debugDescription)
-                    print("codingPath:", context.codingPath)
-                } catch let DecodingError.typeMismatch(type, context)  {
-                    print("Type '\(type)' mismatch:", context.debugDescription)
-                    print("codingPath:", context.codingPath)
-                } catch {
-                    print("error: ", error)
-                }//https://stackoverflow.com/questions/46959625/the-data-couldn-t-be-read-because-it-is-missing-error-when-decoding-json-in-sw
-            }
-        }
-        task.resume()
-    }
-    
-    // this function is called by [getNearbyFromGoogleMap], used to convert the return data from the google api to the store struct
-    // ~~~ move to another file, and return the value
-    func convertGoogleInfoToStore(googleInfoBuffer: [GoogleInfo]){
-        var count = 0
-        for item in googleInfoBuffer{
-            let store =  Store(
-                cafeId: 0,
-                name: item.name,
-                openTime: "8:00",
-                closeTime: "18:00",
-                seatNum: 50,
-                images: [],
-                tags: [
-                    true, //"插座"
-                    true, //"不限時"
-                    true, //"讀書"
-                    true, //"供應正餐"
-                    true, //"音樂"
-                    true, //"戶外"
-                    true, //"插座"
-                    true, //"不限時"
-                    true, //"讀書"
-                    true, //"供應正餐"
-                    true, //"音樂"
-                    true, //"戶外" ]
-                    ],
-                lon: item.geometry.location.lng,
-                lat: item.geometry.location.lat,
-                commentIds: [],
-                envRating: 1,
-                spaceScore: 3,
-                lightScore: 3,
-                plugNum: 4,
-                place_id: "1223",
-                distance: 200,
-                crowdRate: 1,
-                rate: item.rating
-            )
-            self.storeBuffer.append(store)
-            if(self.storeBuffer.count>bufferSize){
-                self.storeBuffer.removeFirst(1)
-            }
-            count+=1
-        }
-    }
+    func getNearbyFromGoogleMap(){}
     
     
     // this method is the filter function which return if the "store" is correspond the selected conditions
@@ -213,8 +107,11 @@ class StoreModel: storeModelPositionManager{
         
 
         //type filter design?
-        for index in typeNames.indices{
-            ansType = selectionsType[index] && store.tags[index]
+        for index in typeNames{
+            if(store.tags.contains(index)){
+                ansType = true
+                break
+            }
         }
 
 
@@ -228,12 +125,6 @@ class StoreModel: storeModelPositionManager{
         
         return ansText && ansType && ansDistance
     }
-    
-    struct StorePlaceIds: Codable{
-        var results: [GoogleInfo]
-        var status: String
-    }
-
 }
 
 @Observable

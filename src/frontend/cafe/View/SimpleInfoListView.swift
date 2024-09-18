@@ -51,7 +51,7 @@ struct SimpleInfoListView: View {
             
             if mapViewModeModel.mode == .small{
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
+                    LazyHStack {
                         ForEach(storeModel.storeMap) { store in
                             StoreSimpleInfoView(store: store,imgNum: 2)
                         }
@@ -59,9 +59,10 @@ struct SimpleInfoListView: View {
                 }
                 .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
                 .frame(minHeight: 160)
+                .frame(height: 220)
             }else if mapViewModeModel.mode == .large{
                 ScrollView(showsIndicators: false) {
-                    VStack {
+                    LazyVStack {
                         ForEach(storeModel.storeMap) { store in
                             StoreSimpleInfoView(store: store,imgNum: 3)
                         }

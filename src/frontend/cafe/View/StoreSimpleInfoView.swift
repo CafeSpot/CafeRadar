@@ -33,9 +33,8 @@ struct StoreSimpleInfoView: View {
         } label: {
             VStack{
                 HStack {
-                    ForEach(store.images.prefix(imgNum)) { image in
-                        image.image
-                            .resizable()
+                    ForEach(store.imageLinks.prefix(imgNum), id: \.self) { url in
+                        AsyncImageView(url: url)
                             .scaledToFill()
                             .frame(width: imageSize, height: imageSize)
                             .clipped()
@@ -43,7 +42,7 @@ struct StoreSimpleInfoView: View {
                         Spacer()
                     }
                     //ForEach(0..<(imgNum - store.images.count)) { _ in
-                    ForEach(0..<(imgNum - min(store.images.count, imgNum)), id: \.self) { _ in
+                    ForEach(0..<(imgNum - min(store.imageLinks.count, imgNum)), id: \.self) { _ in
                         Image(systemName: "plus.square")
                             .resizable()
                             .cornerRadius(20)
@@ -72,7 +71,7 @@ struct StoreSimpleInfoView: View {
                         
                         HStack(){
                             HStack(spacing: 0){
-                                Text(String(store.rate))
+                                Text(String(store.envRate ?? 0.0))
                                     .foregroundColor(CafeColor.basicColor)
                                     .font(.system(size: 13))
                                 Image(systemName: "star.fill")
@@ -80,12 +79,12 @@ struct StoreSimpleInfoView: View {
                                     .font(.system(size: 13))
                             }
                             
-                            Text(String(store.distance)+"公尺")
+                            Text(String(format: "%.2f 公尺", store.distance ?? 0.0))
                                 .foregroundColor(CafeColor.basicColor)
                                 .font(.system(size: 13))
                         }
                         
-                        Text("營業時間 "+store.openTime+"-"+store.closeTime)
+                        Text("營業時間: \(store.openTime ?? "not provided")-\(store.closeTime ?? "not provided")")
                             .foregroundColor(CafeColor.basicColor)
                             .font(.system(size: 13))
                         
@@ -97,7 +96,7 @@ struct StoreSimpleInfoView: View {
                     // right
                     VStack{
                         Spacer()
-                        CrowdRateView(crowdRate: store.crowdRate)
+                        CrowdRateView(crowdRate: store.crowdRate ?? 0.0)
                     }
                     
                 }

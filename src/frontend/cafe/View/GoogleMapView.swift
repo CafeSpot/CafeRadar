@@ -11,7 +11,7 @@ import GoogleMaps
 struct MarkerData{
     var lon: Double
     var lat: Double
-    var rate: Int
+    var rate: Double
     var index: Int
 }
 
@@ -25,7 +25,7 @@ struct GoogleMapView: UIViewRepresentable {
             MarkerData(
                 lon: store.lon,
                 lat: store.lat,
-                rate: store.crowdRate,
+                rate: store.crowdRate ?? 0,
                 index: index
             )
         }

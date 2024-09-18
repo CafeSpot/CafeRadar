@@ -19,7 +19,7 @@
     python = 3.11
     ```bash
     pip install -r requirements.txt
-    pip install pydantic[email]
+    pip install `pydantic[email]`
     ```
 
 4. Run the app using uvicorn:

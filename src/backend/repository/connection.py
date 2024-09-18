@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 import motor.motor_asyncio
+import gridfs
+from motor.motor_asyncio import AsyncIOMotorGridFSBucket
 
 # Load .env file
 env_path = os.path.join(os.path.dirname(__file__), '../../..', '.env')
@@ -14,3 +16,5 @@ client = motor.motor_asyncio.AsyncIOMotorClient(DB_URL)
 db = client.get_database("info")
 user_collection = db.get_collection("users")
 cafe_collection = db.get_collection("cafe")
+fs = AsyncIOMotorGridFSBucket(db)
+

@@ -12,9 +12,17 @@ import random
 ### load the env variables
 load_dotenv()
 
-### request the cafe info from google map api
+### Google Map APi
 api_key = os.getenv("GOOGLE_API_KEY")
 print(api_key)
+
+### MongoDB
+mongodb_url = os.getenv("MONGODB_URL")
+client = MongoClient(mongodb_url)
+print(f"mongodb_url: {mongodb_url}")
+db = client["info"]
+cafe_collection = db["cafe"]
+fs = gridfs.GridFS(db)
 
 '''
     new version of "map/place api" for "text search". It uses the http post instead of get to request the place informations
@@ -200,30 +208,22 @@ def google_map_querys_generator():
                     querys.append(f"{city}{district}{village}的{keyword_class}")
     return querys
 
-def add_image(doc, db, cafe_collection, place_details):
+def push_image_db(cafeId):
     image_ids = []
-    fs = gridfs.GridFS(db)
-
-    directory = f"resource/img/{doc["id"]}"
+    directory = f"resource/img/{cafeId}"
     
     if os.path.isdir(directory):
         for index, filename in enumerate(os.listdir(directory)):
             file_path = os.path.join(directory, filename)
             with open(file_path, "rb") as file:
-                imagename = f"img_{doc["id"]}_{index}.jpg"
+                imagename = f"img_{cafeId}_{index}.jpg"
                 image = fs.find_one({"filename": imagename})
                 if image:
                     image_id = image._id
                 else:
                     image_id = fs.put(file, filename=imagename)
                 image_ids.append(str(image_id))
-    cafe_collection.update_one(
-        {"_id": doc["_id"]},
-        {"$set": {"images": image_ids}}
-    )
-    print(f"add {doc["displayName"]["text"]}'s images to Db successfully!")
-    place_details[doc["id"]]["images"] = image_ids
-    return place_details
+    return image_ids
 
 
 if __name__ == '__main__':
@@ -238,12 +238,6 @@ if __name__ == '__main__':
     parser.add_argument('-test', "--test", action='store_true', help="test the function")
     parser.add_argument('-delete', "--delete", action='store_true', help="test cafe data in DB")
     args = parser.parse_args()
-
-    mongodb_url = os.getenv("MONGODB_URL")
-    client = MongoClient(mongodb_url)
-    print(f"mongodb_url: {mongodb_url}")
-    db = client["info"]
-    cafe_collection = db["cafe"]
 
     ### [get place_id] import the "cafe_place_ids.json" file ([place_id])
     if os.path.exists('resource/cafe_place_ids.json'):
@@ -275,7 +269,6 @@ if __name__ == '__main__':
         place_details = google_map_placeDetail_get(place_ids, place_ids_delete, place_details, limit_times)
     
 
-     
     if args.push_db:
         def covert(cafe):
             def location_to_GeoJSON(location):
@@ -329,67 +322,67 @@ if __name__ == '__main__':
                             openHours_new["Sat"] = {"open":open, "close":close}
                 return openHours_new
             
-
             cafe_new = {}
 
-            cafe_new["name"] = cafe.get("displayName",{}).get("text","")
             cafe_new["cafeId"] = cafe["id"]
             cafe_new["placeId"] = cafe["id"]
-            cafe_new["commentIds"] = []
+            cafe_new["name"] = cafe.get("displayName",{}).get("text","")
+            cafe_new["times"] = convert_openHours(cafe.get("regularOpeningHours", None))
+            cafe_new["imageLinks"] = []
             cafe_new["tags"] = cafe["types"]
-            cafe_new["images"] = cafe.get("images",[])
-            cafe_new["plugNum"] = random.randint(1, 10)
-            cafe_new["seatSize"] = random.randint(1, 5)
-            cafe_new["seatNum"] = random.randint(10, 50)
-            cafe_new["light"] = random.randint(1, 5)
-            cafe_new["openingHours"] = convert_openHours(cafe.get("regularOpeningHours", None))
+            cafe_new["lat"]= cafe.get("location", {}).get("latitude", 0.0)
+            cafe_new["lon"]= cafe.get("location", {}).get("longitude", 0.0)
+            cafe_new["commentIds"] = []
+            cafe_new["envRate"] = cafe.get("rating", None)
+            cafe_new["spaceScore"] = None
+            cafe_new["lightScore"] = None
+            cafe_new["crowdRate"] = random.randint(1, 5)
+            cafe_new["plugNum"] = None
+            cafe_new["seatNum"] = None
             cafe_new["address"] = cafe.get("shortFormattedAddress", cafe.get("formattedAddress", None))
             cafe_new["addressLink"] = cafe.get("addressLink", None)
             cafe_new["googleMapLink"] = cafe.get("googleMapsUri", None)
-            cafe_new["link"] = cafe.get("websiteUri", None)
             cafe_new["phone"] = cafe.get("internationalPhoneNumber", None)
+            cafe_new["link"] = cafe.get("websiteUri", None)
             cafe_new["ig"] = None
+            cafe_new["igLink"] = None
             cafe_new["fb"] = None
-            cafe_new["crowdRate"] = random.randint(1, 5)
-            cafe_new["envRate"] = cafe.get("rating", random.uniform(1, 5))
-            cafe_new["location"]= cafe.get("location", None)
+            cafe_new["fbLink"] = None
+            
             cafe_new["location_geojson"]= location_to_GeoJSON(cafe.get("location", {}))
             return cafe_new
         
-        ### connect to our monogoDB server
+        ### creat the index
+        cafe_collection.create_index([("cafeId", 1)], unique=True)
+        cafe_collection.create_index([("location_geojson", "2dsphere")])
+
+        # show the number of documents in db
         count_old = cafe_collection.count_documents({})
         print(f"[push_db] there are {count_old} documents in DB")
 
-        place_details_list = [covert(place_details[palce_id]) for palce_id in place_details]
+        for place_detail_google in place_details:
+            place_detail = covert(place_details[place_detail_google])
 
+            # push the image to fs
+            place_detail["imageLinks"] = push_image_db(place_detail["cafeId"])
 
-        try:
-            # Insert documents, skipping duplicates
-            cafe_collection.insert_many(place_details_list, ordered=False)
-            print("Documents inserted successfully, skipping duplicates.")
-        except errors.BulkWriteError as bwe:
-            print(f"{len(bwe.details['writeErrors'])} documents were skipped due to duplication.")
-            # for error in bwe.details['writeErrors']:
-            #     print(f"Duplicate document: {error['op']['id']}")
+            # push the cafe info to db
+            try:
+                result = cafe_collection.insert_one(place_detail)
+                _id = result.inserted_id
+            except errors.DuplicateKeyError as e:
+                _id = e.details
 
+            print(f"add the {place_detail["name"]} to the DB. *{len(place_detail["imageLinks"])} images")
+
+        with open('resource/cafe_place_details.json', 'w') as file:
+            json.dump(place_details, file, indent=4)
+        
         count = cafe_collection.count_documents({})
         print(f"[push_db] there are {count} documents in DB, Increase {count-count_old} documents")
 
     if args.update_db:
-        '''
-            create 2dsphere index in collection cafe
-            * ref: [2dsphere index] https://deepinout.com/mongodb/mongodb-questions/34_mongodb_does_anyone_know_a_working_example_of_2dsphere_index_in_pymongo.html
-        '''
-        cafe_collection.create_index([("location_geojson", "2dsphere")])
-
-        '''
-            add the image
-        '''
-        documents = cafe_collection.find()
-        for doc in documents:
-            place_details = add_image(doc, db, cafe_collection, place_details)
-        with open('resource/cafe_place_details.json', 'w') as file:
-            json.dump(place_details, file, indent=4)
+        print("no update")
     
     if args.delete:
         count = cafe_collection.count_documents({})
@@ -397,6 +390,11 @@ if __name__ == '__main__':
         cafe_collection.drop()
         count = cafe_collection.count_documents({})
         print(f"[push_db] there are {count} documents in DB")
+
+        fs = gridfs.GridFS(db)
+        files = fs.find()
+        for file in files:
+            fs.delete(file._id)
 
     if args.test:
         '''

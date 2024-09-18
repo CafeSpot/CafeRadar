@@ -26,7 +26,7 @@ struct CollectionView: View {
                 Spacer()
                 
                 ScrollView(showsIndicators: false) {
-                    VStack {
+                    LazyVStack {
                         ForEach(storeModel.storeCollection) { store in
                             StoreSimpleInfoView(store: store,imgNum: 3)
                         }

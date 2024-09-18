@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends, Body, Query
-
+from fastapi.responses import StreamingResponse
 from src.backend.repository.connection import cafe_collection
 from src.backend.models.cafeModel import *
 from src.backend.repository.query import *
@@ -30,15 +30,24 @@ async def postCafeInfo(response: dict):
 
 @router.get("/search/")
 async def search_items(
-    lon: float = Query(0, description="longitude of the require"),
-    lat: float = Query(0, description="latitude of the require"),
-    dis: int = Query(5000, description="max search distances"),
-    text: str = Query("", description="search text"),
+    lon: Optional[float] = Query(None, description="longitude of the require"),
+    lat: Optional[float] = Query(None, description="latitude of the require"),
+    dis: Optional[float] = Query(1000, description="max search distances"),
+    text: Optional[str] = Query(None, description="search text"),
     types: Optional[List[str]] = Query([], description="List of types to filter by"),
-    nextToken: int = Query(0, description="search text"),
+    nextToken: Optional[int] = Query(None, description="search text"),
 ):
-    cafes_db, nextToken = await get_cafe_search(lon=lon, lat=lat, search_dis=dis, search_text=text, search_types=types, nextToken=nextToken)
-    cafes = cafes_convertor(cafes_db)
+    print(f"lon:{lon}, lat:{lat}, dis:{dis}, text:{text}, types:{types}, nextToken:{nextToken}")
+    query = {
+        "lon": lon,
+        "lat": lat,
+        "dis": dis,
+        "text": text,
+        "types": types,
+        "nextToken": nextToken
+    }
+    cafes_dbs, nextToken = await get_cafe_search(lon=lon, lat=lat, search_dis=int(dis), search_text=text, search_types=types, nextToken=nextToken)
+    cafes = [cafes_convertor(query, cafes_db) for cafes_db in cafes_dbs]
 
     response = {
         "nextToken": nextToken,
@@ -47,3 +56,11 @@ async def search_items(
     print(f"send {len(cafes)} cafes")
 
     return response
+
+@router.get("/img/{imageLink}")
+async def get_image(imageLink: str):
+    image = await get_cafe_image(imageLink)
+    if image:
+        return StreamingResponse(image, media_type="image/jpeg")
+    else:
+        raise HTTPException(status_code=404, detail="Image not found")

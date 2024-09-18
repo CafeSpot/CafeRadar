@@ -20,15 +20,14 @@ struct StoreDetailInfo: View {
                 //images
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(store.images) { image in
-                            image.image
-                                .resizable()
+                        ForEach(store.imageLinks, id: \.self) { url in
+                            AsyncImageView(url: url)
                                 .scaledToFill()
                                 .frame(width: 250, height: 250)
                                 .cornerRadius(17)
                                 .clipped()
                         }
-                        ForEach(0..<(3 - min(store.images.count, 3)), id: \.self) { _ in
+                        ForEach(0..<(3 - min(store.imageLinks.count, 3)), id: \.self) { _ in
                             Image(systemName: "plus.square")
                                 .resizable()
                                 .scaledToFit()
@@ -49,7 +48,7 @@ struct StoreDetailInfo: View {
                         .font(.system(size: 27))
                     //.font(.custom("YourCustomFontName-Bold", size: 24))
                     Spacer()
-                    CrowdRateView(crowdRate: store.crowdRate)
+                    CrowdRateView(crowdRate: store.crowdRate ?? 0.0)
                 }
                 .padding(.leading, leadingAmount)
                 .padding(.trailing, 20)
@@ -61,8 +60,8 @@ struct StoreDetailInfo: View {
                 VStack(alignment: .leading){
                     Text("店家類別")
                     autoArrayLayoutView{
-                        ForEach(store.tags.indices, id: \.self) { index in
-                            typeView(typeName: storeModel.typeNames[index], typeImage: "questionmark.app.dashed")
+                        ForEach(store.tags, id: \.self) { tag in
+                            typeView(typeName: tag, typeImage: "questionmark.app.dashed")
                         }
                     }
                 }
@@ -80,7 +79,7 @@ struct StoreDetailInfo: View {
                 
                 VStack(alignment: .leading){
                     Text("店家地址")
-                    Link(store.address, destination: URL(string: store.addressLink)!)
+                    Link(store.address ?? "not provide", destination: URL(string: store.addressLink ?? "https://")!)
                         .foregroundColor(.black)
                 }
                 .padding(.leading, leadingAmount)
@@ -91,15 +90,15 @@ struct StoreDetailInfo: View {
                     Text("聯絡資訊")
                     HStack{
                         Image(systemName: "phone.fill")
-                        Link(store.phone, destination: URL(string: "tel:\(store.phone)")!)
+                        Link(store.phone ?? "not provide", destination: URL(string: "tel:\(store.phone ?? "not provide")")!)
                             .foregroundColor(.black)
                         Spacer()
                         Image(systemName: "f.square")
-                        Link(store.ig, destination: URL(string: store.igLink)!)
+                        Link(store.ig ?? "not provide", destination: URL(string: store.igLink ?? "https://")!)
                             .foregroundColor(.black)
                         Spacer()
                         Image(systemName: "i.square")
-                        Link(store.fb, destination: URL(string: store.fbLink)!)
+                        Link(store.fb ?? "not provide", destination: URL(string: store.fbLink ?? "https://")!)
                             .foregroundColor(.black)
                     }
                 }
@@ -112,8 +111,8 @@ struct StoreDetailInfo: View {
                 
                 HStack{
                     VStack(alignment: .leading){
-                        Text(String(store.distance)+"公尺")
-                        Text("營業時間 "+String(store.openTime)+"~"+String(store.closeTime))
+                        Text(String(format: "%.2f 公尺", store.distance ?? 0.0))
+                        Text("營業時間: \(store.openTime ?? "not provided")-\(store.closeTime ?? "not provided")")
                     }
                     
                     Spacer()

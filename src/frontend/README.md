@@ -1,11 +1,15 @@
 # CafeRadar - frontend
 1. before run this ios app in xcode, please run "pod install" to install package  
 NOTE: pod is command of "cocoapods"  
-(macos14 - install cocoapods:  
-    sudo gem install drb -v 2.0.5   
-    sudo gem install activesupport -v 6.1.7.6   
-    sudo gem install cocoapods -v 1.13.0   
-)  
+   1.  (macos14 - install cocoapods:  
+        sudo gem install drb -v 2.0.5   
+        sudo gem install activesupport -v 6.1.7.6   
+        sudo gem install cocoapods -v 1.13.0   
+    )  -> not work for M3
+    2. https://github.com/CocoaPods/CocoaPods/issues/12440
+        sudo gem install cocoapods
+        sudo gem uninstall cocoapods
+        brew install cocoapods
 2. add the api\_key for google map service (follow the record on 2024/8/6)
 3. open the file "cafe.xcworkspace" (open the project in xcode)  
 4. choose the "simulator" to run the app  
@@ -106,6 +110,7 @@ reference:
             1. run the Firebase emulator by using this command: ```firebase emulators:start```
             2. visit: http://127.0.0.1:port/auth to access our Firebase emulator UI
     2. SwiftUI app with firebase
+        * download the firebase SDK in xcode: https://medium.com/@marwa.diab/add-firebase-to-swiftui-project-5eab5af0562b
         * reference: https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/利用-firebase-實現-ios-app-的登入功能-cf1795ccec00
             * firebase api in SwiftUI
         * reference: https://mayankchoudharydotcom.medium.com/firebase-offline-simplify-development-with-firebase-local-emulator-suite-ios-android-web-07c9b2fc860c

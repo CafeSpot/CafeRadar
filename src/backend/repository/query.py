@@ -1,8 +1,11 @@
 import os
 import time
 import json
+import math
 from bson import ObjectId 
-from src.backend.repository.connection import user_collection, cafe_collection
+from datetime import datetime
+from src.backend.repository.connection import user_collection, cafe_collection, fs
+
 #import motor.motor_asyncio
 '''
     [Query.get_cafe_detail(id)] get the detail infos of id from DB
@@ -36,7 +39,7 @@ async def get_cafe_search(lat=0, lon=0, search_dis=5000, search_text="", search_
     limit = 100
 
     print("search_text: ",search_text)
-    if lat!=0 and lon!=0:
+    if lat and lon:
         query["location_geojson"] = {
                 "$near": {
                     "$geometry": {
@@ -46,23 +49,45 @@ async def get_cafe_search(lat=0, lon=0, search_dis=5000, search_text="", search_
                     "$maxDistance": search_dis
                 }
             }
-    if search_text != "":
-        query["displayName.text"] = {
+    if search_text and search_text!="":
+        query["name.text"] = {
                 "$regex": search_text, 
                 "$options": "i"
             }
+    '''
     if not search_types:
-        query["displayName.text"] = {
+        query["name.text"] = {
                 "$regex": search_text, 
                 "$options": "i"
             }
-    cursor = cafe_collection.find(query).sort("_id").skip(nextToken).limit(limit)
-    documents = await cursor.to_list(length=100)
+    '''
+    if nextToken:
+        cursor = cafe_collection.find(query).sort("_id").skip(nextToken).limit(limit)
+        documents = await cursor.to_list(length=limit)
 
-    if len(documents)==limit:
-        return documents, nextToken+1
+        if len(documents)==limit:
+            return documents, nextToken+1
+        else:
+            return documents, None
     else:
-        return documents, None
+        cursor = cafe_collection.find(query).sort("_id")
+        documents = await cursor.to_list(length=None)
+
+        return documents, None 
+
+
+'''
+    retrive the image
+'''
+async def get_cafe_image(imageLink):
+    try:
+        # Retrieve the image from GridFS by its _id
+        grid_out = await fs.open_download_stream(ObjectId(imageLink))
+        return grid_out
+    except Exception as e:
+        print(f"Error retrieving {imageLink} image: {e}")
+        return None
+
 
 
 '''
@@ -70,56 +95,86 @@ async def get_cafe_search(lat=0, lon=0, search_dis=5000, search_text="", search_
         * Parameter: cafe's infos in json from DB
         * Return: 
 '''
-def cafes_convertor(cafes_db):
-    table1 = ["restaurant", "food", "store", "cafe", "coffee_shop", "vegan_restaurant", "health", "brunch_restaurant", "breakfast_restaurant", "sandwich_shop", "bakery", "book_store"]
-    table2 = ["restaurant", "food", "store", "cafe", "coffee", "vegan", "health", "brunch", "breakfast", "sandwich", "bakery", "book"]
-    def covert_type(types):
-        #types_one = [False for _ in range(len(table1))]
-        #for type in types:
-        #    try:
-        #        types_one[table1.index(type)] = True
-        #    except ValueError:
-        #        pass
-        types_one = [True for _ in range(len(table1))]
-        return types_one
+def cafes_convertor(query, cafe_db):
+    def covert_tags(tags_db):
+        table = ["coffee","restaurant", "food", "store", "cafe", "coffee_shop", "vegan", "vegan_restaurant", "health", "brunch", "sandwich", "breakfast", "brunch_restaurant", "breakfast_restaurant", "sandwich_shop", "bakery", "book_store", "book"]
+        tags = []
+        for t in tags_db:
+            if t in table:
+                tags.append(t)
+        return tags
 
-    def convertor(cafe_db):
-        cafe = {}
-        cafe["place_id"] = cafe_db.get("id", "")
-        cafe["name"] = cafe_db.get("displayName", {}).get("text", "no name")
-        cafe["tags"] = cafe_db.get("types", [])
-        cafe["address"] = cafe_db.get("formattedAddress", "")
-        cafe["location"] = cafe_db.get("location", None)
-        cafe["time"] = cafe_db.get("regularOpeningHours", None)
-        cafe["phone"] = cafe_db.get("internationalPhoneNumber", "")
-        cafe["google_rating"] = cafe_db.get("rating", None)
-        cafe["googleMapsUri"] = cafe_db.get("googleMapsUri", "")
-        cafe["websiteUri"] = cafe_db.get("websiteUri", "")
-        
+    def convert_times(times):
+        if times:
+            '''
+            times = {
+                "Sun": {"open":"", "close":""},
+                "Mon": {"open":"", "close":""},
+                "Tue": {"open":"", "close":""},
+                "Wed": {"open":"", "close":""},
+                "Thu": {"open":"", "close":""},
+                "Fri": {"open":"", "close":""},
+                "Sat": {"open":"", "close":""},
+            }
+            '''
+            weekday_mapping = {
+                0: "Mon",
+                1: "Tue",
+                2: "Wed",
+                3: "Thu",
+                4: "Fri",
+                5: "Sat",
+                6: "Sun"
+            }
+            now = datetime.now()
+            week = now.weekday()
+            return times[weekday_mapping[week]]["open"], times[weekday_mapping[week]]["close"]
+        else:
+            return None, None
 
-        # goole map api return "photo" which requires addtional images request
-        # hear, "image" the actual image 
-        cafe["images"] = cafe_db.get("images", [])
+    def convert_distance(lon1, lat1, lon2, lat2):
+        R = 6371.0
+        lat1 = math.radians(lat1)
+        lon1 = math.radians(lon1)
+        lat2 = math.radians(lat2)
+        lon2 = math.radians(lon2)
+        dlon = lon2 - lon1
+        dlat = lat2 - lat1
+        a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+        distance = R * c
+        return distance
 
-        if cafe_db.get("servesBreakfast",False):
-            cafe["tags"].append("breakfast")
-        if cafe_db.get("servesLunch",False):
-            cafe["tags"].append("lunch")
-        if cafe_db.get("servesDinner",False):
-            cafe["tags"].append("dinner")
-        if cafe_db.get("servesBrunch",False):
-            cafe["tags"].append("brunch")
-        if cafe_db.get("servesVegetarianFood",False):
-            cafe["tags"].append("vegetarianFood")
-        if cafe_db.get("servesDessert",False):
-            cafe["tags"].append("dessert")
-        if cafe_db.get("servesCoffee",False):
-            cafe["tags"].append("coffee")
-        cafe["tags"] = covert_type(cafe["tags"])
-        #cafe["tags_table"] = table2
-        #cafe["reviews"] = cafe_db["reviews"]
-        return cafe
+    cafe = {}
 
-    cafes = [convertor(cafe_db) for cafe_db in cafes_db]
+    openTime, closeTime = convert_times(cafe_db.get("times",None))
+    tags = covert_tags(cafe_db.get("tags",[]))
+    imageLinks = [ "http://127.0.0.1:8000/cafe/img/"+imageLink for imageLink in cafe_db["imageLinks"]]
 
-    return cafes
+    cafe["cafeId"] = cafe_db.get("placeId","")
+    cafe["name"] = cafe_db.get("name","")
+    cafe["openTime"] = openTime
+    cafe["closeTime"] = closeTime
+    cafe["imageLinks"] = imageLinks
+    cafe["tags"] = tags
+    cafe["lat"]= cafe_db.get("lat",0.0)
+    cafe["lon"]= cafe_db.get("lat",0.0)
+    cafe["distance"] = convert_distance(cafe["lon"], cafe["lat"], query["lon"], query["lat"])
+    cafe["commentIds"] = cafe_db.get("commentIds",[])
+    cafe["envRate"] = cafe_db.get("envRate",None)
+    cafe["spaceScore"] = cafe_db.get("spaceScore",None)
+    cafe["lightScore"] = cafe_db.get("lightScore",None)
+    cafe["crowdRate"] = cafe_db.get("crowdRate",None)
+    cafe["plugNum"] = cafe_db.get("plugNum",None)
+    cafe["seatNum"] = cafe_db.get("seatNum",None)
+    cafe["address"] = cafe_db.get("address",None)
+    cafe["addressLink"] = cafe_db.get("addressLink",None)
+    cafe["googleMapLink"] = cafe_db.get("googleMapLink",None)
+    cafe["phone"] = cafe_db.get("phone",None)
+    cafe["link"] = cafe_db.get("link",None)
+    cafe["ig"] = cafe_db.get("ig",None)
+    cafe["igLink"] = cafe_db.get("igLink",None)
+    cafe["fb"] = cafe_db.get("fb",None)
+    cafe["fbLink"] = cafe_db.get("fbLink",None)
+
+    return cafe
