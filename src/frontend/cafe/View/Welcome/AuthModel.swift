@@ -194,28 +194,28 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate, ObservableObject {
 
         // Start the sign in flow!
         GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController) { [unowned self] result, error in
-          if let error = error {
-              print("Error doing Google Sign-In, \(error)")
-              return
-          }
-            
-        guard let user = result?.user, let idToken = user.idToken?.tokenString else {
-            return
-        }
-
-
-        let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                         accessToken: user.accessToken.tokenString)
-        
-        
-        // Authenticate with Firebase
-        Auth.auth().signIn(with: credential) { authResult, error in
-            if let e = error {
-                print(e.localizedDescription)
+            if let error = error {
+                print("Error doing Google Sign-In, \(error)")
+                return
             }
-           
-            print("Signed in with Google")
-        }
+            
+            guard let user = result?.user, let idToken = user.idToken?.tokenString else {
+                return
+            }
+
+
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                             accessToken: user.accessToken.tokenString)
+            
+            
+            // Authenticate with Firebase
+            Auth.auth().signIn(with: credential) { authResult, error in
+                if let e = error {
+                    print(e.localizedDescription)
+                }
+               
+                print("Signed in with Google")
+            }
         }
     }
  
