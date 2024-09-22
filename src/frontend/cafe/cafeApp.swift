@@ -76,7 +76,8 @@ struct cafeApp: App {
     @State private var storeModel = StoreModel()
     @State private var mapViewModeModel = MapViewModeModel()
     @State private var userModel = UserModel()
-    @StateObject var authModel =  AuthModel()
+    @StateObject var authManager = AuthManager()
+    @StateObject var positionManager = PositionManager()
     
     init(){
     }
@@ -87,7 +88,16 @@ struct cafeApp: App {
                 .environment(storeModel)
                 .environment(mapViewModeModel)
                 .environment(userModel)
-                .environmentObject(authModel)
+                .environmentObject(authManager)
+                .onAppear() {
+                    // why we set the observer in omAppear? https://stackoverflow.com/questions/68930434/accessing-stateobjects-object-without-being-installed-on-a-view-this-will-crea
+                    self.authManager.set { [weak storeModel = self.storeModel] value in
+                        storeModel?.update_idToken(idToken: value)
+                    }
+                    self.positionManager.set { [weak storeModel = self.storeModel] value in
+                        storeModel?.update_position(position: value)
+                    }
+                }
         }
     }
 }

@@ -14,29 +14,56 @@ import AuthenticationServices
 import GoogleSignIn
 
 
-class AuthModel: NSObject, ASAuthorizationControllerDelegate, ObservableObject {
+class AuthManager: NSObject, ASAuthorizationControllerDelegate, ObservableObject {
     @Published var signedIn:Bool = false
+    @Published var idToken: String?
     @Published var notRequireAuth:Bool = false
     
     // Unhashed nonce.
     @Published var currentNonce: String?
+    
+    private var updateFuncList: [(String) -> Void] = []
+    
+    private var authStateListenerHandle: AuthStateDidChangeListenerHandle?
 
     override init() {
         super.init()
         
-        Auth.auth().addStateDidChangeListener() { auth, user in
-            if user != nil {
+        self.authStateListenerHandle = Auth.auth().addStateDidChangeListener() { auth, user in
+            if let user = user {
                 self.signedIn = true
                 print("[AuthModel]: ","Auth state changed, Login now")
+                
+                user.getIDToken { (idToken, error) in
+                    if let error = error {
+                        print("Error fetching ID token: \(error.localizedDescription)")
+                    } else if let idToken = idToken {
+                        // Use this ID token for authenticated API requests
+                        print("ID token: \(idToken)")
+                        self.idToken = idToken
+                        self.update(idToken)
+                    }
+                }
+                
             } else {
                 self.signedIn = false
                 print("[AuthModel]: ","Auth state changed, Loog out")
             }
         }
     }
+    
+    func set(_ function: @escaping (String) -> Void) {
+        updateFuncList.append(function)
+    }
+    
+    func update(_ idToken: String) {
+        for function in updateFuncList {
+            function(idToken) // Call the function with the provided parameter
+        }
+    }
 
     
-    // MARK: - Password Account
+    // [firebase] - Password Account
     func regularCreateAccount(email: String, password: String) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let e = error {
@@ -48,8 +75,8 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate, ObservableObject {
         }
     }
     
-    //MARK: - Traditional sign in
-    // Traditional sign in with password and email
+    
+    // [firebase] - Traditional sign in with password and email
     func regularSignIn(email:String, password:String, completion: @escaping (Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: password) {  authResult, error in
             if let e = error {
@@ -62,8 +89,7 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate, ObservableObject {
         }
     }
     
-    // Regular password acount sign out.
-    // Closure has whether sign out was successful or not
+    // Regular password acount sign out
     func regularSignOut(completion: @escaping (Error?) -> Void) {
         let firebaseAuth = Auth.auth()
         do {
@@ -75,7 +101,9 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate, ObservableObject {
         }
     }
     
-    //MARK: - Apple sign in
+    
+    // [apple] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // [firebase] - Apple sign in
     // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
     private func randomNonceString(length: Int = 32) -> String {
       precondition(length > 0)
@@ -180,6 +208,7 @@ class AuthModel: NSObject, ASAuthorizationControllerDelegate, ObservableObject {
     }
     
 
+    // [google] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     func googleSignIn() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @EnvironmentObject var authModel : AuthModel
+    @EnvironmentObject var authModel : AuthManager
     @Binding var email: String
     @Binding var password: String
     @State private var loginMessage: String = ""
@@ -214,6 +214,6 @@ struct CheckboxToggleStyle: ToggleStyle {
     }
 
     return Preview()
-        .environmentObject(AuthModel())
+        .environmentObject(AuthManager())
 }
 

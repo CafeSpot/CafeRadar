@@ -10,7 +10,9 @@ import CoreLocation
 import GoogleMaps
 
 @Observable
-class StoreModel: storeModelPositionManager{
+class StoreModel{
+    var position: CLLocation?
+    var idToken: String?
     
     // [class setting]
     let bufferSize = 100
@@ -36,12 +38,11 @@ class StoreModel: storeModelPositionManager{
     var selectedDistance: Double = 10000
     
     //init() {
-    override init() {
+    init() {
         self.storeBuffer = []
         self.recommends = []
         self.typeNames = []
         
-        super.init()
         self.initLoad()
     }
     
@@ -60,19 +61,33 @@ class StoreModel: storeModelPositionManager{
     func searchText(text: String){
         storeBuffer = Array(storeBuffer.prefix(2))
     }
-
-    // while the basicPosition change, this function would be called and send the http get request to our server
-    override func basicPositionDidChange() {
-        requestStoreInfo()
+    
+    func update_idToken(idToken: String?){
+        self.idToken = idToken
     }
-    func requestStoreInfo() {
-        if let position = basicPosition {
+
+    func update_position(position: CLLocation?) {
+        self.position = position
+        
+        if let position = self.position {
             print("[StoreModel - Current Location]: Latitude: \(position.coordinate.latitude), Longitude: \(position.coordinate.longitude), distance:\(selectedDistance)")
+        }
+        
+        self.get_store()
+    }
+    
+    func get_store(){
+        if let position = self.position {
+            guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(120.9675)&lat=\(24.8138)&text=\(self.selectionText)&dis=\(self.selectedDistance)") else { return }
+            //guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(position.coordinate.longitude)&lat=\(position.coordinate.latitude)&text=\(selectionText)&dis=\(selectedDistance)") else { return }
             
-             //guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(position.coordinate.longitude)&lat=\(position.coordinate.latitude)&text=\(selectionText)&dis=\(selectedDistance)") else { return }
-            guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(120.9675)&lat=\(24.8138)&text=\(selectionText)&dis=\(selectedDistance)") else { return }
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            if let idToken = self.idToken{
+                request.setValue("Bearer \(String(describing: idToken))", forHTTPHeaderField: "Authorization")
+            }
             
-            URLSession.shared.dataTask(with: url) { data, response, error in
+            URLSession.shared.dataTask(with: request) { data, response, error in
                 if let data = data {
                     do {
                         let decodedData = try JSONDecoder().decode(Response.self, from: data)
@@ -126,76 +141,6 @@ class StoreModel: storeModelPositionManager{
         return ansText && ansType && ansDistance
     }
 }
-
-@Observable
-class storeModelPositionManager: NSObject, CLLocationManagerDelegate{  //positionManager
-    private var locationManager: CLLocationManager
-    var position: CLLocation?
-    var basicPosition: CLLocation? = CLLocation() {
-        didSet {basicPositionDidChange()}
-    }
-    
-    override init() {
-        locationManager = CLLocationManager()
-        super.init()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 0.4
-        locationManager.startUpdatingLocation()
-        locationManager.requestWhenInUseAuthorization()
-
-     }
-     
-    func requestPermission() {
-        print("[storeModelPositionManager]: requestWhenInUseAuthorization")
-        locationManager.requestWhenInUseAuthorization()
-    } // this fubcatuin call to request the position auth from iphone user(optional)
-    
-    func basicPositionDidChange() {
-        if let position = basicPosition {
-            print("Current Location: Latitude: \(position.coordinate.latitude), Longitude: \(position.coordinate.longitude)")
-        }
-    }
-     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-        self.position = locations.first
-        if let location = locations.first{
-            if ifResquestNearbyData(la: location.coordinate.latitude, lo: location.coordinate.longitude) {
-                //sent the request api to get the nearby store
-                print("[storeModelPositionManager]: get the nearby store info")
-                
-                self.basicPosition = locations.first
-            }
-        }
-    }//if the psition chanage, this fucyion would be call
-    
-    func ifResquestNearbyData(la: Double , lo: Double) -> Bool {
-        if let basicPosition = self.basicPosition {
-            return abs(basicPosition.coordinate.latitude - la) > 0.001 || abs(basicPosition.coordinate.longitude - lo) > 0.001
-        } else {
-            return false
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-       print("[storeModelPositionManager]: Location manager failed with error: \(error.localizedDescription)")
-    }//show if there is error
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch status {
-           case .notDetermined:
-           print("[storeModelPositionManager]: status ~ Not Determined")
-        case .restricted:
-           print("[storeModelPositionManager]: status ~ Restricted")
-           case .denied:
-        print("[storeModelPositionManager]: status ~ Denied")
-           case .authorizedAlways, .authorizedWhenInUse:
-           print("[storeModelPositionManager]: status ~ Authorized")
-        @unknown default:
-           print("[storeModelPositionManager]: status ~ Unknown")
-        }
-    }//to show the autorization change
- }
 
 
 

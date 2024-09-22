@@ -10,7 +10,7 @@ import FirebaseAuth
 //import GoogleSignIn
 
 struct WelcomeView: View {
-    @EnvironmentObject var authModel : AuthModel
+    @EnvironmentObject var authModel : AuthManager
     @State private var showLoginPage = false
     @State private var ifLogining = true
 
@@ -33,5 +33,5 @@ struct WelcomeView: View {
 
 #Preview {
     WelcomeView()
-        .environmentObject(AuthModel())
+        .environmentObject(AuthManager())
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingView: View {
-    @EnvironmentObject var authModel : AuthModel
+    @EnvironmentObject var authModel : AuthManager
     @State private var showLoginPage = false
     
     var body: some View {
@@ -57,5 +57,5 @@ struct SettingView: View {
 
 #Preview {
     SettingView()
-        .environmentObject(AuthModel())
+        .environmentObject(AuthManager())
 }
