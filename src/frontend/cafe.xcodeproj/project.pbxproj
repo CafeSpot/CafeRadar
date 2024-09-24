@@ -16,7 +16,7 @@
 		A9186C052B6B73D600169CD3 /* cafeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C042B6B73D600169CD3 /* cafeTests.swift */; };
 		A9186C0F2B6B73D600169CD3 /* cafeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C0E2B6B73D600169CD3 /* cafeUITests.swift */; };
 		A9186C112B6B73D600169CD3 /* cafeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C102B6B73D600169CD3 /* cafeUITestsLaunchTests.swift */; };
-		A9186C1E2B6B740F00169CD3 /* CollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C1D2B6B740F00169CD3 /* CollectionView.swift */; };
+		A9186C1E2B6B740F00169CD3 /* FavoriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C1D2B6B740F00169CD3 /* FavoriteView.swift */; };
 		A9186C202B6B742E00169CD3 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C1F2B6B742E00169CD3 /* ExploreView.swift */; };
 		A9186C222B6B744500169CD3 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C212B6B744500169CD3 /* MapView.swift */; };
 		A9186C242B6B745D00169CD3 /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9186C232B6B745D00169CD3 /* SearchBarView.swift */; };
@@ -48,6 +48,7 @@
 		BA4D23D42C9FDE0200A8441F /* PositionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4D23D32C9FDE0200A8441F /* PositionManager.swift */; };
 		BA4D23D62CA0631E00A8441F /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA4D23D52CA0631E00A8441F /* Response.swift */; };
 		BA9CD45B2C9AC2ED00C0DE8E /* AsyncImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9CD45A2C9AC2ED00C0DE8E /* AsyncImageView.swift */; };
+		BAA6FE272CA2454C0064C49E /* user.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA6FE262CA2454C0064C49E /* user.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,7 +86,7 @@
 		A9186C0A2B6B73D600169CD3 /* cafeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cafeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9186C0E2B6B73D600169CD3 /* cafeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cafeUITests.swift; sourceTree = "<group>"; };
 		A9186C102B6B73D600169CD3 /* cafeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cafeUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		A9186C1D2B6B740F00169CD3 /* CollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionView.swift; sourceTree = "<group>"; };
+		A9186C1D2B6B740F00169CD3 /* FavoriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteView.swift; sourceTree = "<group>"; };
 		A9186C1F2B6B742E00169CD3 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
 		A9186C212B6B744500169CD3 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		A9186C232B6B745D00169CD3 /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
@@ -117,6 +118,7 @@
 		BA4D23D32C9FDE0200A8441F /* PositionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionManager.swift; sourceTree = "<group>"; };
 		BA4D23D52CA0631E00A8441F /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		BA9CD45A2C9AC2ED00C0DE8E /* AsyncImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncImageView.swift; sourceTree = "<group>"; };
+		BAA6FE262CA2454C0064C49E /* user.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = user.swift; sourceTree = "<group>"; };
 		CEF3AF3DBB9F7449A77380EA /* Pods-cafeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cafeUITests.release.xcconfig"; path = "Target Support Files/Pods-cafeUITests/Pods-cafeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		EBCF9A506BB1A360431C6336 /* Pods-cafeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cafeTests.debug.xcconfig"; path = "Target Support Files/Pods-cafeTests/Pods-cafeTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -245,7 +247,7 @@
 				A9FBF3FD2C65CA5400471D78 /* Welcome */,
 				A9D503912B6BF299008324B6 /* CrowdRateView.swift */,
 				A9186BF52B6B73D400169CD3 /* ContentView.swift */,
-				A9186C1D2B6B740F00169CD3 /* CollectionView.swift */,
+				A9186C1D2B6B740F00169CD3 /* FavoriteView.swift */,
 				A9186C1F2B6B742E00169CD3 /* ExploreView.swift */,
 				A9186C212B6B744500169CD3 /* MapView.swift */,
 				A9186C4B2B6BA17A00169CD3 /* GoogleMapView.swift */,
@@ -270,6 +272,7 @@
 				BA4D23D32C9FDE0200A8441F /* PositionManager.swift */,
 				A9FBF4092C65F0A200471D78 /* AuthManager.swift */,
 				BA4D23D52CA0631E00A8441F /* Response.swift */,
+				BAA6FE262CA2454C0064C49E /* user.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -562,7 +565,7 @@
 				A9C090352B72621500FFD98A /* typeView.swift in Sources */,
 				A952D9502C6A9E9800EC458A /* Size.swift in Sources */,
 				BA4D23D62CA0631E00A8441F /* Response.swift in Sources */,
-				A9186C1E2B6B740F00169CD3 /* CollectionView.swift in Sources */,
+				A9186C1E2B6B740F00169CD3 /* FavoriteView.swift in Sources */,
 				A9FBF40A2C65F0A200471D78 /* AuthManager.swift in Sources */,
 				A9186BF62B6B73D400169CD3 /* ContentView.swift in Sources */,
 				A95418322C67BC4F00215420 /* AccountView.swift in Sources */,
@@ -572,6 +575,7 @@
 				A952D94B2C6A8F8200EC458A /* LogoView.swift in Sources */,
 				BA4D23D42C9FDE0200A8441F /* PositionManager.swift in Sources */,
 				A9186C222B6B744500169CD3 /* MapView.swift in Sources */,
+				BAA6FE272CA2454C0064C49E /* user.swift in Sources */,
 				A9186C5A2B6BBDB100169CD3 /* Stores.swift in Sources */,
 				A9D503922B6BF299008324B6 /* CrowdRateView.swift in Sources */,
 				A9186C522B6BB3A400169CD3 /* UserModel.swift in Sources */,

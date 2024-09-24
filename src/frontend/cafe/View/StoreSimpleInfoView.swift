@@ -19,6 +19,9 @@ class StoreInfoModel{
 
 
 struct StoreSimpleInfoView: View {
+    
+    @Environment(StoreModel.self) private var storeModel
+    @Environment(UserModel.self) private var userModel
 
     var store: Store
     var imgNum: Int
@@ -34,7 +37,7 @@ struct StoreSimpleInfoView: View {
             VStack{
                 HStack {
                     ForEach(store.imageLinks.prefix(imgNum), id: \.self) { url in
-                        AsyncImageView(url: url)
+                        AsyncImageView(url: url, idToken: storeModel.idToken)
                             .scaledToFill()
                             .frame(width: imageSize, height: imageSize)
                             .clipped()
@@ -61,6 +64,14 @@ struct StoreSimpleInfoView: View {
                     Text(store.name)
                         .bold()
                     Spacer()
+                    
+                    if userModel.user.favCafeIds.contains(store.cafeId) {
+                        Image(systemName: "star.fill")
+                            .foregroundColor(.yellow)
+                    } else {
+                        Image(systemName: "star")
+                            .foregroundColor(.gray)
+                    }
                 }
                 .padding(.leading, elementPadding)
                 .padding(.bottom, 4)
@@ -120,5 +131,7 @@ struct StoreSimpleInfoView: View {
     var store: Store = storeInfoModel.stores[0]
     
     return StoreSimpleInfoView(store: store, imgNum: 3)
+        .environment(StoreModel())
+        .environment(UserModel())
 }
 

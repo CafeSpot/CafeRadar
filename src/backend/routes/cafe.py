@@ -46,7 +46,7 @@ async def search_items(
         "types": types,
         "nextToken": nextToken
     }
-    cafes_dbs, nextToken = await get_cafe_search(lon=lon, lat=lat, search_dis=int(dis), search_text=text, search_types=types, nextToken=nextToken)
+    cafes_dbs, nextToken = await db_get_cafe_search(lon=lon, lat=lat, search_dis=int(dis), search_text=text, search_types=types, nextToken=nextToken)
     cafes = [cafes_convertor(query, cafes_db) for cafes_db in cafes_dbs]
 
     response = {
@@ -59,7 +59,7 @@ async def search_items(
 
 @router.get("/img/{imageLink}")
 async def get_image(imageLink: str):
-    image = await get_cafe_image(imageLink)
+    image = await db_get_cafe_image(imageLink)
     if image:
         return StreamingResponse(image, media_type="image/jpeg")
     else:

@@ -33,13 +33,21 @@ struct AsyncImageView: View {
     @State private var phase : AsyncImagePhase
     var urlRequest : URLRequest?
     var session : URLSession = .imageSession
+    var idToken: String?
     
-    init(url: String, session: URLSession = .imageSession) {
+    init(url: String, idToken: String? = nil, session: URLSession = .imageSession) {
         self.session = session
         self.urlRequest = nil
+        self.idToken = idToken
         
         if let url  = URL(string: url){
             self.urlRequest = URLRequest(url: url)
+            if let idToken = idToken{
+                self.urlRequest?.httpMethod = "GET"
+                if let idToken = self.idToken{
+                    self.urlRequest?.setValue("Bearer \(String(describing: idToken))", forHTTPHeaderField: "Authorization")
+                }
+            }
         }else{
             self.urlRequest = nil
         }

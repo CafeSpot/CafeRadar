@@ -13,6 +13,7 @@ struct StoreDetailInfo: View {
     var leadingAmount: CGFloat = 20
     
     @Environment(StoreModel.self) private var storeModel
+    @Environment(UserModel.self) private var userModel
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -21,7 +22,7 @@ struct StoreDetailInfo: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
                         ForEach(store.imageLinks, id: \.self) { url in
-                            AsyncImageView(url: url)
+                            AsyncImageView(url: url, idToken: storeModel.idToken)
                                 .scaledToFill()
                                 .frame(width: 250, height: 250)
                                 .cornerRadius(17)
@@ -48,7 +49,29 @@ struct StoreDetailInfo: View {
                         .font(.system(size: 27))
                     //.font(.custom("YourCustomFontName-Bold", size: 24))
                     Spacer()
-                    CrowdRateView(crowdRate: store.crowdRate ?? 0.0)
+                    VStack{
+                        CrowdRateView(crowdRate: store.crowdRate ?? 0.0)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            if userModel.user.favCafeIds.contains(store.cafeId) {
+                                userModel.delete_favCafe(cafeId: store.cafeId)
+                            } else {
+                                userModel.add_favCafe(cafeId: store.cafeId)
+                            }
+                        }) {
+                            // Display the appropriate heart icon
+                            if userModel.user.favCafeIds.contains(store.cafeId) {
+                                Image(systemName: "star.fill")
+                                    .foregroundColor(.yellow)
+                            } else {
+                                Image(systemName: "star")
+                                    .foregroundColor(.gray)
+                            }
+                        }
+
+                    }
                 }
                 .padding(.leading, leadingAmount)
                 .padding(.trailing, 20)
@@ -142,4 +165,5 @@ struct StoreDetailInfo: View {
     
     return StoreDetailInfo(store: store)
         .environment(StoreModel())
+        .environment(UserModel())
 }

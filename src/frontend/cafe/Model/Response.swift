@@ -7,7 +7,15 @@
 
 import Foundation
 
-struct Response: Decodable{
+struct Response_store: Decodable{
     var nextToken: Int?
     var data: [Store]
+}
+
+struct Response_user: Decodable{
+    var data: User
+}
+
+struct Response_favCafeIds: Decodable{
+    var data: [String]
 }

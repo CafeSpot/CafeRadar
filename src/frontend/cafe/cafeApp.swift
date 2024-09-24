@@ -85,18 +85,30 @@ struct cafeApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(userModel)
                 .environment(storeModel)
                 .environment(mapViewModeModel)
                 .environment(userModel)
                 .environmentObject(authManager)
                 .onAppear() {
                     // why we set the observer in omAppear? https://stackoverflow.com/questions/68930434/accessing-stateobjects-object-without-being-installed-on-a-view-this-will-crea
+                    
+                    // idToken subscription
                     self.authManager.set { [weak storeModel = self.storeModel] value in
                         storeModel?.update_idToken(idToken: value)
                     }
+                    self.authManager.set { [weak userModel = self.userModel] value in
+                        userModel?.update_idToken(idToken: value)
+                    }
+                    
+                    // position subscription
                     self.positionManager.set { [weak storeModel = self.storeModel] value in
                         storeModel?.update_position(position: value)
                     }
+                    
+                    // initial the user and store
+                    // self.authManager.get_authState()
+                    //self.storeModel.get_store()
                 }
         }
     }

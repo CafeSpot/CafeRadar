@@ -39,7 +39,7 @@ class AuthManager: NSObject, ASAuthorizationControllerDelegate, ObservableObject
                         print("Error fetching ID token: \(error.localizedDescription)")
                     } else if let idToken = idToken {
                         // Use this ID token for authenticated API requests
-                        print("ID token: \(idToken)")
+                        print("[AuthManager] authStateListenerHandle got ID token")
                         self.idToken = idToken
                         self.update(idToken)
                     }
@@ -48,6 +48,25 @@ class AuthManager: NSObject, ASAuthorizationControllerDelegate, ObservableObject
             } else {
                 self.signedIn = false
                 print("[AuthModel]: ","Auth state changed, Loog out")
+            }
+        }
+    }
+    
+    func get_authState(){
+        if let user = Auth.auth().currentUser {
+            self.signedIn = true
+            print("[AuthModel - get_userstate]: ","Auth state changed, Login now")
+            
+            user.getIDTokenForcingRefresh(true) { idToken, error in
+                if let error = error {
+                    print("[AuthModel - get_userstate]: getIDToken error")
+                } else if let idToken = idToken {
+                    print("[AuthModel - get_userstate]: getIDToken successfully")
+                    self.idToken = idToken
+                    self.update(idToken)
+                } else {
+                    print("[AuthModel - get_userstate]: getIDToken successfully but now idToken")
+                }
             }
         }
     }

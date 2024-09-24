@@ -4,7 +4,9 @@ import firebase_admin
 
 from src.backend.routes.auth import router as auth_router
 from src.backend.routes.cafe import router as cafe_router
+from src.backend.routes.user import router as user_router
 from src.backend.middlewares.auth import LoggingMiddleware
+from src.backend.middlewares.check import CheckMiddleware
 from firebase_admin import auth, credentials
 
 app = FastAPI()
@@ -13,6 +15,9 @@ app = FastAPI()
 # 添加 auth 路由
 app.include_router(auth_router)
 app.include_router(cafe_router)
+app.include_router(user_router)
+
+app.add_middleware(CheckMiddleware)
 app.add_middleware(LoggingMiddleware)
 
 # Initialize the Firebase Admin SDK

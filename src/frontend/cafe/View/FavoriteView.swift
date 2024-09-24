@@ -7,12 +7,16 @@
 
 import SwiftUI
 
-struct CollectionView: View {
+struct FavoriteView: View {
     
     @Environment(StoreModel.self) private var storeModel
     @Environment(UserModel.self) private var userModel
     @State private var selectionText: String = ""
     @State private var selectionsType: [Bool] = [false, false, false, false, false]
+    
+    var favoriteCafes: [Store] {
+        return storeModel.storeCollection.filter {userModel.user.favCafeIds.contains($0.cafeId)}
+    }
     
     var body: some View {
         NavigationStack {
@@ -27,7 +31,7 @@ struct CollectionView: View {
                 
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
-                        ForEach(storeModel.storeCollection) { store in
+                        ForEach(favoriteCafes) { store in
                             StoreSimpleInfoView(store: store,imgNum: 3)
                         }
                     }
@@ -39,7 +43,7 @@ struct CollectionView: View {
 }
 
 #Preview {
-    CollectionView()
+    FavoriteView()
         .environment(StoreModel())
         .environment(MapViewModeModel())
         .environment(UserModel())

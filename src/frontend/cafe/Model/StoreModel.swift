@@ -57,13 +57,13 @@ class StoreModel{
         print("get the ",self.storeBuffer.count," stores from the test data")
     }
     
-    //??? request googlemapAPI-nearbySearch and set the result to the storeBuffer
-    func searchText(text: String){
-        storeBuffer = Array(storeBuffer.prefix(2))
-    }
-    
     func update_idToken(idToken: String?){
-        self.idToken = idToken
+        if self.idToken == nil{
+            self.idToken = idToken
+            get_store()
+        } else {
+            self.idToken = idToken
+        }
     }
 
     func update_position(position: CLLocation?) {
@@ -76,34 +76,50 @@ class StoreModel{
         self.get_store()
     }
     
+    func reset_searchCondition(){
+        self.selectionText = ""  // keyword to search
+        self.selectionsType = Array(repeating: true, count: self.typeNames.count)
+        self.selectedDistance = 10000
+    }
+    
+    func searchText(text: String){
+        storeBuffer = Array(storeBuffer.prefix(2))
+    }
+    
     func get_store(){
+        var lat: Double = 24.8138
+        var lon: Double = 120.9675
+        
+        /*
         if let position = self.position {
-            guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(120.9675)&lat=\(24.8138)&text=\(self.selectionText)&dis=\(self.selectedDistance)") else { return }
-            //guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(position.coordinate.longitude)&lat=\(position.coordinate.latitude)&text=\(selectionText)&dis=\(selectedDistance)") else { return }
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            if let idToken = self.idToken{
-                request.setValue("Bearer \(String(describing: idToken))", forHTTPHeaderField: "Authorization")
-            }
-            
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let data = data {
-                    do {
-                        let decodedData = try JSONDecoder().decode(Response.self, from: data)
-                        
-                        // Update the UI on the main thread
-                        DispatchQueue.main.async {
-                            self.storeBuffer = decodedData.data
-                            print(self.storeBuffer[0])
-                            print("Data received and decoded: \(self.storeBuffer.count)")
-                        }
-                    } catch {
-                        print("Error decoding data: \(error)")
-                    }
-                }
-            }.resume()
+            lat = position.coordinate.latitude
+            lon = position.coordinate.longitude
         }
+         */
+        
+        guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(lon)&lat=\(lat)&text=\(self.selectionText)&dis=\(self.selectedDistance)") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        if let idToken = self.idToken{
+            request.setValue("Bearer \(String(describing: idToken))", forHTTPHeaderField: "Authorization")
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                do {
+                    let decodedData = try JSONDecoder().decode(Response_store.self, from: data)
+                    
+                    // Update the UI on the main thread
+                    DispatchQueue.main.async {
+                        self.storeBuffer = decodedData.data
+                        print("Data received and decoded: \(self.storeBuffer.count)")
+                    }
+                } catch {
+                    print("Error decoding data: \(error)")
+                }
+            }
+        }.resume()
     }
     
     

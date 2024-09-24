@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var authModel : AuthManager
+    @Environment(StoreModel.self) private var storeModel
     var bottomPadding : CGFloat = 10
     var topPadding : CGFloat = 10
     
@@ -25,13 +26,22 @@ struct ContentView: View {
                         .tabItem {
                             Label("咖啡地圖", systemImage: "map.fill")
                         }
-                    CollectionView()
+                        .onAppear(){
+                            storeModel.reset_searchCondition()
+                        }
+                    FavoriteView()
                         .tabItem {
                             Label("我的收藏", systemImage: "suit.heart")
+                        }
+                        .onAppear(){
+                            storeModel.reset_searchCondition()
                         }
                     SettingView()
                         .tabItem {
                             Label("設定", systemImage: "book.and.wrench")
+                        }
+                        .onAppear(){
+                            storeModel.reset_searchCondition()
                         }
             }
             .accentColor(CafeColor.basicColor)
