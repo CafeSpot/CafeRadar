@@ -36,7 +36,7 @@ struct ContentView: View {
                         .onAppear(){
                             storeModel.reset_searchCondition()
                         }
-                    SettingView()
+                    UserInfoView()
                         .tabItem {
                             Label("設定", systemImage: "book.and.wrench")
                         }

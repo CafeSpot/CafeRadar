@@ -49,6 +49,42 @@ class UserModel{
         }
     }
     
+    func update_userInfo(name: String, email: String, phone: String){
+        self.user.name = name
+        self.user.email = email
+        self.user.phone = phone
+        
+        guard let idToken = self.idToken else { return }
+        
+        guard let url = URL(string: "http://127.0.0.1:8000/user/\(self.user.userId ?? "")/update?name=\(name)&email=\(email)&phone=\(phone)") else {
+            print("Invalid URL")
+            return 
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("Bearer \(idToken)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Request error: \(error)")
+                return
+            }
+            
+            if let data = data {
+                do {
+                    let decodedData = try JSONDecoder().decode(Response_user.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        self.user = decodedData.data
+                    }
+                } catch {
+                    print("Error decoding data: \(error)")
+                }
+            }
+        }.resume()
+    }
+    
     func update_favCafe(cafeId: String, action: String) {
         guard let idToken = self.idToken else { return }
         

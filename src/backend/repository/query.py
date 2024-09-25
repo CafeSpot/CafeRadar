@@ -184,11 +184,14 @@ def cafes_convertor(query, cafe_db):
 '''
     add new user
 '''
-async def db_create_user(id):
+async def db_create_user(id, user):
+    email = user.get("email","")
     new_user = {
         "userId": id,  # Unique user ID, replace with actual id
         "name": "",  # User's name, replace with actual name
-        "fav_cafeIds": []  # Initialize with an empty array or pre-populate cafes if needed
+        "fav_cafeIds": [],  # Initialize with an empty array or pre-populate cafes if needed
+        "phone": "",
+        "email": email,
     }
     user_collection.insert_one(new_user)
 
@@ -198,7 +201,6 @@ async def db_create_user(id):
 async def db_find_user(id):
     user = await user_collection.find_one({"userId": id},{'_id': 0})
     count = await user_collection.count_documents({})
-    print(f"there are {count} users in user_collection")
     if user:
         return True, user
     else:
@@ -254,5 +256,32 @@ async def db_delete_favCafe(userId, cafeId):
         
         return updated_user['favCafeIds']  # Return the updated favCafeIds list
     
+    except PyMongoError as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database error: {e}")
+
+
+async def db_update_userInfo(userId, name = "", email = "", phone = ""):
+    try:
+        updated_items = {}
+        if name != "":
+            updated_items["name"] = name
+        if email != "":
+            updated_items["email"] = email
+        if phone != "":
+            updated_items["phone"] = phone
+
+        query = {"userId": userId}
+        update = {"$set": updated_items} 
+
+        result = await user_collection.update_one(query, update)
+
+         # return the updated list of favorite cafes
+        updated_user = await user_collection.find_one(query, {"_id": 0})  # Return only favCafeIds field
+        if updated_user is None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Failed to retrieve updated user")
+        
+        # update the firebase authentication
+
+        return updated_user
     except PyMongoError as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Database error: {e}")

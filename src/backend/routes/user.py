@@ -33,3 +33,21 @@ async def manage_favorite_cafe(
         raise e
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
+
+
+# Define the POST method for managing favorite cafes
+@router.post("/{userId}/update")
+async def manage_favorite_cafe(
+    request: Request,
+    name: str, 
+    email: str,
+    phone: str
+):
+    try:
+        useId = request.state.user["uid"]
+        updated_user = await db_update_userInfo(useId, name, email, phone)
+        return {"data": updated_user}
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
