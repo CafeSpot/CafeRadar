@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException, Depends, Body, Query
+from fastapi import APIRouter, HTTPException, Depends, Body, Query, Request
 from fastapi.responses import StreamingResponse
 from src.backend.repository.connection import cafe_collection
 from src.backend.models.cafeModel import *
 from src.backend.repository.query import *
+from src.backend.recommand. base import *
 
 router = APIRouter(prefix='/cafe')
 
@@ -28,11 +29,11 @@ async def postCafeInfo(response: dict):
     )
     return CafeModel(**cafe_info)
 
-@router.get("/search/")
+@router.get("/search")
 async def search_items(
     lon: Optional[float] = Query(None, description="longitude of the require"),
     lat: Optional[float] = Query(None, description="latitude of the require"),
-    dis: Optional[float] = Query(1000, description="max search distances"),
+    dis: Optional[float] = Query(10000, description="max search distances"),
     text: Optional[str] = Query(None, description="search text"),
     types: Optional[List[str]] = Query([], description="List of types to filter by"),
     nextToken: Optional[int] = Query(None, description="search text"),
@@ -64,3 +65,23 @@ async def get_image(imageLink: str):
         return StreamingResponse(image, media_type="image/jpeg")
     else:
         raise HTTPException(status_code=404, detail="Image not found")
+
+@router.get("/recommand")
+async def recomand_items(
+    request: Request,
+    lon: Optional[float] = Query(None, description="longitude of the require"),
+    lat: Optional[float] = Query(None, description="latitude of the require")
+):
+    recommands = await recommand_base(request, lat, lon)
+
+    for recommand in recommands:
+        for cafe in recommand["cafes"]:
+            cafe["imageLinks"] = [ "http://127.0.0.1:8000/cafe/img/"+imageLink for imageLink in cafe["imageLinks"] ]
+
+    response = {
+        "data": recommands
+    }
+    print(f"send {len(recommands)} recommands")
+    #print(response)
+
+    return response

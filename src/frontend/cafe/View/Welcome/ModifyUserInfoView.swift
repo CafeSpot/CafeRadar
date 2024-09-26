@@ -17,18 +17,35 @@ struct ModifyUserInfoView: View {
     
     var body: some View {
         VStack{
-            Form {
-                TextField("name", text: $name)
-                TextField("email", text: $email)
-                TextField("phone", text: $phone)
+            VStack{
+                HStack{
+                    Text("name")
+                    TextField("name", text: $name)
+                }
+                HStack{
+                    Text("email")
+                    TextField("email", text: $email)
+                }
+                HStack{
+                    Text("phone")
+                    TextField("phone", text: $phone)
+                }
             }
             Spacer()
-            Button(action: {
-                userModel.update_userInfo(name: name, email: email, phone: phone)
-                isModifiedSuccessfully = true
-                isShowingSheet = false
-            }) {
-                Text("更改")
+            HStack{
+                Button(action: {
+                    isShowingSheet = false
+                }) {
+                    Text("取消")
+                }
+                
+                Button(action: {
+                    userModel.update_userInfo(name: name, email: email, phone: phone)
+                    isModifiedSuccessfully = true
+                    isShowingSheet = false
+                }) {
+                    Text("更改")
+                }
             }
         }
     }

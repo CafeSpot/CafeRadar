@@ -6,7 +6,9 @@ from src.backend.repository.query import *
 async def get_user(
     request: Request
 ):
+    print("user info:", request.state.user)
     isExist, user = await db_find_user(request.state.user["uid"])
+    print({"data": user})
     return {"data": user}
 
 

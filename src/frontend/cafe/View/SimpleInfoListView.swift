@@ -42,7 +42,7 @@ struct SimpleInfoListView: View {
                         .cornerRadius(5)
                         .padding(.top, 9)
                         .padding(.bottom, 3)
-                    Text("搜尋到\(storeModel.storeMap.count)家咖啡廳")
+                    Text("搜尋到\(storeModel.storeCollection.count)家咖啡廳")
                         .font(.system(size: 20))
                         .bold()
                         .padding(4)
@@ -52,18 +52,18 @@ struct SimpleInfoListView: View {
             if mapViewModeModel.mode == .small{
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack {
-                        ForEach(storeModel.storeMap) { store in
+                        ForEach(storeModel.storeCollection) { store in
                             StoreSimpleInfoView(store: store,imgNum: 2)
                         }
                     }
                 }
                 .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
                 .frame(minHeight: 160)
-                .frame(height: 220)
+                .frame(height: 197)
             }else if mapViewModeModel.mode == .large{
                 ScrollView(showsIndicators: false) {
                     LazyVStack {
-                        ForEach(storeModel.storeMap) { store in
+                        ForEach(storeModel.storeCollection) { store in
                             StoreSimpleInfoView(store: store,imgNum: 3)
                         }
                     }

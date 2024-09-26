@@ -47,17 +47,17 @@ struct ExploreView: View {
                     .padding(10)
                     
                     // different topic
-                    ForEach(0..<storeModel.storeRecommends.count, id: \.self) { index in
-                        VStack(){
+                    ForEach(storeModel.recommends) { recommend in
+                        LazyVStack(){
                             HStack {
-                                Text(storeModel.recommends[index].title)
+                                Text(recommend.title)
                                     .font(.system(size: 24))
                                     .bold()
                                 Spacer()
                             }
                             ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(storeModel.storeRecommends[index]) { store in
+                                LazyHStack {
+                                    ForEach(recommend.cafes) { store in
                                         StoreSimpleInfoView(store: store,imgNum: 2)
                                     }
                                 }

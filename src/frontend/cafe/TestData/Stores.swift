@@ -11,9 +11,9 @@ import GoogleMaps
 import CoreLocation
 
 let testStores: [Store] = [store1, store2 ,store3 ,store4 ,store5 ,store6 ,store7 ,store8 ,store9 ,store10]
-let testRecommends: [Recommend] = [Recommend(title: "貓店長值班",cafeIds: ["1","2","3","4"]),
-                                   Recommend(title: "好氣份好心情",cafeIds: ["4","5","6","7"]),
-                                   Recommend(title: "網友高分推薦",cafeIds: ["8","9","10"])]
+let testRecommends: [Recommend] = [Recommend(title: "貓店長值班", explain: "", cafes: [store1, store2 ,store3 ,store4 ,store5]),
+                                   Recommend(title: "好氣份好心情", explain: "", cafes: [store1, store2 ,store3 ,store4 ,store5]),
+                                   Recommend(title: "網友高分推薦", explain: "", cafes: [store1, store2 ,store3 ,store4 ,store5])]
 let testTypeNames: [String] = ["coffee","restaurant", "food", "store", "cafe", "coffee_shop", "vegan", "vegan_restaurant", "health", "brunch", "sandwich", "breakfast", "brunch_restaurant", "breakfast_restaurant", "sandwich_shop", "bakery", "book_store", "book"]
 
 let store1 = Store(

@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:../../../&#x65b0;&#x7af9;.gpx">
+   </FileRef>
+   <FileRef
+      location = "group:../../../&#x65b0;&#x7af9;.GPX">
+   </FileRef>
+   <FileRef
+      location = "group:../../../&#x65b0;&#x7af9;.GPX">
+   </FileRef>
+   <FileRef
       location = "group:cafe.xcodeproj">
    </FileRef>
    <FileRef

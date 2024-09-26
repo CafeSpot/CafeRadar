@@ -21,7 +21,7 @@ struct GoogleMapView: UIViewRepresentable {
     var markerTappedAction: ((Int) -> Void)?
     private let defaultZoomLevel: Float = 10
     var markerDatas: [MarkerData]{
-        self.storeModel.storeMap.enumerated().map { (index, store) in
+        self.storeModel.storeCollection.enumerated().map { (index, store) in
             MarkerData(
                 lon: store.lon,
                 lat: store.lat,
@@ -75,13 +75,17 @@ struct GoogleMapView: UIViewRepresentable {
             let marker = GMSMarker(position: CLLocationCoordinate2D(latitude: markerData.lat, longitude: markerData.lon))
             marker.map = uiView
             marker.userData = markerData.index
+    
             if markerData.rate <= 1 {
                 marker.icon = UIImage(systemName: "person.circle.fill")
             }else if markerData.rate <= 2 {
                 marker.icon = UIImage(systemName: "person.2.circle.fill")
             }else if markerData.rate <= 3 {
                 marker.icon = UIImage(systemName: "person.3.fill")
+            }else {
+                marker.icon = UIImage(systemName: "person.3.fill")
             }
+    
         }
     }
     

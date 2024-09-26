@@ -113,7 +113,7 @@ struct StoreSimpleInfoView: View {
                 }
                 .padding(.leading, elementPadding)
             }
-            .frame(width: imgNum==2 ? 230 : 350, height: 170)
+            .frame(width: imgNum==2 ? 230 : 342, height: 170)
             .padding(12)
             .foregroundColor(.black)
             .overlay(

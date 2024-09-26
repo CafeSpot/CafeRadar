@@ -158,7 +158,7 @@ def cafes_convertor(query, cafe_db):
     cafe["imageLinks"] = imageLinks
     cafe["tags"] = tags
     cafe["lat"]= cafe_db.get("lat",0.0)
-    cafe["lon"]= cafe_db.get("lat",0.0)
+    cafe["lon"]= cafe_db.get("lon",0.0)
     cafe["distance"] = convert_distance(cafe["lon"], cafe["lat"], query["lon"], query["lat"])
     cafe["commentIds"] = cafe_db.get("commentIds",[])
     cafe["envRate"] = cafe_db.get("envRate",None)
@@ -201,10 +201,7 @@ async def db_create_user(id, user):
 async def db_find_user(id):
     user = await user_collection.find_one({"userId": id},{'_id': 0})
     count = await user_collection.count_documents({})
-    if user:
-        return True, user
-    else:
-        return False, user
+    return True, user
 
 '''
     add the cafe to the favorite list of the user

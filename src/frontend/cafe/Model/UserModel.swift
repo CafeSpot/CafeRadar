@@ -42,7 +42,7 @@ class UserModel{
                             self.user = decodedData.data
                         }
                     } catch {
-                        print("Error decoding data: \(error)")
+                        print("Error decoding get_user data: \(error)")
                     }
                 }
             }.resume()
@@ -79,7 +79,7 @@ class UserModel{
                         self.user = decodedData.data
                     }
                 } catch {
-                    print("Error decoding data: \(error)")
+                    print("Error decoding the userInfo data: \(error)")
                 }
             }
         }.resume()
@@ -111,7 +111,7 @@ class UserModel{
                         self.user.favCafeIds = Set(decodedData.data)
                     }
                 } catch {
-                    print("Error decoding data: \(error)")
+                    print("Error decoding update_favCafe data: \(error)")
                 }
             }
         }.resume()

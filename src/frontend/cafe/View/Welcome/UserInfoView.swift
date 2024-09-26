@@ -18,33 +18,34 @@ struct UserInfoView: View {
 
     
     var body: some View {
-        VStack(){
-            
-            Text(authManager.signedIn ? "Login" : "Log out")
-                .font(.system(size: 40))
-                .fontWeight(.bold)
-                .padding(20)
-            
-            HStack{
-                Text("Name: ")
-                Text(userModel.user.name ?? "")
+        VStack{
+            VStack(alignment: .leading){
+                
+                Text(authManager.signedIn ? "Login" : "Log out")
+                    .font(.system(size: 40))
+                    .fontWeight(.bold)
+                    .padding(20)
+                
+                HStack{
+                    Text("Name: ")
+                    Text(userModel.user.name ?? "")
+                }
+                
+                HStack{
+                    Text("ID: ")
+                    Text(userModel.user.userId ?? "")
+                }
+                
+                HStack{
+                    Text("Phone: ")
+                    Text(userModel.user.phone ?? "")
+                }
+                
+                HStack{
+                    Text("Email: ")
+                    Text(userModel.user.email ?? "")
+                }
             }
-            
-            HStack{
-                Text("ID: ")
-                Text(userModel.user.userId ?? "")
-            }
-            
-            HStack{
-                Text("Phone: ")
-                Text(userModel.user.phone ?? "")
-            }
-            
-            HStack{
-                Text("Email: ")
-                Text(userModel.user.email ?? "")
-            }
-            
             Spacer()
             
             HStack(){
@@ -59,7 +60,7 @@ struct UserInfoView: View {
                         authManager.googleSignOut()
                     } label: {
                         HStack(){
-                            Text("Sign out")
+                            Text("登出")
                                 .fontWeight(.bold)
                                 .foregroundColor(.black)
                         }
@@ -69,7 +70,7 @@ struct UserInfoView: View {
                     Button(action: {
                         showLoginPage = true
                     }) {
-                        Text("Login")
+                        Text("登入")
                             .fontWeight(.bold)
                             .foregroundColor(.black)
                     }
@@ -78,7 +79,7 @@ struct UserInfoView: View {
                     }
                     .padding(5)
                 }
-
+                
                 Button("更改") {
                     isShowingSheet.toggle() // Show the sheet
                 }

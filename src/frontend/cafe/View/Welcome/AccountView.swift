@@ -11,11 +11,6 @@ struct AccountView: View {
     @EnvironmentObject var authModel : AuthManager
     @Environment(\.presentationMode) var presentationMode
     
-    @State var email: String = ""
-    @State var password: String = ""
-    @State var phone: String = ""
-    @State var username: String = ""
-    
     @State private var isLogin: Bool = true
     
     
@@ -31,10 +26,10 @@ struct AccountView: View {
                     //.padding()
                 
                 if isLogin{
-                    LoginView(email: $email, password: $password)
+                    LoginView()
                 }
                 else{
-                    SignUpView(email: $email, password: $password, phone: $phone, username: $username)
+                    SignUpView()
                 }
                 
                 Button {

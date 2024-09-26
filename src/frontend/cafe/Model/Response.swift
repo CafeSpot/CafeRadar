@@ -19,3 +19,8 @@ struct Response_user: Decodable{
 struct Response_favCafeIds: Decodable{
     var data: [String]
 }
+
+struct Response_recommands: Decodable{
+    var data: [Recommend]
+}
+

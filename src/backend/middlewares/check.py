@@ -12,8 +12,8 @@ class CheckMiddleware(BaseHTTPMiddleware):
 
     async def check_and_add_user(self, request: Request):
         id = request.state.user["uid"]
-        isExist, user = await db_find_user(id)
-        if not isExist:
+        user = await db_find_user(id)
+        if not user:
             await db_create_user(id, request.state.user)
 
         

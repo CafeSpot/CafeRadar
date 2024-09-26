@@ -184,13 +184,29 @@ struct Store: Identifiable, Decodable{
     }
 }
 
-struct Recommend: Identifiable {
-    let id = UUID()
-    let title: String
-    let cafeIds: [String]
+struct Recommend: Identifiable, Decodable{
+    var id = UUID()
+    var title: String
+    var explain: String
+    var cafes: [Store]
     
-    init(title: String, cafeIds: [String]) {
+    init(title: String, explain: String = "", cafes: [Store] = []) {
         self.title = title
-        self.cafeIds = cafeIds
+        self.explain = explain
+        self.cafes = cafes
+    }
+    
+    init(from decoder: Decoder) throws{
+        let container = try decoder.container(keyedBy: CodeingKeys.self)
+        
+        self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+        self.explain = try container.decodeIfPresent(String.self, forKey: .explain) ?? ""
+        self.cafes = try container.decodeIfPresent([Store].self, forKey: .cafes) ?? []
+    }
+    
+    enum CodeingKeys: String, CodingKey{
+        case title
+        case explain
+        case cafes
     }
 }

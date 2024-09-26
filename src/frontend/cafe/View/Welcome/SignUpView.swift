@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @EnvironmentObject var authModel : AuthManager
-    @Binding var email: String
-    @Binding var password: String
-    @Binding var phone: String
-    @Binding var username: String
+    @EnvironmentObject var authManager : AuthManager
+    @Environment(UserModel.self) private var userModel
+    @State var email: String = ""
+    @State var password: String = ""
+    @State var phone: String = ""
+    @State var name: String = ""
+    @State var isProcess: Bool = false
     
     var body: some View {
         VStack(){
@@ -48,7 +50,7 @@ struct SignUpView: View {
             VStack(alignment: .leading){
                 Text("手機號碼")
                     .font(.system(size: 15, design: .default))
-                SecureField("  請輸入手機號碼", text: $phone)
+                TextField("  請輸入手機號碼", text: $phone)
                     .autocapitalization(.none)
                     .textFieldStyle(PlainTextFieldStyle())
                     .frame(height: 40)
@@ -62,7 +64,7 @@ struct SignUpView: View {
             VStack(alignment: .leading){
                 Text("使用者名稱")
                     .font(.system(size: 15, design: .default))
-                SecureField("  請輸入使用者名稱", text: $username)
+                TextField("  請輸入使用者名稱", text: $name)
                     .autocapitalization(.none)
                     .textFieldStyle(PlainTextFieldStyle())
                     .frame(height: 40)
@@ -75,31 +77,42 @@ struct SignUpView: View {
             
             Button {
                 print("[SignUpView]: Tapped Create with email & passward")
-                authModel.regularCreateAccount(email: email, password: password)
+                isProcess = true
+                authManager.regularCreateAccount(email: email, password: password) { error in
+                    if let error = error{
+                        print("[SignUpView - regularCreateAccount]", error)
+                        name = ""
+                        phone = ""
+                        email = ""
+                        password = ""
+                    }
+                    else{
+                        userModel.update_userInfo(name: name, email: email, phone: phone)
+                    }
+                    isProcess = false
+                }
             } label: {
                 Text("註冊")
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity) // Stretch to fill the container's width
                     .frame(height: 40)
-                    .background(CafeColor.basicColor)
+                    .background(isProcess ? CafeColor.basicColor_fade : CafeColor.basicColor)
                     .cornerRadius(5)
             }
             .padding(.top, 30)
+            .disabled(isProcess)
         }
     }
 }
 
 #Preview {
     struct Preview: View {
-        @State var email: String = ""
-        @State var password: String = ""
-        @State var phone: String = ""
-        @State var username: String = ""
         var body: some View {
-            SignUpView(email: $email, password: $password, phone: $phone, username: $username)
+            SignUpView()
         }
     }
 
     return Preview()
         .environmentObject(AuthManager())
+        .environment(UserModel())
 }

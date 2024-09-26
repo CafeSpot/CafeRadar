@@ -26,13 +26,6 @@ class StoreModel{
     // [maintain data]
     var storeCollection: [Store] { self.storeBuffer.filter { self.filtStore_selection(store: $0) } }  // the set of the store show on the map page and the command page
     var storeMap: [Store] { self.storeBuffer.filter { self.filtStore_selection(store: $0) } }
-    var storeRecommends: [[Store]] {
-        self.recommends.map { recommand in
-            self.storeBuffer.filter { store in
-                recommand.cafeIds.contains(store.cafeId)
-            }
-        }
-    }
     var selectionText: String = ""  // keyword to search
     var selectionsType: [Bool] = []  // key type to search
     var selectedDistance: Double = 10000
@@ -60,7 +53,9 @@ class StoreModel{
     func update_idToken(idToken: String?){
         if self.idToken == nil{
             self.idToken = idToken
-            get_store()
+            
+            self.get_store()
+            self.get_recommand()
         } else {
             self.idToken = idToken
         }
@@ -74,6 +69,7 @@ class StoreModel{
         }
         
         self.get_store()
+        self.get_recommand()
     }
     
     func reset_searchCondition(){
@@ -90,14 +86,12 @@ class StoreModel{
         var lat: Double = 24.8138
         var lon: Double = 120.9675
         
-        /*
         if let position = self.position {
             lat = position.coordinate.latitude
             lon = position.coordinate.longitude
         }
-         */
         
-        guard let url = URL(string: "http://127.0.0.1:8000/cafe/search/?lon=\(lon)&lat=\(lat)&text=\(self.selectionText)&dis=\(self.selectedDistance)") else { return }
+        guard let url = URL(string: "http://127.0.0.1:8000/cafe/search?lon=\(lon)&lat=\(lat)") else { return }
         
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
@@ -116,17 +110,47 @@ class StoreModel{
                         print("Data received and decoded: \(self.storeBuffer.count)")
                     }
                 } catch {
-                    print("Error decoding data: \(error)")
+                    print("Error decoding get_store data: \(error)")
                 }
             }
         }.resume()
     }
     
-    
-    // this function is called by [override func locationManager], used to request the nearby store by google map api
-    // ~~~ move to another file, and return the value
-    func getNearbyFromGoogleMap(){}
-    
+    func get_recommand(){
+        var lat: Double = 24.8138
+        var lon: Double = 120.9675
+        
+        if let position = self.position {
+            lat = position.coordinate.latitude
+            lon = position.coordinate.longitude
+        }
+        
+        guard let url = URL(string: "http://127.0.0.1:8000/cafe/recommand?lon=\(lon)&lat=\(lat)") else { return }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        if let idToken = self.idToken{
+            request.setValue("Bearer \(String(describing: idToken))", forHTTPHeaderField: "Authorization")
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                do {
+                    let decodedData = try JSONDecoder().decode(Response_recommands.self, from: data)
+                    
+                    // Update the UI on the main thread
+                    DispatchQueue.main.async {
+                        self.recommends = decodedData.data
+                        print("recommends received and decoded: \(self.recommends.count)")
+                        print("recommends received and decoded: \(self.recommends[0].cafes.count)")
+                    }
+                } catch {
+                    print("Error decoding get_recommand data: \(error)")
+                }
+            }
+        }.resume()
+    }
+
     
     // this method is the filter function which return if the "store" is correspond the selected conditions
     func filtStore_selection(store: Store) -> Bool{
@@ -149,13 +173,14 @@ class StoreModel{
         if let position = self.position{
             let location1 = CLLocation(latitude: position.coordinate.latitude, longitude:position.coordinate.longitude)
             let location2 = CLLocation(latitude: store.lat, longitude: store.lon)
-            ansDistance = location1.distance(from: location2) < selectedDistance*100000000 ? true : false
+            ansDistance = location1.distance(from: location2) < selectedDistance ? true : false
         }else{
             ansDistance = true
         }
         
         return ansText && ansType && ansDistance
     }
+    
 }
 
 

@@ -9,11 +9,12 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject var authModel : AuthManager
-    @Binding var email: String
-    @Binding var password: String
+    @State var email: String = ""
+    @State var password: String = ""
     @State private var loginMessage: String = ""
     
     @State private var isChecked = false
+    @State var isProcess: Bool = false
     
     var body: some View {
         VStack(){
@@ -68,6 +69,7 @@ struct LoginView: View {
             .padding(10)
             
             Button {
+                isProcess = true
                 print("[LoginView]: Sign in with email & passward")
                 authModel.regularSignIn(email: email, password: password) { error in
                     if let e = error {
@@ -78,16 +80,18 @@ struct LoginView: View {
                         loginMessage = ""
                         print("[LoginView]: login")
                     }
+                    isProcess = false
                 }
             } label: {
                 Text("登入")
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity) // Stretch to fill the container's width
                     .frame(height: 40)
-                    .background(CafeColor.basicColor)
+                    .background(isProcess ? CafeColor.basicColor_fade : CafeColor.basicColor)
                     .cornerRadius(5)
             }
             .padding(.top, 20)
+            .disabled(isProcess)
             
             LabelledDivider(label: "或以其他方式登入")
                 .padding(.top,30)
@@ -206,10 +210,8 @@ struct CheckboxToggleStyle: ToggleStyle {
 
 #Preview {
     struct Preview: View {
-        @State var email: String = ""
-        @State var password: String = ""
         var body: some View {
-            LoginView(email: $email, password: $password)
+            LoginView()
         }
     }
 

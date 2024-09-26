@@ -83,13 +83,14 @@ class AuthManager: NSObject, ASAuthorizationControllerDelegate, ObservableObject
 
     
     // [firebase] - Password Account
-    func regularCreateAccount(email: String, password: String) {
+    func regularCreateAccount(email: String, password: String, completion: @escaping (Error?) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let e = error {
-                print("[AuthModel]: ",e.localizedDescription)
-                
+                completion(e)
+                print("[AuthModel]: ","regularCreateAccount error")
             } else {
-                print("[AuthModel]: ","Successfully created password account")
+                print("[AuthModel]: ","Login success")
+                completion(nil)
             }
         }
     }

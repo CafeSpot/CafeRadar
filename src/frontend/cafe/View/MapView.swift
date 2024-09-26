@@ -32,7 +32,7 @@ struct MapView: View {
                 ZStack(alignment: .top){
                     VStack {
                         NavigationLink(
-                            destination: selectedMarkerIndex.map { StoreDetailInfo(store: self.storeModel.storeMap[$0]) },
+                            destination: selectedMarkerIndex.map { StoreDetailInfo(store: self.storeModel.storeCollection[$0]) },
                             isActive: Binding(
                                 get: { self.selectedMarkerIndex != nil },
                                 set: { _ in self.selectedMarkerIndex = nil }

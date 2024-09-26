@@ -39,7 +39,7 @@ struct AsyncImageView: View {
         self.session = session
         self.urlRequest = nil
         self.idToken = idToken
-        
+
         if let url  = URL(string: url){
             self.urlRequest = URLRequest(url: url)
             if let idToken = idToken{
@@ -96,6 +96,7 @@ struct AsyncImageView: View {
                 throw URLError(.unknown)
             }
         } catch{
+            //print("Error: \(error.localizedDescription)")
             phase = .failure(AsyncImageError.failedToLoadImage)
         }
     }
